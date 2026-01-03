@@ -207,4 +207,19 @@
     border-top-left-radius: 100% 100%;
     border-top-right-radius: 100% 100%;
   }
+
+  /* Text gradient */
+  .text-gold-gradient {
+    background: linear-gradient(
+      267.81deg,
+      #ffc359 0.61%,
+      #ffa50d 27.92%,
+      #ffc156 61.61%,
+      #ffa100 91.66%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }

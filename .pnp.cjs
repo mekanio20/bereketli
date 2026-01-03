@@ -30,10 +30,9 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@vitejs/plugin-vue", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:6.0.3"],\
           ["@vueuse/motion", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:3.0.3"],\
-          ["add", "npm:2.0.6"],\
           ["autoprefixer", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.4.23"],\
           ["axios", "npm:1.13.2"],\
-          ["baseline-browser-mapping", "npm:2.9.8"],\
+          ["countup.js", "npm:2.9.0"],\
           ["pinia", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:3.0.4"],\
           ["postcss", "npm:8.5.6"],\
           ["swiper", "npm:12.0.3"],\
@@ -1015,15 +1014,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["add", [\
-      ["npm:2.0.6", {\
-        "packageLocation": "../../.yarn/berry/cache/add-npm-2.0.6-c96b78d852-10c0.zip/node_modules/add/",\
-        "packageDependencies": [\
-          ["add", "npm:2.0.6"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["agent-base", [\
       ["npm:7.1.4", {\
         "packageLocation": "../../.yarn/berry/cache/agent-base-npm-7.1.4-cb8b4604d5-10c0.zip/node_modules/agent-base/",\
@@ -1356,6 +1346,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["copy-anything", "npm:4.0.5"],\
           ["is-what", "npm:5.5.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["countup.js", [\
+      ["npm:2.9.0", {\
+        "packageLocation": "../../.yarn/berry/cache/countup.js-npm-2.9.0-dd92d6baa1-10c0.zip/node_modules/countup.js/",\
+        "packageDependencies": [\
+          ["countup.js", "npm:2.9.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3493,10 +3492,9 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@vitejs/plugin-vue", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:6.0.3"],\
           ["@vueuse/motion", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:3.0.3"],\
-          ["add", "npm:2.0.6"],\
           ["autoprefixer", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.4.23"],\
           ["axios", "npm:1.13.2"],\
-          ["baseline-browser-mapping", "npm:2.9.8"],\
+          ["countup.js", "npm:2.9.0"],\
           ["pinia", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:3.0.4"],\
           ["postcss", "npm:8.5.6"],\
           ["swiper", "npm:12.0.3"],\

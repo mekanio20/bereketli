@@ -14,7 +14,10 @@ export default defineConfig({
         "vue-router",
         "pinia",
         {
-          "@vueuse/motion": ["useMotion", "useSpring", "useElementHover"],
+          "countup.js": ["CountUp"]
+        },
+        {
+          "@vueuse/motion": ["useMotion", "useSpring", "useElementHover"]
         },
       ],
       dirs: ["src/components", "src/layouts", "src/composables", "src/stores"],

@@ -1,12 +1,14 @@
 <template>
-    <div class="w-full">
+    <div class="w-full overflow-hidden">
         <Header />
         <NotificationBar />
         <Hero />
-        <div class="relative pb-40">
-            <MainContainer class="space-y-20">
-                <Callculator />
-                <Services />
+        <div class="relative pb-28">
+            <MainContainer>
+                <div class="space-y-20">
+                    <Callculator />
+                    <Services />
+                </div>
             </MainContainer>
 
             <!-- Absolute Background -->
@@ -15,9 +17,32 @@
             </div>
         </div>
 
-        <div class="relative">
+        <div class="w-full">
+            <OrderService />
             <MainContainer>
-                <About />
+                <div class="relative">
+                    <Mobile />
+                    <div class="font-medium text-[52px] text-[#222222] leading-[62px] py-5">
+                        Biz ygtybarly, netijeli we <img src="/images/img_1.webp"
+                            class="w-[115px] h-[45px] inline-block" />
+                        döwrebap logistika çözgütlerini hödürleýäris. <span class="text-gold-gradient">Transport,
+                            ammarçylyk
+                            we <img src="/images/img_2.webp" class="w-[115px] h-[45px] inline-block" />
+                            üpjünçilik zynjyrynda baý</span> tejribämiz bilen iberişleri takyk we wagtynda ýetirilmegini
+                        üpjün edýäris <img src="/images/img_3.webp" class="w-[115px] h-[45px] inline-block" />
+                    </div>
+                    <!-- Absolute Background -->
+                    <div class="absolute top-[300px] -z-10 w-full h-full">
+                        <img :src="background" class="w-full h-full object-cover" />
+                    </div>
+                </div>
+            </MainContainer>
+            <Statistic />
+            <MainContainer>
+                <div class="space-y-8">
+                    <News />
+                    <Comments />
+                </div>
             </MainContainer>
         </div>
 
