@@ -39,11 +39,14 @@
             </MainContainer>
             <Statistic />
             <MainContainer>
-                <div class="space-y-8">
+                <div class="space-y-8 pb-20">
                     <News />
                     <Comments />
+                    <Accordion />
                 </div>
             </MainContainer>
+
+            <Footer />
         </div>
 
         <!-- Phone Button -->
