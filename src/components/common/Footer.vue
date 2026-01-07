@@ -1,6 +1,5 @@
 <template>
-    <footer ref="footerRef" class="bg-[#002645] text-white relative overflow-hidden rounded-t-[40px]"
-        :class="{ 'animate-fade-in': isVisible }">
+    <footer ref="footerRef" class="bg-[#002645] text-white relative overflow-hidden rounded-t-[40px]">
 
         <div class="absolute top-0 bottom-0 left-0 right-0">
             <img class="w-full h-full object-cover" :src="background">
@@ -164,16 +163,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -184,10 +173,6 @@ onUnmounted(() => {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
 }
 
 .animate-slide-up {

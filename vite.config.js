@@ -11,14 +11,10 @@ export default defineConfig({
     AutoImport({
       imports: [
         "vue",
-        "vue-router",
         "pinia",
-        {
-          "countup.js": ["CountUp"]
-        },
-        {
-          "@vueuse/motion": ["useMotion", "useSpring", "useElementHover"]
-        },
+        "vue-router",
+        { "countup.js": ["CountUp"] },
+        { "@vueuse/motion": ["useMotion", "useSpring", "useElementHover"] },
       ],
       dirs: ["src/components", "src/layouts", "src/composables", "src/stores"],
     }),

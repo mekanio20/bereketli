@@ -1,6 +1,6 @@
 <template>
     <div v-motion :initial="{ opacity: 0, y: 50 }" :visible="{ opacity: 1, y: 0 }" :hover="{ y: -8 }"
-        class="space-y-4 max-w-[410px] group cursor-pointer transition-all duration-300">
+        class="group space-y-4 cursor-pointer transition-all duration-300">
         <div
             class="relative w-full h-[280px] overflow-hidden rounded-[14px] shadow-md group-hover:shadow-2xl transition-all duration-500">
             <img :src="image" :alt="title"

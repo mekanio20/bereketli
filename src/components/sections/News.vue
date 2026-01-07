@@ -1,7 +1,7 @@
 <template>
     <section class="space-y-10 pb-10">
         <h2 class="text-[44px] font-semibold text-[#222222]">Täzelikler</h2>
-        <div class="grid grid-cols-3 gap-8 pb-16">
+        <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 pb-16">
             <NewsCard v-for="item in newsData" :key="item.id" :image="item.image" :date="item.date"
                 :title="item.title" />
         </div>

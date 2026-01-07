@@ -1,181 +1,174 @@
 <template>
     <div class="w-full min-h-screen bg-white">
         <Header />
-        
-        <!-- Spacer for fixed header -->
+
         <div class="h-20"></div>
 
         <MainContainer>
             <div class="py-12 lg:py-20">
-                <!-- Header Section -->
                 <div class="mb-12 text-center">
                     <h1 class="text-4xl lg:text-5xl font-bold text-[#222222] mb-4">
-                        Gizlinlik <span class="text-gold-gradient">Sýasaty</span>
+                        Privacy <span class="text-gold-gradient">Policy</span>
                     </h1>
-                    <p class="text-gray-600 text-lg">Soňky täzelendirilen: {{ lastUpdated }}</p>
+                    <p class="text-gray-600 text-lg">Last updated: {{ lastUpdated }}</p>
                 </div>
 
-                <!-- Content Section -->
                 <div class="max-w-4xl mx-auto space-y-8">
-                    <!-- Introduction -->
                     <section class="bg-[#F3F8FF] rounded-2xl p-8 lg:p-10">
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4">
-                            Giriş
+                            Introduction
                         </h2>
                         <p class="text-gray-700 leading-relaxed">
-                            Biziň gizlinlik syýasatymyz, siziň şahsy maglumatlaryňyzyň nähili ýygnanylandygyny, 
-                            ulanylandygyny we goragly saklanýandygyny düşündirýär. Bu sahypa biziň hyzmatlarymyzy 
-                            ulananyňyzda, siziň maglumatlaryňyza nähili garamaklygyňyzy aňladýar.
+                            Our privacy policy explains how your personal information is collected,
+                            used, and protected. This page describes how your data is handled
+                            when you use our services.
                         </p>
                     </section>
 
-                    <!-- Data Collection -->
                     <section>
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4 flex items-center">
                             <span class="w-2 h-2 bg-custom-gradient rounded-full mr-3"></span>
-                            Maglumat Ýygnamak
+                            Data Collection
                         </h2>
                         <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8 space-y-4">
                             <p class="text-gray-700 leading-relaxed">
-                                Biz aşakdaky maglumatlary ýygnap bileris:
+                                We may collect the following information:
                             </p>
                             <ul class="space-y-3 ml-6">
                                 <li class="flex items-start">
                                     <span class="text-[#F98900] mr-3">•</span>
                                     <span class="text-gray-700">
-                                        <strong class="text-[#222222]">Şahsy maglumatlar:</strong> 
-                                        Adyňyz, e-poçta salgyňyz, telefon belgiňiz we beýleki habarlaşmak maglumatlaryňyz
+                                        <strong class="text-[#222222]">Personal information:</strong>
+                                        Your name, email address, phone number, and other contact information
                                     </span>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="text-[#F98900] mr-3">•</span>
                                     <span class="text-gray-700">
-                                        <strong class="text-[#222222]">Sargyt maglumatlary:</strong> 
-                                        Sargytlaryňyz, iberiş salgylaryňyz we logistika maglumatlaryňyz
+                                        <strong class="text-[#222222]">Order information:</strong>
+                                        Your orders, delivery addresses, and logistics information
                                     </span>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="text-[#F98900] mr-3">•</span>
                                     <span class="text-gray-700">
-                                        <strong class="text-[#222222]">Tehniki maglumatlar:</strong> 
-                                        IP salgyňyz, brauzer görnüşi, ulanyş wagty we beýleki awtomatik ýygnanan maglumatlar
+                                        <strong class="text-[#222222]">Technical data:</strong>
+                                        Your IP address, browser type, time of use, and other automatically collected
+                                        information
                                     </span>
                                 </li>
                             </ul>
                         </div>
                     </section>
 
-                    <!-- Data Usage -->
                     <section>
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4 flex items-center">
                             <span class="w-2 h-2 bg-custom-gradient rounded-full mr-3"></span>
-                            Maglumatlary Ulanyş
+                            Data Usage
                         </h2>
                         <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
                             <p class="text-gray-700 leading-relaxed mb-4">
-                                Ýygnanan maglumatlary aşakdaky maksatlar üçin ulanyýarys:
+                                We use the collected information for the following purposes:
                             </p>
                             <div class="grid md:grid-cols-2 gap-4">
                                 <div class="bg-[#F3F8FF] rounded-lg p-4">
-                                    <h3 class="font-semibold text-[#222222] mb-2">Hyzmatlary ýerine ýetirmek</h3>
-                                    <p class="text-sm text-gray-600">Sargytlaryňyzy işlemek we logistika hyzmatlaryny üpjün etmek</p>
+                                    <h3 class="font-semibold text-[#222222] mb-2">Service Fulfillment</h3>
+                                    <p class="text-sm text-gray-600">Processing your orders and providing logistics
+                                        services</p>
                                 </div>
                                 <div class="bg-[#F3F8FF] rounded-lg p-4">
-                                    <h3 class="font-semibold text-[#222222] mb-2">Habarlaşmak</h3>
-                                    <p class="text-sm text-gray-600">Sargytlaryňyz barada size habar bermek</p>
+                                    <h3 class="font-semibold text-[#222222] mb-2">Communication</h3>
+                                    <p class="text-sm text-gray-600">Informing you about your orders</p>
                                 </div>
                                 <div class="bg-[#F3F8FF] rounded-lg p-4">
-                                    <h3 class="font-semibold text-[#222222] mb-2">Hyzmatlary ýokarlandyrmak</h3>
-                                    <p class="text-sm text-gray-600">Biziň platformamyzy we hyzmatlarymyzy ösdürmek</p>
+                                    <h3 class="font-semibold text-[#222222] mb-2">Improving Services</h3>
+                                    <p class="text-sm text-gray-600">Developing our platform and services</p>
                                 </div>
                                 <div class="bg-[#F3F8FF] rounded-lg p-4">
-                                    <h3 class="font-semibold text-[#222222] mb-2">Hukuky talapnamalar</h3>
-                                    <p class="text-sm text-gray-600">Hukuky borçlarymyzy ýerine ýetirmek</p>
+                                    <h3 class="font-semibold text-[#222222] mb-2">Legal Requirements</h3>
+                                    <p class="text-sm text-gray-600">Fulfilling our legal obligations</p>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <!-- Data Protection -->
                     <section>
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4 flex items-center">
                             <span class="w-2 h-2 bg-custom-gradient rounded-full mr-3"></span>
-                            Maglumatlary Goramak
+                            Data Protection
                         </h2>
                         <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
                             <p class="text-gray-700 leading-relaxed">
-                                Siziň maglumatlaryňyzy goramak üçin kabul edilen tehniki we guramaklyk çäreleri 
-                                ulanýarys. Maglumatlaryňyzyň güýçli şifrlenişi, güýçli goragly serwerler we 
-                                düzgün goragly giriş mehanizmleri bilen goragly saklanýandygyny üpjün edýäris.
+                                We use established technical and organizational measures to protect your information.
+                                We ensure your data is kept secure through strong encryption,
+                                protected servers, and regulated access mechanisms.
                             </p>
                         </div>
                     </section>
 
-                    <!-- Cookies -->
                     <section>
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4 flex items-center">
                             <span class="w-2 h-2 bg-custom-gradient rounded-full mr-3"></span>
-                            Çörekler (Cookies)
+                            Cookies
                         </h2>
                         <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
                             <p class="text-gray-700 leading-relaxed mb-4">
-                                Web sahypamyzy özleşdirmek we ulanyş tejribäni ýokarlandyrmak üçin çörekleri 
-                                ulanýarys. Çörekleri brauzeriňiziň sazlamalaryndan dolandyryp bilersiňiz.
+                                We use cookies to personalize our website and improve your user experience.
+                                You can manage cookies through your browser settings.
                             </p>
                         </div>
                     </section>
 
-                    <!-- User Rights -->
                     <section>
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4 flex items-center">
                             <span class="w-2 h-2 bg-custom-gradient rounded-full mr-3"></span>
-                            Ulanyjynyň Hukuklary
+                            User Rights
                         </h2>
                         <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8 space-y-3">
                             <p class="text-gray-700 leading-relaxed">
-                                Sizde aşakdaky hukuklar bar:
+                                You have the following rights:
                             </p>
                             <ul class="space-y-2 ml-6">
                                 <li class="flex items-start">
                                     <span class="text-[#F98900] mr-3">✓</span>
-                                    <span class="text-gray-700">Şahsy maglumatlaryňyza giriş almak</span>
+                                    <span class="text-gray-700">Accessing your personal data</span>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="text-[#F98900] mr-3">✓</span>
-                                    <span class="text-gray-700">Maglumatlaryňyzy düzetmek ýa-da öçürmek</span>
+                                    <span class="text-gray-700">Correcting or deleting your data</span>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="text-[#F98900] mr-3">✓</span>
-                                    <span class="text-gray-700">Maglumatlaryňyzyň işlenmegine garşy çykmak</span>
+                                    <span class="text-gray-700">Objecting to the processing of your data</span>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="text-[#F98900] mr-3">✓</span>
-                                    <span class="text-gray-700">Maglumatlaryňyzy göçürmek</span>
+                                    <span class="text-gray-700">Data portability (exporting your data)</span>
                                 </li>
                             </ul>
                         </div>
                     </section>
 
-                    <!-- Contact -->
                     <section>
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4 flex items-center">
                             <span class="w-2 h-2 bg-custom-gradient rounded-full mr-3"></span>
-                            Habarlaşmak
+                            Contact Us
                         </h2>
-                        <div class="bg-gradient-to-r from-[#F3F8FF] to-white border border-gray-200 rounded-xl p-6 lg:p-8">
+                        <div
+                            class="bg-gradient-to-r from-[#F3F8FF] to-white border border-gray-200 rounded-xl p-6 lg:p-8">
                             <p class="text-gray-700 leading-relaxed mb-4">
-                                Gizlinlik syýasatymyz barada soraglaryňyz ýa-da şikäýetleriňiz bar bolsa, 
-                                aşakdaky ünümler bilen biz bilen habarlaşyň:
+                                If you have any questions or complaints about our privacy policy,
+                                please contact us using the information below:
                             </p>
                             <div class="space-y-2">
                                 <p class="text-gray-700">
-                                    <strong class="text-[#222222]">E-poçta:</strong> 
+                                    <strong class="text-[#222222]">Email:</strong>
                                     <a href="mailto:info@bereketli.com" class="text-[#F98900] hover:underline">
                                         info@bereketli.com
                                     </a>
                                 </p>
                                 <p class="text-gray-700">
-                                    <strong class="text-[#222222]">Telefon:</strong> 
+                                    <strong class="text-[#222222]">Phone:</strong>
                                     <a href="tel:+99361626364" class="text-[#F98900] hover:underline">
                                         +993 61 62 63 64
                                     </a>
@@ -184,30 +177,26 @@
                         </div>
                     </section>
 
-                    <!-- Changes -->
                     <section>
                         <h2 class="text-2xl font-semibold text-[#222222] mb-4 flex items-center">
                             <span class="w-2 h-2 bg-custom-gradient rounded-full mr-3"></span>
-                            Üýtgeşmeler
+                            Changes
                         </h2>
                         <div class="bg-white border border-gray-200 rounded-xl p-6 lg:p-8">
                             <p class="text-gray-700 leading-relaxed">
-                                Biz bu gizlinlik syýasatyny wagty-wagty täzeläp bilýäris. Üýtgeşmeler 
-                                bu sahypada ýaylymlaşdyrylar we "Soňky täzelendirilen" sany täzelenilýär. 
-                                Syýasatdaky üýtgeşmelerden habardar bolmak üçin bu sahypany yzygiderli 
-                                gözden geçirmegi maslahat berýäris.
+                                We may update this privacy policy from time to time. Changes will be
+                                posted on this page and the "Last updated" date will be revised.
+                                We recommend reviewing this page periodically to stay informed
+                                about any changes in the policy.
                             </p>
                         </div>
                     </section>
                 </div>
 
-                <!-- Back to Home Button -->
                 <div class="mt-12 text-center">
-                    <router-link 
-                        to="/" 
-                        class="inline-flex items-center px-8 py-3 bg-custom-gradient text-white rounded-[10px] hover:scale-95 transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
-                    >
-                        Baş sahypa gaýtmak
+                    <router-link to="/"
+                        class="inline-flex items-center px-8 py-3 bg-custom-gradient text-white rounded-[10px] hover:scale-95 transition-all duration-300 font-medium shadow-lg hover:shadow-xl">
+                        Back to Home
                         <arrow_right-icon class="ml-2" :size="20" color="white" />
                     </router-link>
                 </div>
@@ -217,14 +206,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import MainContainer from '@/components/containers/MainContainer.vue'
-import Header from '@/components/common/Header.vue'
-
-const lastUpdated = ref(new Date().toLocaleDateString('tk-TM', {
+const lastUpdated = ref(new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
 }))
 </script>
-

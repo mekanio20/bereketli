@@ -18,7 +18,6 @@
         <div class="pt-10">
             <swiper :modules="modules" :slides-per-view="1" :space-between="20" :loop="true"
                 :autoplay="{ delay: 5000, disableOnInteraction: false, }"
-                :pagination="{ clickable: true, dynamicBullets: false, }"
                 :navigation="{ prevEl: '.prev_el', nextEl: '.next_el' }"
                 :breakpoints="{
                     640: {

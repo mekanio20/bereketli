@@ -31,7 +31,7 @@
   }
   /* Firefox */
   .no-scrollbar {
-    scrollbar-width: none; /* gizle */
+    scrollbar-width: none;
   }
 
   /* Chrome, Safari, Edge */
@@ -159,6 +159,11 @@
     background: #9a9a9a;
   }
 
+  /* Section title */
+  .section_title {
+    @apply md:text-[44px] sm:text-[38px] text-[28px] text-[#222222] font-semibold leading-[110%];
+  }
+
   /* Header */
   .nav_item {
     @apply sm:text-base text-sm leading-[100%] tracking-[0%] text-[#222222] hover:text-[#F98900] transition-colors duration-200;
@@ -169,7 +174,7 @@
     @apply sm:text-[12px] text-[10px] leading-[100%] tracking-[0%] text-[#fff];
   }
 
-  /* Gradients */
+  /* Background gradient */
   .bg-custom-gradient {
     background: linear-gradient(
       267.81deg,
@@ -178,34 +183,6 @@
       #ffc156 61.61%,
       #ffa100 91.66%
     );
-  }
-
-  /* index.css */
-  .bg-custom-overlay {
-    background: linear-gradient(
-      358.89deg,
-      rgba(0, 0, 0, 0) -400.7%,
-      rgba(0, 0, 0, 0.4) 449.2%
-    );
-  }
-
-  .curve-container {
-    position: relative;
-    height: 80px;
-    margin-top: -40px;
-  }
-
-  .curve-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140%;
-    height: 100%;
-    background: #f6f9ff;
-    border-top-left-radius: 100% 100%;
-    border-top-right-radius: 100% 100%;
   }
 
   /* Text gradient */
@@ -221,5 +198,32 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  /* Background overlay */
+  .bg-custom-overlay {
+    background: linear-gradient(
+      358.89deg,
+      rgba(0, 0, 0, 0) -400.7%,
+      rgba(0, 0, 0, 0.4) 449.2%
+    );
+  }
+
+  /* Clearly visible but still soft yellow pulse */
+  @keyframes visible-yellow-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 220, 130, 0.85);
+    }
+    70% {
+      box-shadow: 0 0 18px 6px rgba(255, 200, 90, 0.65);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 220, 130, 0);
+    }
+  }
+
+  .visible-yellow-pulse {
+    animation: visible-yellow-pulse 2s ease-in-out infinite;
+    border-radius: 9999px;
   }
 }

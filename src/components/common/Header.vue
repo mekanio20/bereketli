@@ -29,10 +29,10 @@
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition">Türkmen</a>
                         </div>
                     </div>
-                    <button
+                    <button @click="appStore.toggleModal('login')"
                         class="px-4 py-2 font-semibold sm:text-base text-sm leading-[100%] tracking-[0%] text-[#002645] hover:text-[#F98900] duration-200">Ulagama
                         gir</button>
-                    <button
+                    <button @click="appStore.toggleModal('register')"
                         class="px-6 py-2 bg-custom-gradient text-white rounded-[10px] hover:scale-95 transition-all duration-300 font-medium">Hasap
                         döretmek</button>
                 </div>
@@ -42,6 +42,7 @@
 </template>
 
 <script setup>
+const appStore = useAppStore()
 const isHover = ref(false)
 const navbar_menu = ref([
     {
