@@ -1,5 +1,6 @@
 <template>
   <component :is="layout"></component>
+   <!-- AUTH MODALS -->
   <RegisterModal :isOpen="appStore.activeModal === 'register'" @close="appStore.toggleModal('register')" @redirect="redirectModal" />
   <LoginModal :isOpen="appStore.activeModal === 'login'" @close="appStore.toggleModal('login')" @redirect="redirectModal" />
   

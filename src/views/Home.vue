@@ -1,7 +1,5 @@
 <template>
     <div class="w-full overflow-hidden">
-        <Header />
-        <NotificationBar />
         <Hero />
         <div class="relative pb-28">
             <MainContainer>
@@ -46,7 +44,7 @@
                 </div>
             </MainContainer>
 
-            <Footer />
+
         </div>
 
         <!-- Phone Button -->

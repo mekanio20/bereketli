@@ -24,9 +24,9 @@
                         <div v-if="dropdowns.lang"
                             class="absolute right-0 mt-2 w-32 bg-white shadow-lg rounded-lg p-2 border border-gray-100 animate-in fade-in duration-200">
                             <a href="#"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition">English</a>
+                                class="block px-4 py-2 text-[#222222] hover:bg-gray-100 rounded transition">English</a>
                             <a href="#"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition">Türkmen</a>
+                                class="block px-4 py-2 text-[#222222] hover:bg-gray-100 rounded transition">Türkmen</a>
                         </div>
                     </div>
                     <button @click="appStore.toggleModal('login')"

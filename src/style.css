@@ -166,7 +166,7 @@
 
   /* Header */
   .nav_item {
-    @apply sm:text-base text-sm leading-[100%] tracking-[0%] text-[#222222] hover:text-[#F98900] transition-colors duration-200;
+    @apply sm:text-base text-sm leading-[100%] tracking-[0%] text-[#222222] hover:text-[#F98900] transition-colors duration-200 cursor-pointer;
   }
 
   /* Notification bar */
