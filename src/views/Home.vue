@@ -40,7 +40,7 @@
                 <div class="space-y-8 pb-20">
                     <News />
                     <Comments />
-                    <Accordion />
+                    <Accordion :title="'Köp soralýan soraglar'" :data="faqStore.faqs" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
                 </div>
             </MainContainer>
 
@@ -59,4 +59,7 @@
 
 <script setup>
 import background from '@/assets/images/background.webp'
+const faqStore = useFaqsStore()
+const toggleAccordion = (index) => faqStore.toggleAccordion(index)
+const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
 </script>

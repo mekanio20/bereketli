@@ -1,13 +1,14 @@
 <template>
     <div class="container mx-auto px-4 sm:px-0">
-        <h2 class="text-[44px] text-[#222222] font-semibold pb-10">Köp soralýan soraglar</h2>
+        <h2 class="text-[44px] text-[#222222] font-semibold pb-10" :class="{'text-center' : isCenter}">{{ title }}</h2>
+        <slot></slot>
         <!-- Accordion Container -->
         <div class="space-y-4">
             <!-- Accordion Items -->
-            <div v-for="(item, index) in accordionItems" :key="index"
+            <div v-for="(item, index) in data" :key="index"
                 class="accordion-item backdrop-blur-sm border-b-[0.5px] border-[#C0C0C0] overflow-hidden transition-all duration-300 hover:border-gray-700/70 bottom_scroll">
                 <!-- Accordion Header -->
-                <button @click="toggleAccordion(index)"
+                <button @click="$emit('toggle', index)"
                     class="w-full py-4 flex items-center justify-between text-left focus:outline-none transition-all duration-200 group"
                     :class="{ 'pb-4': item.isOpen }">
                     <!-- Question Text -->
@@ -45,62 +46,28 @@
 </template>
 
 <script setup>
+const emit = defineEmits(['toggle', 'setContentHeight'])
+const props = defineProps({
+    title: {
+        type: String,
+        required: true
+    },
+    isCenter: {
+        type: Boolean,
+        default: false
+    },
+    data: {
+        type: Array,
+        required: true
+    }
+})
 const contentRefs = ref([])
-const accordionItems = ref([
-    {
-        question: "Who is the Socratic Sales Method for?",
-        answer: "This program is for agencies, coaches, and high ticket closers who want to stop relying on scripts and start signing consistent four and five figure clients. It works whether you are just starting out or already experienced.",
-        isOpen: false,
-        contentHeight: 0
-    },
-    {
-        question: "How is this different from other sales coaching?",
-        answer: "Most sales trainings give you scripts, memorized lines, or surface level tactics. The Socratic Method goes deeper. It teaches you how the human brain makes decisions and how to guide conversations naturally. No BS tactics. Just pure psychology, philosophy and human nature applied to sales.",
-        isOpen: false,
-        contentHeight: 0
-    },
-    {
-        question: "Can I get personal coaching or mentorship?",
-        answer: "Yes. You get one-on-one coaching and personalized WhatsApp access, so you basically have direct access to our brains whenever you need guidance.",
-        isOpen: false,
-        contentHeight: 0
-    },
-    {
-        question: "How fast will I see results?",
-        answer: "Most clients begin closing four and five figure business owners within 30 to 60 days depending on effort and number of calls.",
-        isOpen: false,
-        contentHeight: 0
-    }
-])
-
-const toggleAccordion = async (index) => {
-    // Close all other accordions
-    accordionItems.value.forEach((item, i) => {
-        if (i !== index) {
-            item.isOpen = false
-        }
-    })
-
-    // Toggle current accordion
-    accordionItems.value[index].isOpen = !accordionItems.value[index].isOpen
-
-    // Calculate content height for smooth animation
-    if (accordionItems.value[index].isOpen) {
-        await nextTick()
-        const contentEl = contentRefs.value[index]
-        if (contentEl) {
-            accordionItems.value[index].contentHeight = contentEl.scrollHeight
-        }
-    }
-}
-
-// Calculate initial content heights
 onMounted(async () => {
     await nextTick()
-    accordionItems.value.forEach((item, index) => {
+    props.data.forEach((item, index) => {
         const contentEl = contentRefs.value[index]
         if (contentEl) {
-            item.contentHeight = contentEl.scrollHeight
+            emit('setContentHeight', index, contentEl.scrollHeight)
         }
     })
 })
