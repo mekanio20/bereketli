@@ -164,6 +164,10 @@
     @apply md:text-[44px] sm:text-[38px] text-[28px] text-[#222222] font-semibold leading-[110%];
   }
 
+  .form_title {
+    @apply md:text-[22px] sm:text-lg text-base text-[#222222] font-semibold leading-[100%];
+  }
+
   /* Header */
   .nav_item {
     @apply sm:text-base text-sm leading-[100%] tracking-[0%] text-[#222222] hover:text-[#F98900] transition-colors duration-200 cursor-pointer;
@@ -225,5 +229,27 @@
   .visible-yellow-pulse {
     animation: visible-yellow-pulse 2s ease-in-out infinite;
     border-radius: 9999px;
+  }
+
+  /* Date picker */
+  :deep(.dp__input) {
+    border: none;
+    border-radius: 14px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    background-color: #ebf3fd;
+  }
+
+  /* Input number */
+
+  /* Remove spinner from number inputs */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }

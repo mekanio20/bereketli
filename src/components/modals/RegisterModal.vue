@@ -8,7 +8,7 @@
                     :class="{ 'animate-scale-in': isOpen }">
                     <!-- Close Button -->
                     <button @click="closeModal"
-                        class="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-[#F3F8FF] hover:bg-gray-100 hover:scale-110 transform transition-all duration-300 group"
+                        class="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-[#F3F8FF] hover:bg-[#edf5ff] hover:scale-110 transform transition-all duration-300 group"
                         aria-label="Close">
                         <close-icon :size="20" />
                     </button>

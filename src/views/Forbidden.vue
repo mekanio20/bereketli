@@ -1,5 +1,5 @@
 <template>
-    <section class="overflow-hidden relative">
+    <section class="overflow-x-hidden relative">
         <MainContainer>
             <SectionContainer class="pb-20">
                 <!-- Breadcrumb -->

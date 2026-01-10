@@ -44,9 +44,19 @@ const routes = [
     component: () => import("@/views/FAQ.vue"),
   },
   {
-    path: "/order/request",
+    path: "/order/requests",
     name: "OrderRequest",
     component: () => import("@/views/OrderRequest.vue"),
+  },
+  {
+    path: "/order/request/new",
+    name: "OrderRequestNew",
+    component: () => import("@/views/OrderRequestNew.vue"),
+  },
+  {
+    path: "/order/history",
+    name: "OrderHistory",
+    component: () => import("@/views/OrderHistory.vue"),
   },
   {
     path: "/privacy",
