@@ -1,7 +1,7 @@
 <template>
     <footer ref="footerRef" class="bg-[#002645] text-white relative overflow-hidden rounded-t-[40px]">
 
-        <div class="absolute top-0 bottom-0 left-0 right-0">
+        <div class="absolute sm:block hidden top-0 bottom-0 left-0 right-0">
             <img class="w-full h-full object-cover" :src="background">
         </div>
 

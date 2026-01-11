@@ -2,7 +2,7 @@
     <section class="overflow-x-hidden relative">
         <!-- Absolute -->
         <div class="absolute -z-10 w-full h-full bg-[#F3F8FF]">
-            <img :src="background" class="w-full h-full object-cover" />
+            <img :src="background" class="w-full h-full object-contain" />
         </div>
         <MainContainer>
             <SectionContainer class="pb-20">

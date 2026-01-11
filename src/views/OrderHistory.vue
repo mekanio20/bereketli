@@ -2,7 +2,7 @@
     <section class="overflow-x-hidden relative">
         <!-- Absolute -->
         <div class="absolute -z-10 w-full h-full bg-[#F3F8FF]">
-            <img :src="background" class="w-full h-full object-cover" />
+            <img :src="background" class="w-full h-full object-contain" />
         </div>
         <MainContainer>
             <SectionContainer>
@@ -19,22 +19,31 @@
                     </h1>
                 </div>
 
+                <!-- Tab Buttons -->
+                <div class="w-fit flex gap-0 p-[7px] mb-14 animate-slide-up bg-[#002645] rounded-2xl"
+                    style="animation-delay: 0.1s">
+                    <button @click="activeTab = 'pending'"
+                        class="py-[9px] px-10 mr-2 font-semibold transition-all duration-300 rounded-xl"
+                        :class="activeTab === 'pending' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
+                        Garaşylýanlar
+                    </button>
+                    <button @click="activeTab = 'accepted'"
+                        class="py-[9px] px-10 font-semibold transition-all duration-300 rounded-xl -ml-px"
+                        :class="activeTab === 'accepted' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
+                        Tamamlananlar
+                    </button>
+                </div>
+
                 <!-- Warehouses Grid -->
                 <TransitionGroup name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <OrderCard v-for="order in orders" :key="order.id" :order="order"
+                    <OrderCard v-for="order in filteredOrders" :key="order.id" :order="order"
                         @click="handleOrderClick(order)" />
                 </TransitionGroup>
 
                 <!-- Empty State -->
                 <Transition name="fade">
-                    <div v-if="orders.length === 0" class="text-center py-20">
-                        <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
-                            <search-icon :size="40" />
-                        </div>
-                        <p class="text-xl text-[#222222]">Ammar tapylmady</p>
-                        <p class="text-sm text-[#838589] mt-2">Başga söz bilen gözläp görüň</p>
-                    </div>
+                    <NoData v-if="filteredOrders.length === 0" :message="'Sargyt tapylmady'" />
                 </Transition>
             </SectionContainer>
         </MainContainer>
@@ -45,6 +54,7 @@
 
 <script setup>
 import background from '@/assets/images/background.webp'
+const activeTab = ref('pending')
 const selectedWarehouse = ref({})
 const showModal = ref(false)
 
@@ -121,6 +131,11 @@ const handleOrderClick = (order) => {
     console.log('Order clicked:', order)
     // Navigate to order details or open modal
 }
+
+const filteredOrders = computed(() => {
+    if (activeTab.value === 'all') return orders.value
+    return orders.value.filter(order => order.status === activeTab.value)
+})
 </script>
 
 <style scoped>

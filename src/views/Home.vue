@@ -1,6 +1,6 @@
 <template>
     <div class="w-full overflow-hidden">
-        <Hero />
+        <Hero @search="handleSearch" />
         <div class="relative pb-28">
             <MainContainer>
                 <div class="space-y-20">
@@ -55,11 +55,14 @@
                 class="absolute right-full bottom-2 mr-3 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">+99361626364</span>
         </a>
     </div>
+    <SearchResultModal :isOpen="searchOpen" @close="searchOpen = false" />
 </template>
 
 <script setup>
 import background from '@/assets/images/background.webp'
+const searchOpen = ref(false)
 const faqStore = useFaqsStore()
 const toggleAccordion = (index) => faqStore.toggleAccordion(index)
 const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
+const handleSearch = (value) => { searchOpen.value = true }
 </script>

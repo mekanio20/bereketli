@@ -59,6 +59,16 @@ const routes = [
     component: () => import("@/views/OrderHistory.vue"),
   },
   {
+    path: "/account",
+    name: "Account",
+    component: () => import("@/views/Account.vue"),
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: () => import("@/views/Chat.vue"),
+  },
+  {
     path: "/privacy",
     name: "PrivacyPolicy",
     component: () => import("@/views/PrivacyPolicy.vue"),

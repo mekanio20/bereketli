@@ -9,16 +9,16 @@
                 <span class="text-white text-sm font-medium">Siziň ynamyňyz - biziň borjumyzdyr</span>
             </div>
 
-            <h1 class="text-5xl sm:text-[72px] font-bold text-white leading-[100%] animate-slide-down pb-5bu"
+            <h1 class="text-5xl sm:text-[72px] font-bold text-white leading-[100%] animate-slide-down pb-5"
                 style="animation-delay: 100ms">
                 Sargydyňyzy yzarlamak
             </h1>
 
             <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 space-y-4 animate-slide-up">
                 <div class="relative">
-                    <input type="text" placeholder="Sargydyňyzy trek kody boyunça gözläň..."
+                    <input v-model="searchInput" type="text" placeholder="Sargydyňyzy trek kody boyunça gözläň..."
                         class="w-full text-lg px-6 py-[22px] bg-[#EBF3FD] rounded-[18px] pr-48 outline-none text-[#4D4D4D] placeholder-[#4D4D4D]" />
-                    <button
+                    <button @click="$emit('search', searchInput)"
                         class="absolute right-4 top-1/2 transform -translate-y-1/2 px-6 py-4 bg-custom-gradient text-white rounded-[14px] font-semibold hover:shadow-lg transition-all duration-300 whitespace-nowrap flex items-center justify-center space-x-2">
                         <search-icon />
                         <span>Gözlemek</span>
@@ -38,4 +38,5 @@
 
 <script setup>
 import heroImage from '@/assets/images/hero.webp'
+const searchInput = ref('')
 </script>
