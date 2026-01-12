@@ -23,7 +23,7 @@
                         </div>
 
                         <!-- Right Side - Form -->
-                        <div class="flex flex-col py-8 lg:pt-40 relative">
+                        <div class="flex flex-col py-8 lg:pt-40 md:pt-36 pt-20 relative">
 
                             <img :src="background" class="absolute top-32 -z-10 w-full h-[500px] object-cover" />
 
@@ -138,7 +138,7 @@ const startTimer = () => {
 }
 
 const resetTimer = async () => {
-    await auth.sendOtp({ identifier: String(props.data.identifier).trim(), purpose: "reset_password" })
+    await auth.sendOtp({})
     timer.value = 60;
     isTimerActive.value = true;
     clearInterval(timerInterval.value);
@@ -164,6 +164,10 @@ const handleBackspace = (index) => {
 
 onUnmounted(() => {
     clearInterval(timerInterval.value);
+})
+
+onMounted(() => {
+    startTimer()
 })
 
 const closeModal = () => {

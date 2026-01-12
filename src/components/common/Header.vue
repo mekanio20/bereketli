@@ -7,9 +7,27 @@
                 </router-link>
 
                 <div class="hidden lg:flex items-center space-x-14">
-                    <router-link v-for="(item, index) in navbar_menu" :key="index" :to="item.link">
-                        <span class="nav_item">{{ item.name }}</span>
-                    </router-link>
+                    <div v-for="(item, index) in navbar_menu" :key="index" class="relative group">
+                        <router-link :to="item.link" class="nav_item flex items-center gap-2">
+                            <span>{{ item.name }}</span>
+                            <chevron_down-icon v-if="item?.children" :size="14" color="#222222"
+                                class="transition-transform duration-200 group-hover:rotate-180" />
+                        </router-link>
+
+                        <div v-if="item?.children"
+                            class="absolute left-28 -translate-x-1/2 top-full pt-3 min-w-[220px] opacity-0 translate-y-2 pointer-events-none
+                                   group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto
+                                   transition-all duration-200">
+                            <div class="rounded-xl border border-gray-100 bg-white shadow-[0_12px_45px_rgba(0,0,0,0.1)] overflow-hidden">
+                                <div class="flex flex-col divide-y divide-gray-50">
+                                    <router-link v-for="(i, x) in item.children" :key="x" :to="i.link"
+                                        class="flex items-center justify-between px-4 py-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] transition-colors">
+                                        <span>{{ i.name }}</span>
+                                    </router-link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="hidden lg:flex items-center space-x-4">
@@ -22,7 +40,7 @@
                                 :class="{ 'rotate-180 transition-transform duration-200': dropdowns.lang }" />
                         </button>
                         <div v-if="dropdowns.lang"
-                            class="absolute right-0 mt-2 w-32 bg-white shadow-lg rounded-lg p-2 border border-gray-100 animate-in fade-in duration-200">
+                            class="absolute right-0 w-32 bg-white shadow-lg rounded-lg p-2 border border-gray-100 animate-in fade-in duration-200">
                             <a href="#"
                                 class="block px-4 py-2 text-[#222222] hover:bg-gray-100 rounded transition">English</a>
                             <a href="#"
@@ -47,15 +65,25 @@ const isHover = ref(false)
 const navbar_menu = ref([
     {
         name: 'Biz barada',
-        link: '#'
+        link: '#',
+        children: [
+            { name: 'Ammarlar', link: '/warehouses' },
+            { name: 'Täzelikler', link: '/news' },
+            { name: 'Gadagan edilýän ýükler', link: '/forbidden-cargo' },
+            { name: 'Köp soralýan soraglar', link: '/faq' },
+        ]
     },
     {
         name: 'Sargyt ugratmak',
-        link: '#'
+        link: '#',
+        children: [
+            { name: 'Simple Order', link: '/order/request/new' },
+            { name: 'Advanced Order', link: '#' },
+        ]
     },
     {
         name: 'Habarlaşmak',
-        link: '#'
+        link: '/chat'
     },
 ])
 
