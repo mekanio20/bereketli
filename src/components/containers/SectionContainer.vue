@@ -1,5 +1,5 @@
 <template>
-    <div class="py-[130px]">
+    <div class="py-[120px]">
         <slot></slot>
     </div>
 </template>

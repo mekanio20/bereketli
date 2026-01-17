@@ -47,13 +47,24 @@ const niraOptions = [
     'Balkanabat'
 ]
 
-const agramOptions = [
-    '0-1 kg',
-    '1-5 kg',
-    '5-10 kg',
-    '10-20 kg',
-    '20+ kg'
-]
+const agramOptions = ref([
+    {
+        img: '/icons/mail.webp',
+        label: '1-5 kg',
+    },
+    {
+        img: '/icons/mail.webp',
+        label: '6-10 kg',
+    },
+    {
+        img: '/icons/mail.webp',
+        label: '11-15 kg',
+    },
+    {
+        img: '/icons/mail.webp',
+        label: '16-20 kg',
+    },
+])
 
 const handleCalculate = () => {
     console.log('Calculating...', { nirden: nirden.value, nira: nira.value, agram: agram.value })

@@ -15,7 +15,7 @@
 
                 <!-- Title -->
                 <h1 class="section_title mb-10">
-                    Simple Order
+                    Advanced Order
                 </h1>
 
                 <div class="flex items-start space-x-6">
@@ -24,9 +24,12 @@
                         <!-- Delivery Section -->
                         <FormContainer>
                             <h2 class="form_title mb-8">Eltip bermek</h2>
-                            <div class="flex items-end space-x-6 mb-4">
-                                <!-- From Location -->
-                                <div class="flex-1">
+                            <div class="flex items-center space-x-6 mb-4">
+                                <div class="flex-1 flex flex-col space-y-8">
+                                    <!-- From Location -->
+                                    <SimpleSelect v-model="formData.fromLocation"
+                                        :options="['Aşgabat', 'Mary', 'Türkmenabat']" placeholder="Incoterm"
+                                        :isSearch="true" :icon="'map_pin-icon'" />
                                     <SimpleSelect v-model="formData.fromLocation"
                                         :options="['Aşgabat', 'Mary', 'Türkmenabat']" placeholder="Nirden"
                                         :isSearch="true" :icon="'map_pin-icon'" />
@@ -38,11 +41,19 @@
                                         <arrow_group-icon class="rotate-[90deg]" />
                                     </button>
                                 </div>
-                                <!-- To Location -->
-                                <div class="flex-1">
-                                    <SimpleSelect v-model="formData.toLocation"
-                                        :options="['Aşgabat', 'Mary', 'Türkmenabat']" placeholder="Nirä"
-                                        :isSearch="true" :icon="'map_pin-icon'" />
+                                <div class="flex-1 flex flex-col space-y-8">
+                                    <!-- To Location -->
+                                    <div class="flex-1">
+                                        <SimpleSelect v-model="formData.toLocation"
+                                            :options="['Aşgabat', 'Mary', 'Türkmenabat']" placeholder="Incoterm"
+                                            :isSearch="true" :icon="'map_pin-icon'" />
+                                    </div>
+                                    <!-- To Location -->
+                                    <div class="flex-1">
+                                        <SimpleSelect v-model="formData.toLocation"
+                                            :options="['Aşgabat', 'Mary', 'Türkmenabat']" placeholder="Nirä"
+                                            :isSearch="true" :icon="'map_pin-icon'" />
+                                    </div>
                                 </div>
                             </div>
                         </FormContainer>
@@ -65,6 +76,43 @@
                                         : 'bg-[#EBF3FD] text-[#222222] font-medium hover:bg-[#ddebfd]'">
                                     {{ type }}
                                 </button>
+                            </div>
+                        </FormContainer>
+
+                        <!-- Shipping Type Section -->
+                        <FormContainer>
+                            <h2 class="form_title mb-8">Ugur</h2>
+                            <div class="flex flex-wrap gap-3">
+                                <!-- Direct -->
+                                <div @click="selected = 'direct'" :class="cardClass('direct')">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <p :class="titleClass('direct')">Direct</p>
+                                            <p :class="descClass('direct')">1 hepde</p>
+                                        </div>
+
+                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full"
+                                            :class="[selected === 'direct' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
+                                            <div v-if="selected === 'direct'"
+                                                class="w-[13px] h-[13px] bg-custom-gradient rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Transit -->
+                                <div @click="selected = 'transit'" :class="cardClass('transit')">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <p :class="titleClass('transit')">Transit</p>
+                                            <p :class="descClass('transit')">30 gün</p>
+                                        </div>
+                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full"
+                                            :class="[selected === 'transit' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
+                                            <div v-if="selected === 'transit'"
+                                                class="w-[13px] h-[13px] bg-custom-gradient rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </FormContainer>
 
@@ -177,6 +225,36 @@ const transportTypes = ref([
     { id: 'road', label: 'Ulag', icon: 'truck_delivery-icon' },
     { id: 'rail', label: 'Otly', icon: 'train_2-icon' }
 ])
+
+const selected = ref('direct')
+
+const cardClass = (type) => [
+    'w-[200px] rounded-[14px] px-5 py-4 cursor-pointer transition-all duration-200',
+    selected.value === type
+        ? 'border border-[#FFAE24] bg-[#fffaeb]'
+        : 'bg-blue-50 border border-transparent'
+]
+
+const titleClass = (type) =>
+    selected.value === type
+        ? 'font-semibold text-gold-gradient'
+        : 'font-medium text-[#222222]'
+const descClass = (type) => [
+    'text-sm mt-8 font-medium',
+    selected.value === type
+        ? 'text-gold-gradient'
+        : 'text-[#939393]'
+]
+
+const radioClass = (type) => [
+    'w-5 h-5 rounded-full border flex items-center justify-center',
+    selected.value === type
+        ? 'border-[#FFAE24]'
+        : 'border-[#C9C9C9]',
+    selected.value === type
+        ? 'bg-custom-gradient'
+        : ''
+]
 
 const formData = reactive({
     fromLocation: '',

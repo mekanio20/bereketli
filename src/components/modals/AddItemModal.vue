@@ -76,23 +76,32 @@
 
                                             <div>
                                                 <label class="block text-sm text-[#939393] mb-2">Quantity</label>
-                                                <form-input v-model="formData.quantity" type="number" class="h-[50px]" />
+                                                <form-input v-model="formData.quantity" type="number"
+                                                    class="h-[50px]" />
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Description -->
+                                    <div>
+                                        <label class="block text-sm text-[#939393] mb-2">Description</label>
+                                        <textarea v-model="formData.description" rows="2"
+                                            class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
+                                    </div>
                                 </div>
 
-                                <div v-else key="approximate" class="space-y-6">
-                                    <p class="text-center text-[#939393] py-6">Takmynan form fields here</p>
+                                <div v-else key="approximate" class="space-y-3 max-h-96 overflow-y-auto pb-4 pt-2">
+                                    <div v-for="item in approximate" :key="item.id" class="flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] hover:bg-[#ddebff] cursor-pointer duration-100">
+                                        <div class="w-[58px] h-[40px]">
+                                            <img :src="item.icon" class="w-full h-full object-cover" />
+                                        </div>
+                                        <div class="flex flex-col space-y-2">
+                                            <h4 class="text-[#222222] font-semibold">{{ item.name }}</h4>
+                                            <p class="text-[#838589] text-sm">{{ item.weight }}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </Transition>
-
-                            <!-- Description -->
-                            <div>
-                                <label class="block text-sm text-[#939393] mb-2">Description</label>
-                                <textarea v-model="formData.description" rows="2"
-                                    class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
-                            </div>
 
                             <div class="flex items-center justify-center">
                                 <!-- Submit Button -->
@@ -136,6 +145,14 @@ const formData = reactive({
     quantity: null,
     description: ''
 })
+
+const approximate = ref([
+    { id: 1, icon: '/icons/mail.webp', name: 'Envelope', weight: '(34x27x2 cm)' },
+    { id: 2, icon: '/icons/mail.webp', name: 'Box', weight: '(34x27x2 cm)' },
+    { id: 3, icon: '/icons/mail.webp', name: 'Package', weight: '(34x27x2 cm)' },
+    { id: 3, icon: '/icons/mail.webp', name: 'Package', weight: '(34x27x2 cm)' },
+    { id: 3, icon: '/icons/mail.webp', name: 'Package', weight: '(34x27x2 cm)' },
+])
 
 const handleSubmit = async () => {
     isSubmitting.value = true

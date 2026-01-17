@@ -7,11 +7,6 @@ const routes = [
     name: "test",
     component: () => import("@/views/tests/index.vue"),
   },
-  {
-    path: "/component",
-    name: "component",
-    component: () => import("@/views/tests/component.vue"),
-  },
   // MAIN
   {
     path: "/",
@@ -52,6 +47,11 @@ const routes = [
     path: "/order/request/new",
     name: "OrderRequestNew",
     component: () => import("@/views/OrderRequestNew.vue"),
+  },
+  {
+    path: "/order/request/advanced",
+    name: "OrderRequestAdvanced",
+    component: () => import("@/views/OrderRequestAdvanced.vue"),
   },
   {
     path: "/order/history",

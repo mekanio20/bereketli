@@ -231,15 +231,6 @@
     border-radius: 9999px;
   }
 
-  /* Date picker */
-  :deep(.dp__input) {
-    border: none;
-    border-radius: 14px;
-    padding-top: 13px;
-    padding-bottom: 13px;
-    background-color: #ebf3fd;
-  }
-
   /* Input number */
 
   /* Remove spinner from number inputs */
@@ -251,5 +242,10 @@
 
   input[type="number"] {
     -moz-appearance: textfield;
+  }
+
+  /* clip path */
+  .clip-path {
+    clip-path: polygon(20%, 18% 71%, 18% 71%49% 52%, 24% 63%, 24% 63%, 24% 63%, 30% 57%, 58% 55%, 38% 53%, 66% 72%, 64% 63%, 20%);
   }
 }
