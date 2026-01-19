@@ -27,16 +27,14 @@
             </div>
         </div>
 
-        <div class="bg-[#F3F8FF] w-full h-[55px] rounded-t-[40px] absolute bottom-0 z-40">
-            <button @click="scrollToCalculator"
-                class="absolute bottom-10 py-6 left-1/2 transform -translate-x-1/2 z-20 bg-[#F3F8FF] rounded-t-[40px] w-12 h-6 flex items-center justify-center text-white animate-bounce">
-                <arrow_down-icon />
-            </button>
-        </div>
+        <button type="button" class="absolute bottom-0 z-40" @click.stop="$emit('scroll')">
+            <img src="/icons/arrow_down.webp" class="h-[30px]" />
+        </button>
     </section>
 </template>
 
 <script setup>
 import heroImage from '@/assets/images/hero.webp'
+const emit = defineEmits(['search', 'scroll'])
 const searchInput = ref('')
 </script>

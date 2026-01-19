@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-[95px] -mb-[70px] sticky z-10">
+    <div class="fixed top-20 left-0 right-0 z-50">
         <div class="hidden sm:block bg-[#002645] py-3 overflow-hidden">
             <div class="flex items-center space-x-8 animate-marquee">
                 <div class="flex items-center space-x-2 whitespace-nowrap">

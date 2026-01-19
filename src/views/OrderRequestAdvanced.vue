@@ -152,8 +152,28 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="py-4">
-                                
+                            <div class="py-20 flex items-center space-x-20">
+                                <div class="w-[220px] h-220px">
+                                    <img src="/images/new_1.png" class="w-full h-full object-cover">
+                                </div>
+                                <div class="grid grid-cols-2 gap-x-24 gap-y-14">
+                                    <div>
+                                        <h5 class="text-[#939393]">Daşarky ölçegler:</h5>
+                                        <p class="text-[#222222]">12,19 × 2,44 × 2,90 m</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-[#939393]">Umumy agram:</h5>
+                                        <p class="text-[#222222]">30 480 kg</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-[#939393]">Içki ölçegler:</h5>
+                                        <p class="text-[#222222]">12,19 × 2,44 × 2,90 m</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-[#939393]">Ýükleme agramy:</h5>
+                                        <p class="text-[#222222]">~26 730 kg</p>
+                                    </div>
+                                </div>
                             </div>
                             <button @click="showModal = true"
                                 class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2">

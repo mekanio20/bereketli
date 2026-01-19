@@ -1,10 +1,10 @@
 <template>
     <div class="w-full overflow-hidden">
-        <Hero @search="handleSearch" />
+        <Hero @search="handleSearch" @scroll="scrollDown" />
         <div class="relative pb-28">
             <MainContainer>
                 <div class="space-y-20">
-                    <Callculator />
+                    <Calculator />
                     <Services />
                 </div>
             </MainContainer>
@@ -65,4 +65,11 @@ const faqStore = useFaqsStore()
 const toggleAccordion = (index) => faqStore.toggleAccordion(index)
 const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
 const handleSearch = (value) => { searchOpen.value = true }
+
+const scrollDown = () => {
+  window.scrollBy({
+    top: window.innerHeight - 120,
+    behavior: 'smooth'
+  })
+}
 </script>
