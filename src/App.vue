@@ -4,12 +4,12 @@
   <RegisterModal :isOpen="appStore.activeModal === 'register'" @close="appStore.toggleModal('register')" @redirect="redirectModal" />
   <LoginModal :isOpen="appStore.activeModal === 'login'" @close="appStore.toggleModal('login')" @redirect="redirectModal" />
   <OtpModal :isOpen="appStore.activeModal === 'otp'" @close="appStore.toggleModal('otp')" @redirect="redirectModal" />
+  <PasswordModal :isOpen="appStore.activeModal === 'password'" @close="appStore.toggleModal('password')" @redirect="redirectModal" />
   
 </template>
 
 <script setup>
 import baseLayout from '@/layouts/baseLayout.vue';
-import OtpModal from './components/modals/OtpModal.vue';
 const appStore = useAppStore()
 const route = useRoute()
 

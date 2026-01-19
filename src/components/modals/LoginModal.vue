@@ -17,8 +17,7 @@
                         <!-- Left Side - Illustration -->
                         <div class="hidden md:flex items-center justify-center">
                             <div class="relative w-full h-full">
-                                <MouseScaleImage
-                                    class="w-full h-full object-cover transition-transform duration-700"
+                                <MouseScaleImage class="w-full h-full object-cover transition-transform duration-700"
                                     :src="authImage" :maxScale="1.15" :parallax="50" :transition="400" />
                             </div>
                         </div>
@@ -149,6 +148,7 @@
 import authImage from '@/assets/images/auth.webp'
 import background from '@/assets/images/modal.webp'
 const emit = defineEmits(['close', 'submit', 'redirect'])
+const authStore = useAuthStore()
 const props = defineProps({
     isOpen: {
         type: Boolean,
@@ -211,12 +211,9 @@ const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-
-        emit('submit', {
-            type: activeTab.value,
-            ...formData
+        await authStore.register({
+            idendifier: activeTab.value === 'phone' ? formData.phone : formData.email,
+            name: formData.name
         })
 
         closeModal()

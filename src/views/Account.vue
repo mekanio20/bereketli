@@ -82,26 +82,26 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
                                             <label class="block text-sm font-medium text-[#838589] mb-2">Adyňyz</label>
-                                            <form-input v-model="profileData.firstName" type="text" class="h-[50px]" />
+                                            <form-input v-model="profileData.firstName" type="text" />
                                         </div>
                                         <div>
                                             <label
                                                 class="block text-sm font-medium text-[#838589] mb-2">Familiýaňyz</label>
-                                            <form-input v-model="profileData.lastName" type="text" class="h-[50px]" />
+                                            <form-input v-model="profileData.lastName" type="text" />
                                         </div>
                                     </div>
 
                                     <!-- Company Name -->
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Kompaniýaňyz</label>
-                                        <form-input v-model="profileData.company" type="text" class="h-[50px]" />
+                                        <form-input v-model="profileData.company" type="text" />
                                     </div>
 
                                     <!-- Phone Number -->
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Telefon
                                             belgiňiz</label>
-                                        <form-input v-model="profileData.phone" type="tel" class="h-[50px]" />
+                                        <form-input v-model="profileData.phone" type="tel" />
                                     </div>
 
                                     <!-- Save Button -->
@@ -131,21 +131,21 @@
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Häzirki açar
                                             sözi</label>
-                                        <form-input v-model="passwordData.current" type="password" class="h-[50px]" />
+                                        <form-input v-model="passwordData.current" type="password" />
                                     </div>
 
                                     <!-- New Password -->
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Täze açar
                                             sözi</label>
-                                        <form-input v-model="passwordData.new" type="password" class="h-[50px]" />
+                                        <form-input v-model="passwordData.new" type="password" />
                                     </div>
 
                                     <!-- Confirm Password -->
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Täze açar sözüni
                                             tassyklaň</label>
-                                        <form-input v-model="passwordData.confirm" type="password" class="h-[50px]" />
+                                        <form-input v-model="passwordData.confirm" type="password" />
                                     </div>
 
                                     <!-- Change Password Button -->

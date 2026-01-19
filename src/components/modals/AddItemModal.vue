@@ -60,7 +60,7 @@
                                             <!-- Dimensions -->
                                             <label class="block text-sm text-[#939393] mb-2">Giňligi, uzynlygy,
                                                 beýikligi</label>
-                                            <div class="grid grid-cols-3 gap-3 h-[50px]">
+                                            <div class="grid grid-cols-3 gap-3">
                                                 <form-input v-model="formData.dimensions" type="number" />
                                                 <form-input v-model="formData.length" type="number" />
                                                 <form-input v-model="formData.height" type="number" />
@@ -71,13 +71,12 @@
                                         <div class="grid grid-cols-2 gap-4">
                                             <div>
                                                 <label class="block text-sm text-[#939393] mb-2">Volume, m³</label>
-                                                <form-input v-model="formData.volume" type="number" class="h-[50px]" />
+                                                <form-input v-model="formData.volume" type="number" />
                                             </div>
 
                                             <div>
                                                 <label class="block text-sm text-[#939393] mb-2">Quantity</label>
-                                                <form-input v-model="formData.quantity" type="number"
-                                                    class="h-[50px]" />
+                                                <form-input v-model="formData.quantity" type="number" />
                                             </div>
                                         </div>
                                     </div>

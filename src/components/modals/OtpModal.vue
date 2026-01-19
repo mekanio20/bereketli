@@ -27,7 +27,8 @@
 
                             <img :src="background" class="absolute top-32 -z-10 w-full h-[500px] object-cover" />
 
-                            <h2 class="text-2xl lg:text-3xl font-bold text-[#222222] mb-8 text-center animate-slide-down">
+                            <h2
+                                class="text-2xl lg:text-3xl font-bold text-[#222222] mb-8 text-center animate-slide-down">
                                 OTP Kody
                             </h2>
 
@@ -77,22 +78,23 @@
 <script setup>
 import authImage from '@/assets/images/auth.webp'
 import background from '@/assets/images/modal.webp'
-const auth = useAuthStore()
-const emit = defineEmits(['close', 'submit', 'redirect'])
+const emit = defineEmits(['close', 'success', 'redirect'])
+const authStore = useAuthStore()
 const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false
     }
 })
-const isSubmitting = ref(false)
 
 // Form state
+const isSubmitting = ref(false)
 const timer = ref(60)
 const timerInterval = ref(null)
 const isTimerActive = ref(false)
 const codeInputs = ref(["", "", "", ""])
 const inputRefs = ref([]);
+const register_data = ref(JSON.parse(sessionStorage.getItem('register_data')))
 
 const formattedTime = computed(() => {
     const minutes = Math.floor(timer.value / 60);
@@ -104,24 +106,30 @@ const isCodeComplete = computed(() => {
     return codeInputs.value.every((digit) => digit !== "");
 })
 
-
 // Methods
 const handleSubmit = async () => {
     if (isCodeComplete.value) {
         isSubmitting.value = true
         try {
-            const response = await auth.register({ ...props.data, otp: [...codeInputs.value].join('') })
+            const payload = {
+              identifier: "+99363755727",
+              phone_number: "+99363755727",
+            //   email: "",
+              first_name: "Mekan",
+              language: "tk",
+              password: "adminadmin",
+              otp: "1234"
+            }
+            const response = await authStore.register({ ...payload, otp: [...codeInputs.value].join('') })
             if (response.status === "ok") {
-                emit('update:modelValue', false)
+                closeModal()
                 emit('success', true)
-                isTimerActive.value = true
-                startTimer()
             }
         } catch (err) {
             console.error(err)
             emit('success', false)
         } finally {
-            // isSubmitting.value = false
+            isSubmitting.value = false
         }
     }
 }
@@ -138,7 +146,11 @@ const startTimer = () => {
 }
 
 const resetTimer = async () => {
-    await auth.sendOtp({})
+    await authStore.sendOtp({
+        email: register_data.value.email,
+        phone_number: register_data.value.phone_number,
+        purpose: "registration"
+    })
     timer.value = 60;
     isTimerActive.value = true;
     clearInterval(timerInterval.value);
@@ -162,12 +174,10 @@ const handleBackspace = (index) => {
     }
 }
 
+watch(() => props.isOpen, (isOpen) => { if (isOpen) startTimer() })
+
 onUnmounted(() => {
     clearInterval(timerInterval.value);
-})
-
-onMounted(() => {
-    startTimer()
 })
 
 const closeModal = () => {

@@ -23,7 +23,7 @@
         </button>
 
         <!-- Dropdown -->
-        <div v-show="isOpen" class="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div v-show="isOpen" class="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-md overflow-hidden">
             <!-- Search -->
             <div v-if="isSearch" class="p-3 border-b">
                 <input v-model="search" type="text" placeholder="Gözle..." class="w-full px-4 py-2 rounded-lg bg-[#F5F7FA]

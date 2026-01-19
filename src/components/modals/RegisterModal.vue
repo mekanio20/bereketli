@@ -17,8 +17,7 @@
                         <!-- Left Side - Illustration -->
                         <div class="hidden md:flex items-center justify-center">
                             <div class="relative w-full h-full">
-                                <MouseScaleImage
-                                    class="w-full h-full object-cover transition-transform duration-700"
+                                <MouseScaleImage class="w-full h-full object-cover transition-transform duration-700"
                                     :src="authImage" :maxScale="1.15" :parallax="50" :transition="400" />
                             </div>
                         </div>
@@ -74,13 +73,13 @@
                                         <!-- Name Field -->
                                         <div>
                                             <label for="name" class="block text-sm text-[#222222] mb-3">
-                                                Adyňyz
+                                                Doly adyňyz
                                             </label>
-                                            <input id="name" v-model="formData.name" type="text"
+                                            <input id="name" v-model="formData.fullname" type="text"
                                                 class="w-full px-4 py-4 bg-[#EBF3FD] rounded-xl outline-none transition-all duration-300 text-[#222222]"
-                                                :class="{ 'border-red-400': errors.name }" />
+                                                :class="{ 'border-red-400': errors.fullname }" />
                                             <Transition name="fade">
-                                                <p v-if="errors.name" class="mt-2 text-sm text-red-600">{{ errors.name
+                                                <p v-if="errors.fullname" class="mt-2 text-sm text-red-600">{{ errors.fullname
                                                 }}</p>
                                             </Transition>
                                         </div>
@@ -105,13 +104,13 @@
                                         <!-- Name Field -->
                                         <div>
                                             <label for="name-email" class="block text-sm text-[#222222] mb-3">
-                                                Adyňyz
+                                                Doly adyňyz
                                             </label>
-                                            <input id="name-email" v-model="formData.name" type="text"
+                                            <input id="name-email" v-model="formData.fullname" type="text"
                                                 class="w-full px-4 py-4 bg-[#EBF3FD] outline-none rounded-xl transition-all duration-300 text-[#222222]"
-                                                :class="{ 'border-red-400': errors.name }" />
+                                                :class="{ 'border-red-400': errors.fullname }" />
                                             <Transition name="fade">
-                                                <p v-if="errors.name" class="mt-2 text-sm text-red-600">{{ errors.name
+                                                <p v-if="errors.fullname" class="mt-2 text-sm text-red-600">{{ errors.fullname
                                                 }}</p>
                                             </Transition>
                                         </div>
@@ -148,7 +147,8 @@
 <script setup>
 import authImage from '@/assets/images/auth.webp'
 import background from '@/assets/images/modal.webp'
-const emit = defineEmits(['close', 'submit', 'redirect'])
+const emit = defineEmits(['close', 'redirect'])
+const authStore = useAuthStore()
 const props = defineProps({
     isOpen: {
         type: Boolean,
@@ -162,13 +162,13 @@ const isSubmitting = ref(false)
 const formData = reactive({
     phone: '+993',
     email: '',
-    name: ''
+    fullname: ''
 })
 
 const errors = reactive({
     phone: '',
     email: '',
-    name: ''
+    fullname: ''
 })
 
 const validateForm = () => {
@@ -177,7 +177,7 @@ const validateForm = () => {
     // Reset errors
     errors.phone = ''
     errors.email = ''
-    errors.name = ''
+    errors.fullname = ''
 
     if (activeTab.value === 'phone') {
         if (!formData.phone || formData.phone === '+993') {
@@ -197,8 +197,8 @@ const validateForm = () => {
         }
     }
 
-    if (!formData.name || formData.name.trim().length < 2) {
-        errors.name = 'Adyňyzy giriziň'
+    if (!formData.fullname || formData.fullname.split(' ')[1] === '') {
+        errors.fullname = 'Doly adyňyzy giriziň'
         isValid = false
     }
 
@@ -207,19 +207,18 @@ const validateForm = () => {
 
 const handleSubmit = async () => {
     if (!validateForm()) return
-
     isSubmitting.value = true
 
     try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-
-        emit('submit', {
-            type: activeTab.value,
-            ...formData
-        })
-
-        closeModal()
+        sessionStorage.setItem('register_data', JSON.stringify({
+            identifier: activeTab.value === 'phone' ? formData.phone : formData.email,
+            phone_number: formData.phone,
+            email: formData.email,
+            first_name: formData.fullname?.split(' ')[0],
+            last_name: formData.fullname?.split(' ')[1],
+            language: "tk"
+        }))
+        emit('redirect', 'password')
     } catch (error) {
         console.error('Submission error:', error)
     } finally {
@@ -273,10 +272,12 @@ const closeModal = () => {
 
 /* Animations */
 @keyframes float {
+
     0%,
     100% {
         transform: translateY(0px);
     }
+
     50% {
         transform: translateY(-20px);
     }
@@ -348,23 +349,5 @@ const closeModal = () => {
 
 .animate-float-envelope {
     animation: floatEnvelope 5s ease-in-out infinite;
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
 }
 </style>

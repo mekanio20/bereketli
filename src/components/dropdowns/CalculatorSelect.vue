@@ -55,7 +55,7 @@
                 <div class="flex items-center space-x-4">
                     <div class="flex-1 flex flex-col space-y-2">
                         <label for="name" class="text-sm font-medium text-[#222222]">Ady</label>
-                        <form-input id="name" v-model="formData.name" type="text" class="h-[50px]" />
+                        <form-input id="name" v-model="formData.name" type="text" />
                     </div>
                     <div class="mt-[28px]">
                         <SimpleSelect v-model="formData.agram" :options="['kg', 'g', 't']" placeholder="Agram" />
@@ -65,7 +65,7 @@
                     <div class="flex flex-col space-y-2">
                         <span class="text-sm font-medium text-[#222222]">Ölçegi, sm</span>
                         <p class="text-[12px] text-[#939393]">Giňligi, uzynlygy, beýikligi</p>
-                        <div class="grid grid-cols-3 gap-3 h-[50px]">
+                        <div class="grid grid-cols-3 gap-3">
                             <form-input v-model="formData.dimensions" type="number" />
                             <form-input v-model="formData.length" type="number" />
                             <form-input v-model="formData.height" type="number" />

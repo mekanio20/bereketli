@@ -1,10 +1,17 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import api from "@/api/index";
+import {
+  getAccessToken,
+  getRefreshToken,
+  setAccessToken,
+  setRefreshToken,
+  clearTokens,
+} from "@/composables/useTokens";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    access_token: localStorage.getItem("access_token"),
-    refresh_token: localStorage.getItem("refresh_token"),
+    access_token: localStorage.getItem("bereketli_access"),
+    refresh_token: localStorage.getItem("bereketli_refresh"),
     error: null,
     loading: false,
   }),
@@ -23,20 +30,40 @@ export const useAuthStore = defineStore("auth", {
     async login(data) {
       this.loading = true;
       try {
-
-      } catch (error) {}
+        const response = await api.post("token/", data);
+        setAccessToken(response.data.access);
+        setRefreshToken(response.data.refresh);
+      } catch (error) {
+        this.error = error;
+        throw error
+      } finally {
+        this.loading = false;
+      }
     },
-    async register() {
+    async register(data) {
       this.loading = true;
       try {
-
-      } catch (error) {}
+        const response = await api.post("token/", data);
+        setAccessToken(response.data.access);
+        setRefreshToken(response.data.refresh);
+      } catch (error) {
+        this.error = error;
+        throw error
+      } finally {
+        this.loading = false;
+      }
     },
-    async sendOtp() {
+    async sendOtp(data) {
       this.loading = true;
       try {
-
-      } catch (error) {}
+        const otp = await api.post("otp/", data);
+        return otp
+      } catch (error) {
+        this.error = error;
+        throw error;
+      } finally {
+        this.loading = false;
+      }
     },
   },
   logout() {

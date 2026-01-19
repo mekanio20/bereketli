@@ -133,6 +133,37 @@
                             </div>
                         </FormContainer>
 
+                        <!-- Container -->
+                        <FormContainer>
+                            <h2 class="form_title mb-8">Konteýner</h2>
+                            <div class="flex items-center space-x-6">
+                                <form-input v-model="formData.container_type" type="text"
+                                    :placeholder="'Container type'" />
+                                <form-input v-model="formData.container_count" type="number"
+                                    :placeholder="'Container count'" />
+                                <div class="flex items-center space-x-2 !ml-2">
+                                    <button @click="formData.container_count--"
+                                        class="w-[50px] h-[50px] text-[#222222] text-[20px] font-medium bg-[#EBF3FD] hover:bg-blue-100 duration-300 rounded-[14px] flex items-center justify-center">
+                                        -
+                                    </button>
+                                    <button @click="formData.container_count++"
+                                        class="w-[50px] h-[50px] text-[#222222] text-[20px] font-medium bg-[#EBF3FD] hover:bg-blue-100 duration-300 rounded-[14px] flex items-center justify-center">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="py-4">
+                                
+                            </div>
+                            <button @click="showModal = true"
+                                class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2">
+                                <div class="w-6 h-6 bg-[#002244] rounded-full flex items-center justify-center">
+                                    <plus-icon class="text-white" :size="14" />
+                                </div>
+                                Täze konteýner goşmak
+                            </button>
+                        </FormContainer>
+
                         <!-- Items Section -->
                         <FormContainer>
                             <h2 class="form_title mb-8">Items</h2>
@@ -155,11 +186,7 @@
                             <button @click="showModal = true"
                                 class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2">
                                 <div class="w-6 h-6 bg-[#002244] rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
+                                    <plus-icon class="text-white" :size="14" />
                                 </div>
                                 Add Item
                             </button>
@@ -264,6 +291,8 @@ const formData = reactive({
     selectedTransport: '',
     pickupDate: '',
     deliveryDate: '',
+    container_type: '',
+    container_count: 0,
     items: [
         { name: 'Item #1', dimensions: '34 × 27 × 2 cm' }
     ]

@@ -13,7 +13,7 @@
                     <input ref="fileInput" type="file" multiple class="hidden" @change="handleFileSelect" />
 
                     <!-- Sidebar - Chat List -->
-                    <aside class="w-full md:w-96 max-h-screen bg-white flex flex-col rounded-[26px] overflow-y-auto">
+                    <aside class="w-full md:w-96 bg-white flex flex-col rounded-[26px] max-h-[600px] overflow-y-auto">
                         <!-- Sidebar Header -->
                         <div class="p-6">
                             <h1 class="text-[22px] font-semibold text-[#222222]">Habarlaşmak</h1>
@@ -48,7 +48,7 @@
                     </aside>
 
                     <!-- Main Chat Area -->
-                    <main v-if="selectedChat" class="flex-1 flex flex-col bg-white rounded-[26px] max-h-screen overflow-y-auto">
+                    <main v-if="selectedChat" class="flex-1 flex flex-col bg-white rounded-[26px] max-h-[600px] overflow-y-auto">
                         <!-- Chat Header -->
                         <header class="flex items-center gap-4 px-6 py-5 border-b border-[#EDEDED]">
                             <div
