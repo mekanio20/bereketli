@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <button type="button" class="absolute bottom-0 z-40" @click.stop="$emit('scroll')">
+        <button type="button" class="absolute bottom-0 z-20 cursor-pointer" @click.stop="$emit('scroll')">
             <img src="/icons/arrow_down.webp" class="h-[30px]" />
         </button>
     </section>

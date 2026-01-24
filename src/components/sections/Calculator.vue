@@ -28,24 +28,13 @@
 </template>
 
 <script setup>
+import { normalizeToIdLabel } from '@/utils/normalizers/optionNormalizer.js'
+const countryStore = useCountryStore()
 const nirden = ref('')
 const nira = ref('')
 const agram = ref('')
-const nirdenOptions = [
-    'Aşgabat',
-    'Mary',
-    'Türkmenabat',
-    'Daşoguz',
-    'Balkanabat'
-]
-
-const niraOptions = [
-    'Aşgabat',
-    'Mary',
-    'Türkmenabat',
-    'Daşoguz',
-    'Balkanabat'
-]
+const nirdenOptions = ref([])
+const niraOptions = ref([])
 
 const agramOptions = ref([
     {
@@ -69,4 +58,10 @@ const agramOptions = ref([
 const handleCalculate = () => {
     console.log('Calculating...', { nirden: nirden.value, nira: nira.value, agram: agram.value })
 }
+
+onMounted(async () => {
+    const countries = await countryStore.fetchCountries()
+    nirdenOptions.value = normalizeToIdLabel(countries)
+    niraOptions.value = normalizeToIdLabel(countries)
+});
 </script>

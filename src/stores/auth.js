@@ -33,7 +33,9 @@ export const useAuthStore = defineStore("auth", {
         const response = await api.post("token/", data);
         setAccessToken(response.data.access);
         setRefreshToken(response.data.refresh);
+        return response
       } catch (error) {
+        console.log('POST Login: ', error);
         this.error = error;
         throw error
       } finally {
@@ -46,7 +48,9 @@ export const useAuthStore = defineStore("auth", {
         const response = await api.post("token/", data);
         setAccessToken(response.data.access);
         setRefreshToken(response.data.refresh);
+        return response
       } catch (error) {
+        console.log('POST Register: ', error);
         this.error = error;
         throw error
       } finally {
@@ -59,6 +63,7 @@ export const useAuthStore = defineStore("auth", {
         const otp = await api.post("otp/", data);
         return otp
       } catch (error) {
+        console.log('Send OTP: ', error);
         this.error = error;
         throw error;
       } finally {

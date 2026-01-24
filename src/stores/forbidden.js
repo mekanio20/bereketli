@@ -1,30 +1,30 @@
 import { defineStore } from "pinia";
 import api from "@/api/index";
 
-export const useFaqsStore = defineStore("faqs", {
+export const useForbiddenStore = defineStore("forbidden", {
   state: () => ({
-    faqs: [],
+    forbidden_cargos: [],
   }),
   actions: {
     toggleAccordion(index) {
-      this.faqs.forEach((item, i) => {
+      this.forbidden_cargos.forEach((item, i) => {
         if (i !== index) {
           item.isOpen = false;
         }
       });
-      this.faqs[index].isOpen = !this.faqs[index].isOpen;
+      this.forbidden_cargos[index].isOpen = !this.forbidden_cargos[index].isOpen;
     },
     setContentHeight(index, height) {
-      this.faqs[index].contentHeight = height;
+      this.forbidden_cargos[index].contentHeight = height;
     },
-    async fetchFaqs() {
+    async fetchForbidden() {
       this.loading = true;
       try {
-        const response = await api.get("faqs/");
-        this.faqs = response.data;
+        const response = await api.get("forbidden-cargos/");
+        this.forbidden_cargos = response.data;
         return response.data;
       } catch (error) {
-        console.log('GET faqs: ', error);
+        console.log('GET forbidden: ', error);
         this.error = error;
         throw error
       } finally {

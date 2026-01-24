@@ -1,19 +1,18 @@
 <template>
     <div ref="wrapper" class="relative w-full">
         <!-- Trigger Button -->
-        <button type="button" @click="toggle" class="w-full relative bg-[#EBF3FD] font-medium px-6 py-[13px] rounded-[10px]
-             flex items-center justify-between transition-all duration-300"
-             :class="[modelValue.length > 0 ? 'text-[#222222]' : 'text-[#838589]', icon && 'pl-12']">
+        <button type="button" @click="isOpen = !isOpen" class="w-full relative bg-[#EBF3FD] font-medium px-6 py-[13px] rounded-[10px]
+             flex items-center justify-between transition-all duration-300" :class="[
+                selectedOption ? 'text-[#222222]' : 'text-[#838589]',
+                icon && 'pl-12'
+            ]">
 
-             <!-- Icon -->
-            <component
-                v-if="icon"
-                :is="icons[icon]" :color="'currentColor'"
-                class="absolute left-6"
+            <!-- Icon -->
+            <component v-if="icon" :is="icons[icon]" :color="'currentColor'" class="absolute left-6"
                 :class="[modelValue.length > 0 ? 'text-[#222222]' : 'text-[#838589]']" />
 
             <span class="text-base truncate max-w-[200px]">
-                {{ modelValue || placeholder }}
+                {{ selectedOption?.label || placeholder }}
             </span>
 
             <chevron_down-icon :class="[
@@ -32,10 +31,10 @@
 
             <!-- Options -->
             <div class="max-h-60 overflow-y-auto">
-                <button v-for="option in filteredOptions" :key="option" @click="select(option)" class="w-full text-left px-6 py-3
+                <button type="button" v-for="option in filteredOptions" :key="option.id" @click="select(option)" class="w-full text-left px-6 py-3
                  hover:bg-gradient-to-r hover:from-blue-100 hover:to-indigo-100
                  transition-all duration-200 text-gray-700 font-medium">
-                    {{ option }}
+                    {{ option.label }}
                 </button>
 
                 <div v-if="!filteredOptions.length" class="px-6 py-4 text-sm text-gray-400">
@@ -48,11 +47,13 @@
 
 <script setup>
 const { icons } = useIcons()
+/* ---------------- EMITS ---------------- */
+const emit = defineEmits(['update:modelValue', 'change'])
 /* ---------------- PROPS ---------------- */
 const props = defineProps({
     modelValue: {
-        type: String,
-        default: ''
+        type: [String, Number, null],
+        default: null
     },
     options: {
         type: Array,
@@ -62,38 +63,31 @@ const props = defineProps({
         type: String,
         default: 'Saýlaň'
     },
-    isSearch: {
-        type: Boolean,
-        default: false
-    },
-    icon: {
-        type: String
-    }
+    isSearch: Boolean,
+    icon: String
 })
 
-const emit = defineEmits(['update:modelValue'])
-
 /* ---------------- STATE ---------------- */
-const isOpen = ref(false)
 const search = ref('')
+const isOpen = ref(false)
 const wrapper = ref(null)
 
 /* ---------------- COMPUTED ---------------- */
+const selectedOption = computed(() =>
+    props.options.find(o => o.id === props.modelValue) || null
+)
+
 const filteredOptions = computed(() => {
     if (!props.isSearch || !search.value) return props.options
-
-    return props.options.filter(option =>
-        option.toLowerCase().includes(search.value.toLowerCase())
+    return props.options.filter(o =>
+        o.label?.toLowerCase().includes(search.value.toLowerCase())
     )
 })
 
 /* ---------------- METHODS ---------------- */
-const toggle = () => {
-    isOpen.value = !isOpen.value
-}
-
-const select = (value) => {
-    emit('update:modelValue', value)
+const select = (option) => {
+    emit('update:modelValue', option.id)
+    emit('change', option)
     isOpen.value = false
     search.value = ''
 }

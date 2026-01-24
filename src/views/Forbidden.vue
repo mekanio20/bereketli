@@ -1,7 +1,7 @@
 <template>
     <section class="overflow-x-hidden relative">
         <MainContainer>
-            <SectionContainer class="pb-20">
+            <SectionContainer class="py-20">
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
@@ -9,16 +9,20 @@
                     { label: 'Gadagan edilýän ýükler' }
                 ]" />
 
-               <Accordion :isCenter="true" :title="'Gadagan edilýän ýükler'" :data="faqStore.faqs" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
+               <Accordion :isCenter="true" :title="'Gadagan edilýän ýükler'" :data="forbiddenStore.forbidden_cargos" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
             </SectionContainer>
         </MainContainer>
     </section>
 </template>
 
 <script setup>
-const faqStore = useFaqsStore()
-const toggleAccordion = (index) => faqStore.toggleAccordion(index)
-const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
+const forbiddenStore = useForbiddenStore()
+const toggleAccordion = (index) => forbiddenStore.toggleAccordion(index)
+const setContentHeight = (index, height) => forbiddenStore.setContentHeight(index, height)
+
+onMounted(async () => {
+    await forbiddenStore.fetchForbidden()
+})
 </script>
 
 <style scoped>

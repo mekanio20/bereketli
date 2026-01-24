@@ -38,7 +38,7 @@
             <Statistic />
             <MainContainer>
                 <div class="space-y-8 pb-20">
-                    <News />
+                    <News :news="newsStore.news" />
                     <Comments />
                     <Accordion :title="'Köp soralýan soraglar'" :data="faqStore.faqs" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
                 </div>
@@ -62,6 +62,7 @@
 import background from '@/assets/images/background.webp'
 const searchOpen = ref(false)
 const faqStore = useFaqsStore()
+const newsStore = useNewsStore()
 const toggleAccordion = (index) => faqStore.toggleAccordion(index)
 const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
 const handleSearch = (value) => { searchOpen.value = true }
@@ -72,4 +73,9 @@ const scrollDown = () => {
     behavior: 'smooth'
   })
 }
+
+onMounted(async () => {
+    await faqStore.fetchFaqs()
+    await newsStore.fetchNews()
+})
 </script>

@@ -49,7 +49,7 @@
                                 </Transition>
 
                                 <div class="flex items-center justify-between pb-5">
-                                    <button @click="resetTimer" class="text-[#F98900] hover:underline cursor-pointer">
+                                    <button type="button" @click.stop="resetTimer" class="text-[#F98900] hover:underline cursor-pointer">
                                         Täzeden iber
                                     </button>
                                     <span class="text-sm font-medium text-[#222222]">
@@ -92,9 +92,11 @@ const isSubmitting = ref(false)
 const timer = ref(60)
 const timerInterval = ref(null)
 const isTimerActive = ref(false)
-const codeInputs = ref(["", "", "", ""])
+const codeInputs = ref(["", "", "", "", "", ""])
 const inputRefs = ref([]);
-const register_data = ref(JSON.parse(sessionStorage.getItem('register_data')))
+const register_data = ref(
+  JSON.parse(sessionStorage.getItem('register_data'))
+)
 
 const formattedTime = computed(() => {
     const minutes = Math.floor(timer.value / 60);
@@ -111,16 +113,9 @@ const handleSubmit = async () => {
     if (isCodeComplete.value) {
         isSubmitting.value = true
         try {
-            const payload = {
-              identifier: "+99363755727",
-              phone_number: "+99363755727",
-            //   email: "",
-              first_name: "Mekan",
-              language: "tk",
-              password: "adminadmin",
-              otp: "1234"
-            }
-            const response = await authStore.register({ ...payload, otp: [...codeInputs.value].join('') })
+            console.log('Response -> ', register_data.value);
+            
+            const response = await authStore.register({ ...register_data.value, otp: [...codeInputs.value].join('') })
             if (response.status === "ok") {
                 closeModal()
                 emit('success', true)

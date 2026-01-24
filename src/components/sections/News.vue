@@ -2,7 +2,7 @@
     <section class="space-y-10 pb-10">
         <h2 class="text-[44px] font-semibold text-[#222222]">Täzelikler</h2>
         <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 pb-16">
-            <NewsCard v-for="item in newsStore.newsData" :key="item.id" :image="item.image" :date="item.date"
+            <NewsCard v-for="item in news" :key="item.id" :image="item.image" :date="item.date_created"
                 :title="item.title" @click="handleNewsDetail(item.id)" />
         </div>
         <div class="flex items-center justify-center">
@@ -32,4 +32,15 @@ const newsStore = useNewsStore()
 const handleNewsDetail = (id) => {
     router.push({ name: 'NewsDetail', params: { id } })
 }
+const props = defineProps({
+    news: {
+        type: Array,
+        required: true
+    }
+})
+
+onMounted(async () => {
+   console.log('News -> ', props.news);
+   
+})
 </script>
