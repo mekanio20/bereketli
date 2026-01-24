@@ -21,7 +21,7 @@
 
 
         <!-- Dropdown -->
-        <div v-show="isOpen" class="absolute z-50 w-full mt-2 bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div v-show="isOpen" class="absolute z-20 w-full mt-2 bg-white rounded-2xl shadow-2xl overflow-hidden">
             <div class="w-full flex items-center space-x-2 p-2">
                 <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id"
                     class="w-full px-8 py-3 rounded-[10px] transition-all duration-300 transform hover:scale-105"
@@ -74,7 +74,9 @@
                 </div>
                 <!-- Submit button -->
                 <button @click="submit"
-                    class="w-full bg-custom-gradient h-[52px] flex items-center justify-center rounded-full text-white font-bold transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">Hasaplamak</button>
+                    class="w-full bg-custom-gradient h-[52px] flex items-center justify-center rounded-full text-white font-bold transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                    Saýlamak
+                </button>
             </div>
         </div>
     </div>

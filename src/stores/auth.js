@@ -45,7 +45,7 @@ export const useAuthStore = defineStore("auth", {
     async register(data) {
       this.loading = true;
       try {
-        const response = await api.post("token/", data);
+        const response = await api.post("register/", data);
         setAccessToken(response.data.access);
         setRefreshToken(response.data.refresh);
         return response

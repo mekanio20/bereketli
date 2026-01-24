@@ -3,7 +3,7 @@
         <Hero @search="handleSearch" @scroll="scrollDown" />
         <div class="relative pb-28">
             <MainContainer>
-                <div class="space-y-20">
+                <div class="space-y-16 pt-20">
                     <Calculator />
                     <Services />
                 </div>
