@@ -3,9 +3,7 @@
         <!-- Trigger Button -->
         <button type="button" @click="isOpen = !isOpen" class="w-full relative bg-[#EBF3FD] font-medium px-6 py-[13px] rounded-[10px]
              flex items-center justify-between transition-all duration-300" :class="[
-                selectedOption ? 'text-[#222222]' : 'text-[#838589]',
-                icon && 'pl-12'
-            ]">
+                selectedOption ? 'text-[#222222]' : 'text-[#838589]', icon && 'pl-12']">
 
             <!-- Icon -->
             <component v-if="icon" :is="icons[icon]" :color="'currentColor'" class="absolute left-6"

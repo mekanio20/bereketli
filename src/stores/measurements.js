@@ -1,22 +1,22 @@
 import { defineStore } from "pinia";
 import api from "@/api/index";
 
-export const useCountryStore = defineStore("countries", {
+export const useMeasurementStore = defineStore("measurements", {
   state: () => ({
-    countries: [],
-    country: {},
+    measurements: [],
+    measurement: {},
     error: null,
     loading: false,
   }),
   actions: {
-    async fetchCountries(filteredOptions = {}) {
+    async fetchMeasurements() {
       this.loading = true;
       try {
-        const response = await api.get("countries/", { params: filteredOptions });
-        this.countries = response.data;
+        const response = await api.get("measurements/");
+        this.measurements = response.data;
         return response.data;
       } catch (error) {
-        console.log('GET countries: ', error);
+        console.log('GET measurements: ', error);
         this.error = error;
         throw error
       } finally {
@@ -24,14 +24,14 @@ export const useCountryStore = defineStore("countries", {
       }
     },
     // DETAILS
-    async fetchCountry(id) {
+    async fetchMeasurement(id) {
       this.loading = true;
       try {
-        const response = await api.get(`countries/${id}/`);
-        this.country = response.data;
+        const response = await api.get(`measurements/${id}/`);
+        this.measurement = response.data;
         return response.data;
       } catch (error) {
-        console.log('GET country: ', error);
+        console.log('GET measurement: ', error);
         this.error = error;
         throw error
       } finally {

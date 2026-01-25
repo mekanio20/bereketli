@@ -6,22 +6,29 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-14">
             <div class="relative">
-                <SimpleSelect :isSearch="true" v-model="nirden" :options="nirdenOptions" placeholder="Nireden" />
+                <SimpleSelect :isSearch="true" v-model="formData.from_country" :options="nirdenOptions"
+                    @change="selectedCountry('nirden', $event)" placeholder="Nireden" />
             </div>
 
             <div class="relative">
-                <SimpleSelect :isSearch="true" v-model="nira" :options="niraOptions" placeholder="Nira" />
+                <SimpleSelect :isSearch="true" v-model="formData.to_country" :options="niraOptions"
+                    @change="selectedCountry('nira', $event)" placeholder="Nira" />
             </div>
 
             <div class="relative">
-                <CalculatorSelect :isSearch="true" v-model="agram" :options="agramOptions" placeholder="Agram" />
+                <CalculatorSelect :isSearch="true" v-model="agram" :options="agramOptions" @change="handleAddData"
+                    placeholder="Agram" />
             </div>
         </div>
 
-        <div class="flex justify-center">
-            <button @click="handleCalculate"
+        <div class="flex justify-center space-x-5">
+            <button type="button" @click="handleCalculate"
                 class="bg-[#002645] text-white font-bold text-lg md:text-[20px] w-[380px] px-16 py-4 rounded-[100px] shadow-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none">
                 Hasaplamak
+            </button>
+            <!-- Clear button -->
+            <button type="button" @click="handleClear" class="text-[#002645] font-semibold hover:underline text-lg md:text-[20px]">
+                Arassala
             </button>
         </div>
     </section>
@@ -30,38 +37,64 @@
 <script setup>
 import { normalizeToIdLabel } from '@/utils/normalizers/optionNormalizer.js'
 const countryStore = useCountryStore()
-const nirden = ref('')
-const nira = ref('')
-const agram = ref('')
+const itemSizeStore = useItemSizeStore()
+
 const nirdenOptions = ref([])
 const niraOptions = ref([])
+const agramOptions = ref([])
 
-const agramOptions = ref([
-    {
-        img: '/icons/mail.webp',
-        label: '1-5 kg',
-    },
-    {
-        img: '/icons/mail.webp',
-        label: '6-10 kg',
-    },
-    {
-        img: '/icons/mail.webp',
-        label: '11-15 kg',
-    },
-    {
-        img: '/icons/mail.webp',
-        label: '16-20 kg',
-    },
-])
+const formData = ref({
+    from_country: 0,
+    to_country: 0,
+    item_type: 0,
+    weight: 0,
+    measurement: 0,
+    length: 0,
+    width: 0,
+    height: 0,
+    item_size: 0
+})
+
+const selectedCountry = async (type, data) => {
+    if (type === 'nirden') {
+        const countries = await countryStore.fetchCountries({ from_country: data.id })
+        niraOptions.value = normalizeToIdLabel(countries)
+    } else if (type === 'nira') {
+        const countries = await countryStore.fetchCountries({ to_country: data.id })
+        nirdenOptions.value = normalizeToIdLabel(countries)
+    }
+}
+
+const handleAddData = async (data) => {
+    console.log('Data added:', data)
+}
 
 const handleCalculate = () => {
-    console.log('Calculating...', { nirden: nirden.value, nira: nira.value, agram: agram.value })
+    formData.value = {
+        ...formData.value
+    }
+}
+
+const handleClear = () => {
+    formData.value = {
+        from_country: 0,
+        to_country: 0,
+        item_type: 0,
+        weight: 0,
+        measurement: 0,
+        length: 0,
+        width: 0,
+        height: 0,
+        item_size: 0
+    }
 }
 
 onMounted(async () => {
     const countries = await countryStore.fetchCountries()
+    const itemSizes = await itemSizeStore.fetchItemSizes()
     nirdenOptions.value = normalizeToIdLabel(countries)
     niraOptions.value = normalizeToIdLabel(countries)
+    agramOptions.value = itemSizes
 });
+
 </script>
