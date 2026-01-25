@@ -4,7 +4,7 @@
         <div class="relative pb-28">
             <MainContainer>
                 <div class="space-y-16 pt-20">
-                    <Calculator />
+                    <Calculator @showResult="showResult" />
                     <Services />
                 </div>
             </MainContainer>
@@ -56,16 +56,28 @@
         </a>
     </div>
     <SearchResultModal :isOpen="searchOpen" @close="searchOpen = false" />
+    <ResultPrices :options="resultOptions" :isOpen="showResultModal" @close="showResultModal = false" />
 </template>
 
 <script setup>
+import { normalizePrices } from '@/utils/normalizers/optionNormalizer'
 import background from '@/assets/images/background.webp'
 const searchOpen = ref(false)
+const showResultModal = ref(false)
+const resultOptions = ref([])
+
 const faqStore = useFaqsStore()
 const newsStore = useNewsStore()
 const toggleAccordion = (index) => faqStore.toggleAccordion(index)
 const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
 const handleSearch = (value) => { searchOpen.value = true }
+
+const showResult = (results) => {
+    showResultModal.value = true
+    resultOptions.value = normalizePrices(results.prices)
+    console.log('Result options -> ', resultOptions.value);
+    
+}
 
 const scrollDown = () => {
   window.scrollBy({

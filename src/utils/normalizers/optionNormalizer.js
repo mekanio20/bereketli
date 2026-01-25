@@ -17,3 +17,13 @@ export const normalizeToIdLabel = (list = []) =>
 
     return { id, label };
   });
+
+export const normalizePrices = (prices) => {
+  return Object.entries(prices)
+    .filter(([, value]) => value !== null)
+    .map(([type, value]) => ({
+      type,
+      price: value.price,
+      delivery_days: value.delivery_days,
+    }));
+};

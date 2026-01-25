@@ -16,7 +16,7 @@
             </div>
 
             <div class="relative">
-                <CalculatorSelect :isSearch="true" v-model="agram" :options="agramOptions" @change="handleAddData"
+                <CalculatorSelect :isSearch="true" v-model="formData.weight" :options="agramOptions" @change="handleAddData"
                     placeholder="Agram" />
             </div>
         </div>
@@ -36,8 +36,11 @@
 
 <script setup>
 import { normalizeToIdLabel } from '@/utils/normalizers/optionNormalizer.js'
+const emits = defineEmits(['showResult'])
+
 const countryStore = useCountryStore()
 const itemSizeStore = useItemSizeStore()
+const calculatorStore = useCalculatorStore()
 
 const nirdenOptions = ref([])
 const niraOptions = ref([])
@@ -66,13 +69,19 @@ const selectedCountry = async (type, data) => {
 }
 
 const handleAddData = async (data) => {
-    console.log('Data added:', data)
+    formData.value = {
+        ...formData.value,
+        ...data
+    }
 }
 
-const handleCalculate = () => {
-    formData.value = {
-        ...formData.value
-    }
+const handleCalculate = async () => {
+    Object.keys(formData.value).forEach(key => {
+        if (Number(formData.value[key]) > 0) formData.value[key] = Number(formData.value[key])
+        else delete formData.value[key]
+    })
+    const result = await calculatorStore.calculate(formData.value)
+    emits('showResult', result)
 }
 
 const handleClear = () => {

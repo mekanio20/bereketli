@@ -99,8 +99,8 @@ const { icons } = useIcons()
 /* ---------------- PROPS ---------------- */
 const props = defineProps({
     modelValue: {
-        type: String,
-        default: ''
+        type: [String, Number, null],
+        default: null
     },
     options: {
         type: Array,
