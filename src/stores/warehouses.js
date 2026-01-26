@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { isWarehouseOpen } from "@/utils/booleans";
 import api from "@/api/index";
 
 export const useWarehouseStore = defineStore("warehouses", {
@@ -13,8 +14,11 @@ export const useWarehouseStore = defineStore("warehouses", {
             this.loading = true;
             try {
                 const response = await api.get("warehouses/", { params: filteredOptions });
-                this.warehouses = response.data;
-                return response.data
+                this.warehouses = response.data.map((warehouse) => ({
+                    ...warehouse,
+                    isOpen: isWarehouseOpen(warehouse.work_hours_start, warehouse.work_hours_end),
+                }));
+                return this.warehouses
             } catch (error) {
                 console.log('GET warehouses: ', error);
                 this.error = error;

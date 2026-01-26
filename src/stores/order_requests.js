@@ -67,5 +67,20 @@ export const useOrderRequestStore = defineStore("order_requests", {
                 this.loading = false;
             }
         },
+        // DELETE
+        async deleteOrderRequest(id) {
+            this.loading = true;
+            try {
+                const response = await api.delete(`order-requests/${id}/`);
+                this.order_requests = this.order_requests.filter(order => order.id !== id);
+                return response.data
+            } catch (error) {
+                console.log('DELETE order request: ', error);
+                this.error = error;
+                throw error
+            } finally {
+                this.loading = false;
+            }
+        },
     },
 });

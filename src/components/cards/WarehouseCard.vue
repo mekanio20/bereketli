@@ -15,8 +15,8 @@
             </div>
 
             <span class="px-6 py-1.5 rounded-full text-sm font-medium transition-all duration-300"
-                :class="statusBadgeClass">
-                {{ warehouse.statusLabel }}
+                :class="[warehouse.isOpen ? 'bg-[#B3FFCE] text-[#009D37]' : 'bg-[#FFC1C0] text-[#B50200]']">
+                {{ warehouse.isOpen ? 'Açyk' : 'Ýapyk' }}
             </span>
         </div>
 
@@ -60,17 +60,6 @@ const props = defineProps({
     warehouse: {
         type: Object,
         required: true
-    }
-})
-
-const statusBadgeClass = computed(() => {
-    switch (props.warehouse.status) {
-        case 'open':
-            return 'bg-[#B3FFCE] text-[#009D37]'
-        case 'closed':
-            return 'bg-[#FFC1C0] text-[#B50200]'
-        default:
-            return 'bg-gray-100 text-gray-800'
     }
 })
 </script>

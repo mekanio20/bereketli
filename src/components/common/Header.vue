@@ -37,11 +37,32 @@
                 <div class="hidden lg:flex items-center"
                     :class="[autStore.isAuthenticated ? 'space-x-16' : 'space-x-4']">
                     <div v-if="autStore.isAuthenticated" class="flex items-center space-x-10">
-                        <router-link to="/order/history" class="nav_item flex items-center gap-3">
-                            <box_linear-icon :color="'currentColor'" />
-                            <span>Sargytlar</span>
-                        </router-link>
-                        <router-link to="/account" class="nav_item flex items-center gap-3">
+                        <div class="relative group">
+                            <router-link to="/order/history" class="nav_item flex items-center gap-2">
+                                <box_linear-icon :color="'currentColor'" />
+                                <span>Sargytlar</span>
+                                <chevron_down-icon :size="14" :color="'currentColor'"
+                                    class="transition-transform duration-200 group-hover:rotate-180" />
+                            </router-link>
+                            <div class="absolute left-28 -translate-x-1/2 top-full pt-3 min-w-[220px] opacity-0 translate-y-2 pointer-events-none
+                                       group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto
+                                       transition-all duration-200">
+                                <div
+                                    class="rounded-xl border border-gray-100 bg-white shadow-[0_12px_45px_rgba(0,0,0,0.1)] overflow-hidden">
+                                    <div class="flex flex-col divide-y divide-gray-50">
+                                        <router-link to="/order/history"
+                                            class="flex items-center justify-between px-4 py-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] transition-colors">
+                                            <span>Sargyt taryhy</span>
+                                        </router-link>
+                                        <router-link to="/order/requests"
+                                            class="flex items-center justify-between px-4 py-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] transition-colors">
+                                            <span>Tassyklanmadyk sargytlar</span>
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <router-link to="/account" class="nav_item flex items-center gap-2">
                             <profile_circle-icon :color="'currentColor'" />
                             <span>Hasap</span>
                         </router-link>

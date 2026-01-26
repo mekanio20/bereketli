@@ -32,8 +32,8 @@
                 </h3>
                 <span
                   class="px-6 py-1.5 rounded-full text-sm font-medium transition-all duration-300"
-                  :class="statusBadgeClass">
-                  {{ warehouse.statusLabel }}
+                  :class="[warehouse.isOpen ? 'bg-[#B3FFCE] text-[#009D37]' : 'bg-[#FFC1C0] text-[#B50200]']">
+                  {{ warehouse.isOpen ? 'Açyk' : 'Ýapyk' }}
                 </span>
               </div>
 
