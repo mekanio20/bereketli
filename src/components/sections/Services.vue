@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full space-y-10">
+    <div class="w-full space-y-10 pb-10">
         <h2 class="font-semibold text-[44px] text-[#222222]">
             Hyzmatlar
         </h2>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto px-4 sm:px-0">
+    <section class="container mx-auto px-4 sm:px-0">
         <h2 class="text-[44px] text-[#222222] font-semibold pb-10" :class="{'text-center' : isCenter}">{{ title }}</h2>
         <slot></slot>
         <!-- Accordion Container -->
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup>

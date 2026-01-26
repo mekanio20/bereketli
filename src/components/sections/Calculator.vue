@@ -22,9 +22,11 @@
         </div>
 
         <div class="flex justify-center space-x-5">
-            <button type="button" @click="handleCalculate"
-                class="bg-[#002645] text-white font-bold text-lg md:text-[20px] w-[380px] px-16 py-4 rounded-[100px] shadow-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none">
-                Hasaplamak
+            <button type="button" :disabled="calculatorStore.loading" @click="handleCalculate"
+                class="bg-[#002645] text-white font-bold text-lg md:text-[20px] w-[380px] px-16 py-4 rounded-[100px] shadow-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none flex items-center justify-center"
+                :class="[calculatorStore.loading ? 'opacity-50 cursor-not-allowed' : '']">
+                <animate_spin-icon v-if="calculatorStore.loading" />
+                <span>Hasaplamak</span>
             </button>
             <!-- Clear button -->
             <button type="button" @click="handleClear" class="text-[#002645] font-semibold hover:underline text-lg md:text-[20px]">
@@ -35,7 +37,8 @@
 </template>
 
 <script setup>
-import { normalizeToIdLabel } from '@/utils/normalizers/optionNormalizer.js'
+import { normalizeToIdLabel } from '@/utils/normalizers'
+import { cleanObject } from '@/utils/objects'
 const emits = defineEmits(['showResult'])
 
 const countryStore = useCountryStore()
@@ -76,11 +79,8 @@ const handleAddData = async (data) => {
 }
 
 const handleCalculate = async () => {
-    Object.keys(formData.value).forEach(key => {
-        if (Number(formData.value[key]) > 0) formData.value[key] = Number(formData.value[key])
-        else delete formData.value[key]
-    })
-    const result = await calculatorStore.calculate(formData.value)
+    const payload = cleanObject(formData.value)
+    const result = await calculatorStore.calculate(payload)
     emits('showResult', result)
 }
 

@@ -1,11 +1,12 @@
 <template>
     <div class="w-full overflow-hidden">
         <Hero @search="handleSearch" @scroll="scrollDown" />
-        <div class="relative pb-28">
+        <div class="relative pb-10">
             <MainContainer>
                 <div class="space-y-16 pt-20">
                     <Calculator @showResult="showResult" />
                     <Services />
+                    <Orders v-if="authStore.isAuthenticated" />
                 </div>
             </MainContainer>
 
@@ -60,23 +61,29 @@
 </template>
 
 <script setup>
-import { normalizePrices } from '@/utils/normalizers/optionNormalizer'
+import { usdToTmt } from "@/utils/numbers";
+import { normalizePrices } from '@/utils/normalizers'
 import background from '@/assets/images/background.webp'
+
+const authStore = useAuthStore()
+const faqStore = useFaqsStore()
+const newsStore = useNewsStore()
+const configStore = useConfigStore()
+
 const searchOpen = ref(false)
 const showResultModal = ref(false)
 const resultOptions = ref([])
 
-const faqStore = useFaqsStore()
-const newsStore = useNewsStore()
 const toggleAccordion = (index) => faqStore.toggleAccordion(index)
 const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
 const handleSearch = (value) => { searchOpen.value = true }
 
-const showResult = (results) => {
+const showResult = async (results) => {
     showResultModal.value = true
-    resultOptions.value = normalizePrices(results.prices)
-    console.log('Result options -> ', resultOptions.value);
-    
+    resultOptions.value = normalizePrices(results.prices).map((option) => ({
+        ...option,
+        price: usdToTmt(option.price, configStore.usd_rate)
+    }))
 }
 
 const scrollDown = () => {
@@ -89,5 +96,6 @@ const scrollDown = () => {
 onMounted(async () => {
     await faqStore.fetchFaqs()
     await newsStore.fetchNews()
+    await configStore.fetchConfig()
 })
 </script>

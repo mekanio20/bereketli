@@ -33,13 +33,13 @@
                 <!-- Warehouses Grid -->
                 <TransitionGroup name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <WarehouseCard v-for="warehouse in filteredWarehouses" :key="warehouse.id" :warehouse="warehouse"
+                    <WarehouseCard v-for="warehouse in warehouses" :key="warehouse.id" :warehouse="warehouse"
                         @click="handleWarehouseClick(warehouse)" />
                 </TransitionGroup>
 
                 <!-- Empty State -->
                 <Transition name="fade">
-                    <div v-if="filteredWarehouses.length === 0" class="text-center py-20">
+                    <div v-if="warehouses.length === 0" class="text-center py-20">
                         <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
                             <search-icon :size="40" />
                         </div>
@@ -56,127 +56,36 @@
 
 <script setup>
 import background from '@/assets/images/background.webp'
-const selectedWarehouse = ref({})
+import { debounce } from '@/utils/debounce'
+
+const warehouseStore = useWarehouseStore()
+
 const showModal = ref(false)
 const searchQuery = ref('')
-// Sample warehouses data
-const warehouses = ref([
-    {
-        id: 1,
-        name: 'Aşgabat',
-        status: 'open',
-        statusLabel: 'Açyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: true
-    },
-    {
-        id: 2,
-        name: 'Aşgabat',
-        status: 'open',
-        statusLabel: 'Açyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: true
-    },
-    {
-        id: 3,
-        name: 'Aşgabat',
-        status: 'closed',
-        statusLabel: 'Ýapyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: false
-    },
-    {
-        id: 4,
-        name: 'Aşgabat',
-        status: 'open',
-        statusLabel: 'Açyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: true
-    },
-    {
-        id: 5,
-        name: 'Aşgabat',
-        status: 'open',
-        statusLabel: 'Açyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: true
-    },
-    {
-        id: 6,
-        name: 'Aşgabat',
-        status: 'closed',
-        statusLabel: 'Ýapyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: false
-    },
-    {
-        id: 7,
-        name: 'Aşgabat',
-        status: 'closed',
-        statusLabel: 'Ýapyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: false
-    },
-    {
-        id: 8,
-        name: 'Aşgabat',
-        status: 'open',
-        statusLabel: 'Açyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: true
-    },
-    {
-        id: 9,
-        name: 'Aşgabat',
-        status: 'open',
-        statusLabel: 'Açyk',
-        city: 'Salgy',
-        address: 'Parahat(Mir) 2/1, 23',
-        workingDays: 'Du-Şen',
-        workingHours: '10:00 - 20:00',
-        isAvailable: true
-    }
-])
+const selectedWarehouse = ref({})
+const warehouses = computed(() => warehouseStore.warehouses)
 
-const filteredWarehouses = computed(() => {
-    if (!searchQuery.value) return warehouses.value
-
-    const query = searchQuery.value.toLowerCase()
-    return warehouses.value.filter(warehouse =>
-        warehouse.name.toLowerCase().includes(query) ||
-        warehouse.city.toLowerCase().includes(query) ||
-        warehouse.address.toLowerCase().includes(query)
-    )
-})
+const performSearch = async () => {
+  await warehouseStore.fetchWarehouses({
+    search: searchQuery.value || undefined
+  })
+}
 
 const handleWarehouseClick = (warehouse) => {
-    selectedWarehouse.value = warehouse
-    showModal.value = true
+  selectedWarehouse.value = warehouse
+  showModal.value = true
 }
+
+watch(
+  searchQuery,
+  debounce(() => {
+    performSearch()
+  }, 400)
+)
+
+onMounted(async () => {
+    await warehouseStore.fetchWarehouses()
+})
 </script>
 
 <style scoped>

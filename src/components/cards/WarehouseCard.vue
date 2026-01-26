@@ -29,7 +29,7 @@
                 <map_pin-icon />
             </div>
             <div>
-                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">{{ warehouse.city }}</p>
+                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">{{ warehouse.location }}</p>
                 <p class="text-base font-medium text-[#222222]">{{ warehouse.address }}</p>
             </div>
         </div>
@@ -42,7 +42,7 @@
             <div>
                 <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">Iş wagty</p>
                 <p class="text-base font-medium text-gray-900">
-                    {{ warehouse.workingDays }} / {{ warehouse.workingHours }}
+                    {{ warehouse.work_hours_start }} / {{ warehouse.work_hours_end }}
                 </p>
             </div>
         </div>

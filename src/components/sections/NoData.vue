@@ -1,12 +1,12 @@
 <template>
-    <div class="w-full">
+    <section class="w-full">
         <div class="flex flex-col items-center">
             <div class="w-[350px]">
                 <img src="/icons/empty_box.webp" class="w-full h-full object-cover">
             </div>
             <p class="text-[36px] text-[#838589] font-medium">{{ message }}</p>
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-    <div class="py-16 px-4 sm:px-6 lg:px-20 bg-white rounded-t-[40px]">
+    <section class="py-16 px-4 sm:px-6 lg:px-20 bg-white rounded-t-[40px]">
         <MainContainer>
             <!-- Header -->
             <div class="flex justify-between items-center mb-12 transition-all duration-700"
@@ -96,7 +96,7 @@
                 </swiper-slide>
             </swiper>
         </MainContainer>
-    </div>
+    </section>
 </template>
 
 <script setup>

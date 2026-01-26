@@ -46,13 +46,11 @@ const getTypeIcon = (type) => {
         case 'AIR':
             return 'plane-icon'
         case 'SEA':
-            return 'train_2-icon'
+            return 'mingcute_ship_line-icon'
         case 'LAND':
-            return ''
+            return 'truck_delivery-icon'
         case 'RAIL':
-            return ''
-        default:
-            return ''
+            return 'train_2-icon'
     }
 }
 </script>

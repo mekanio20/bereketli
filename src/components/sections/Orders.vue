@@ -1,5 +1,5 @@
 <template>
-    <section class="py-10">
+    <section>
         <MainContainer>
             <!-- Header -->
             <div class="mb-10 animate-fade-in">

@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
+import router from '@/router/index';
 import api from "@/api/index";
 import {
-  getAccessToken,
-  getRefreshToken,
   setAccessToken,
   setRefreshToken,
   clearTokens,
@@ -33,6 +32,8 @@ export const useAuthStore = defineStore("auth", {
         const response = await api.post("token/", data);
         setAccessToken(response.data.access);
         setRefreshToken(response.data.refresh);
+        this.access_token = response.data.access
+        this.refresh_token = response.data.refresh
         return response
       } catch (error) {
         console.log('POST Login: ', error);
@@ -70,13 +71,11 @@ export const useAuthStore = defineStore("auth", {
         this.loading = false;
       }
     },
-  },
-  logout() {
-    this.access_token = null;
-    this.refresh_token = null;
-    this.subdomain = null;
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("subdomain");
+    logout() {
+      clearTokens();
+      this.access_token = null;
+      this.refresh_token = null;
+      router.push({ name: "Home" });
+    },
   },
 });

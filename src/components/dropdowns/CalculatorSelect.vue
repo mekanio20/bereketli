@@ -3,14 +3,14 @@
         <!-- Trigger Button -->
         <button type="button" @click="isOpen = !isOpen" class="w-full relative bg-[#EBF3FD] font-medium px-6 py-[13px] rounded-[10px]
              flex items-center justify-between transition-all duration-300"
-            :class="[selectedOption ? 'text-[#222222]' : 'text-[#838589]', icon && 'pl-12']">
+            :class="[displayValue ? 'text-[#222222]' : 'text-[#838589]', icon && 'pl-12']">
 
             <!-- Icon -->
             <component v-if="icon" :is="icons[icon]" :color="'currentColor'" class="absolute left-6"
-                :class="[modelValue.length > 0 ? 'text-[#222222]' : 'text-[#838589]']" />
+                :class="[displayValue ? 'text-[#222222]' : 'text-[#838589]']" />
 
             <span class="text-base truncate max-w-[200px]">
-                {{ selectedOption?.name || placeholder }}
+                {{ displayValue }}
             </span>
 
             <chevron_down-icon :class="[
@@ -92,7 +92,8 @@
 </template>
 
 <script setup>
-import { normalizeToIdLabel } from '@/utils/normalizers/optionNormalizer.js'
+import { normalizeToIdLabel } from '@/utils/normalizers'
+import { formattedMeasurement, findArrayItem } from '@/utils/strings'
 const itemCategoryStore = useItemCategoryStore()
 const measurementStore = useMeasurementStore()
 const { icons } = useIcons()
@@ -115,17 +116,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue', 'change'])
+
+/* ---------------- STATE ---------------- */
+const wrapper = ref(null)
+const isOpen = ref(false)
+const search = ref('')
 const activeTab = ref(1)
-const tabs = [
-    {
-        id: 1,
-        label: 'Takmynan'
-    },
-    {
-        id: 2,
-        label: 'Takyk'
-    }
-]
+
 const measurementOptions = ref([])
 const itemTypeOptions = ref([])
 
@@ -138,54 +135,83 @@ const formData = ref({
     height: null
 })
 
-/* ---------------- STATE ---------------- */
-const search = ref('')
-const isOpen = ref(false)
-const wrapper = ref(null)
+const tabs = [
+    { id: 1, label: 'Takmynan' },
+    { id: 2, label: 'Takyk' }
+]
 
 /* ---------------- COMPUTED ---------------- */
-const selectedOption = computed(() =>
-    props.options.find(o => o.id === props.modelValue) || null
-)
+const selectedMeasurementLabel = computed(() => {
+  if (!formData.value.measurement) return ''
+  return (
+    findArrayItem(
+      measurementOptions.value,
+      'id',
+      formData.value.measurement
+    )?.label || ''
+  )
+})
+
+const displayValue = computed(() => {
+  if (
+    props.modelValue === null ||
+    props.modelValue === undefined ||
+    props.modelValue === false ||
+    (typeof props.modelValue === 'string' && !props.modelValue.trim())
+  ) {
+    return props.placeholder
+  }
+
+  return selectedMeasurementLabel.value
+    ? `${props.modelValue} ${selectedMeasurementLabel.value}`
+    : props.modelValue
+})
 
 const filteredOptions = computed(() => {
     if (!props.isSearch || !search.value) return props.options
-
     return props.options.filter(option =>
         option.name.toLowerCase().includes(search.value.toLowerCase())
     )
 })
 
 /* ---------------- METHODS ---------------- */
+
+// Takmynan
+const selectTakmynan = option => {
+  emit('update:modelValue', option.id)
+
+  formData.value = {
+    item_type: option.id,
+    width: option.width_m,
+    height: option.height_m,
+    length: option.length_m,
+    weight: option.weight_kg,
+    measurement: option.measurement
+  }
+  
+  emitChange(formData.value)
+}
+
+// Takyk
 const selectTakyk = () => {
-    emit('change', {
-        item_type: formData.value.item_type,
-        width: formData.value.width,
-        height: formData.value.height,
-        length: formData.value.length,
-        weight: formData.value.weight,
-        measurement: formData.value.measurement
-    })
-    isOpen.value = false
-    search.value = ''
+  emitChange({
+    item_type: formData.value.item_type,
+    width: formData.value.width,
+    height: formData.value.height,
+    length: formData.value.length,
+    weight: formData.value.weight,
+    measurement: formData.value.measurement
+  })
 }
 
-const selectTakmynan = (value) => {
-    emit('update:modelValue', value.id)
-    emit('change', {
-        item_size: value.id,
-        width: value.width_m,
-        height: value.height_m,
-        length: value.length_m,
-        weight: formData.value.weight,
-        measurement: value.measurement
-    })
-    isOpen.value = false
-    search.value = ''
+const closeDropdown = () => {
+  isOpen.value = false
+  search.value = ''
 }
 
-const formattedMeasurement = (option) => {
-    return `(${option.width_m}x${option.height_m}x${option.length_m} cm)`
+const emitChange = payload => {
+  emit('change', payload)
+  closeDropdown()
 }
 
 /* ---------------- CLICK OUTSIDE ---------------- */
@@ -196,18 +222,18 @@ const handleClickOutside = (e) => {
 }
 
 onMounted(async () => {
-    await fetchData()
+    await Promise.all([
+        measurementStore.fetchMeasurements(),
+        itemCategoryStore.fetchItemCategories()
+    ])
+
+    itemTypeOptions.value = normalizeToIdLabel(itemCategoryStore.item_categories)
+    measurementOptions.value = normalizeToIdLabel(measurementStore.measurements)
+
     document.addEventListener('click', handleClickOutside)
 })
 
 onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside)
 })
-
-const fetchData = async () => {
-    await measurementStore.fetchMeasurements()
-    await itemCategoryStore.fetchItemCategories()
-    itemTypeOptions.value = normalizeToIdLabel(itemCategoryStore.item_categories)
-    measurementOptions.value = normalizeToIdLabel(measurementStore.measurements)
-}
 </script>

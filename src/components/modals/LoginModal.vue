@@ -70,16 +70,24 @@
                                             </div>
                                         </div>
 
-                                        <!-- Name Field -->
+                                        <!-- Password Field -->
                                         <div>
-                                            <label for="name" class="block text-sm text-[#222222] mb-3">
-                                                Adyňyz
-                                            </label>
-                                            <input id="name" v-model="formData.name" type="text"
-                                                class="w-full px-4 py-4 bg-[#EBF3FD] rounded-xl outline-none transition-all duration-300 text-[#222222]"
-                                                :class="{ 'border-red-400': errors.name }" />
+                                            <label id="password" class="inline-block mb-3 text-[#222222]">Açar
+                                                sözi</label>
+                                            <div class="relative">
+                                                <form-input :label="'password'" v-model="formData.password"
+                                                    :type="passwordType" placeholder="Açar sözi" />
+                                                <div
+                                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
+                                                    <eye_hide-icon v-if="passwordType === 'password'"
+                                                        @click="passwordType = 'text'" />
+                                                    <eye-icon v-if="passwordType === 'text'"
+                                                        @click="passwordType = 'password'" />
+                                                </div>
+                                            </div>
                                             <Transition name="fade">
-                                                <p v-if="errors.name" class="mt-2 text-sm text-red-600">{{ errors.name
+                                                <p v-if="errors.password" class="mt-2 text-sm text-red-600">{{
+                                                    errors.password
                                                 }}</p>
                                             </Transition>
                                         </div>
@@ -101,16 +109,23 @@
                                             </Transition>
                                         </div>
 
-                                        <!-- Name Field -->
                                         <div>
-                                            <label for="name-email" class="block text-sm text-[#222222] mb-3">
-                                                Adyňyz
-                                            </label>
-                                            <input id="name-email" v-model="formData.name" type="text"
-                                                class="w-full px-4 py-4 bg-[#EBF3FD] outline-none rounded-xl transition-all duration-300 text-[#222222]"
-                                                :class="{ 'border-red-400': errors.name }" />
+                                            <label id="password" class="inline-block mb-3 text-[#222222]">Açar
+                                                sözi</label>
+                                            <div class="relative">
+                                                <form-input :label="'password'" v-model="formData.password"
+                                                    :type="passwordType" placeholder="Açar sözi" />
+                                                <div
+                                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
+                                                    <eye_hide-icon v-if="passwordType === 'password'"
+                                                        @click="passwordType = 'text'" />
+                                                    <eye-icon v-if="passwordType === 'text'"
+                                                        @click="passwordType = 'password'" />
+                                                </div>
+                                            </div>
                                             <Transition name="fade">
-                                                <p v-if="errors.name" class="mt-2 text-sm text-red-600">{{ errors.name
+                                                <p v-if="errors.password" class="mt-2 text-sm text-red-600">{{
+                                                    errors.password
                                                 }}</p>
                                             </Transition>
                                         </div>
@@ -148,27 +163,28 @@
 import authImage from '@/assets/images/auth.webp'
 import background from '@/assets/images/modal.webp'
 const emit = defineEmits(['close', 'submit', 'redirect'])
-const authStore = useAuthStore()
 const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false
     }
 })
+const authStore = useAuthStore()
 
 const activeTab = ref('phone')
+const passwordType = ref('password')
 const isSubmitting = ref(false)
 
 const formData = reactive({
     phone: '+993',
     email: '',
-    name: ''
+    password: ''
 })
 
 const errors = reactive({
     phone: '',
     email: '',
-    name: ''
+    password: ''
 })
 
 const validateForm = () => {
@@ -177,7 +193,7 @@ const validateForm = () => {
     // Reset errors
     errors.phone = ''
     errors.email = ''
-    errors.name = ''
+    errors.password = ''
 
     if (activeTab.value === 'phone') {
         if (!formData.phone || formData.phone === '+993') {
@@ -197,8 +213,8 @@ const validateForm = () => {
         }
     }
 
-    if (!formData.name || formData.name.trim().length < 2) {
-        errors.name = 'Adyňyzy giriziň'
+    if (formData.password.length < 6) {
+        errors.password = 'Açar sözi 6 harpdan uly bolmaly!'
         isValid = false
     }
 
@@ -211,11 +227,10 @@ const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        await authStore.register({
-            idendifier: activeTab.value === 'phone' ? formData.phone : formData.email,
-            name: formData.name
+        await authStore.login({
+            identifier: activeTab.value === 'phone' ? formData.phone : formData.email,
+            password: formData.password
         })
-
         closeModal()
     } catch (error) {
         console.error('Submission error:', error)

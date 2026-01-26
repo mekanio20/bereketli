@@ -177,6 +177,9 @@
 
 <script setup>
 import background from '@/assets/images/background.webp'
+
+const authStore = useAuthStore()
+
 const activeSection = ref('info')
 const isSaving = ref(false)
 const isChangingPassword = ref(false)
@@ -235,10 +238,9 @@ const handleLogout = () => {
     showLogoutModal.value = true
 }
 
-const confirmLogout = () => {
-    console.log('Logging out...')
+const confirmLogout = async () => {
+    await authStore.logout()
     showLogoutModal.value = false
-    // Redirect to login
 }
 
 const handleDeleteAccount = () => {

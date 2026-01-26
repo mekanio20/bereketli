@@ -61,7 +61,7 @@
                 </div>
                 <div class="flex-1">
                   <p class="text-base font-medium text-[#222222]">
-                   {{ warehouse.workingDays }} / {{ warehouse.workingHours }}
+                   {{ warehouse.work_hours_start }} / {{ warehouse.work_hours_end }}
                   </p>
                 </div>
               </div>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="flex-1 space-y-1">
                   <p class="text-base font-medium text-[#222222]">
-                    +99361616161
+                    {{ warehouse.phone }}
                   </p>
                 </div>
               </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="flex-1">
                   <p class="text-base font-medium text-[#222222]">
-                    bereketlilogistika@gmail.com
+                    {{ warehouse.email }}
                   </p>
                 </div>
               </div>
