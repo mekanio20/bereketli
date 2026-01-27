@@ -184,18 +184,34 @@
 
                     <!-- Mobile User Actions -->
                     <div v-if="autStore.isAuthenticated" class="space-y-3">
-                        <router-link to="/order/history" @click="mobileMenuOpen = false"
-                            class="flex items-center gap-3 py-3 px-3 text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors">
-                            <box_linear-icon :color="'currentColor'" />
-                            <span class="font-medium">Sargytlar</span>
-                        </router-link>
+                        <div>
+                            <button @click="toggleOrder = !toggleOrder"
+                                class="w-full flex items-center justify-between py-3 text-[#222222] hover:text-[#F98900] rounded-lg transition-colors">
+                                <div class="flex items-center gap-2">
+                                    <box_linear-icon :color="'currentColor'" />
+                                    <span class="font-medium">Sargytlar</span>
+                                </div>
+                                <chevron_down-icon :size="16" :color="'currentColor'"
+                                    :class="{ 'rotate-180 transition-transform duration-200': toggleOrder }" />
+                            </button>
+                            <div v-if="toggleOrder" class="pl-4 flex flex-col space-y-1 pb-2">
+                                <router-link to="/order/history" @click="mobileMenuOpen = false"
+                                    class="w-full text-left py-2.5 px-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors">
+                                    Sargyt taryhy
+                                </router-link>
+                                <router-link to="/order/requests" @click="mobileMenuOpen = false"
+                                    class="w-full text-left py-2.5 px-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors">
+                                    Tassyklanmadyk sargytlar
+                                </router-link>
+                            </div>
+                        </div>
                         <router-link to="/account" @click="mobileMenuOpen = false"
-                            class="flex items-center gap-3 py-3 px-3 text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors">
+                            class="flex items-center gap-3 py-3 text-[#222222] hover:text-[#F98900] rounded-lg transition-colors">
                             <profile_circle-icon :color="'currentColor'" />
                             <span class="font-medium">Hasap</span>
                         </router-link>
                         <button @click="openNotification = !openNotification"
-                            class="w-full flex items-center gap-3 py-3 px-3 text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors relative">
+                            class="w-full flex items-center gap-3 py-3 text-[#222222] hover:text-[#F98900] rounded-lg transition-colors relative">
                             <notification-icon :color="'currentColor'" />
                             <span class="font-medium">Bildirişler</span>
                             <span v-if="false" class="absolute left-8 top-2.5 w-2 h-2 bg-[#FF0000] rounded-full"></span>
@@ -203,9 +219,9 @@
                     </div>
 
                     <!-- Mobile Language Selector -->
-                    <div class="">
+                    <div>
                         <button @click="toggleMobileLangDropdown"
-                            class="w-full flex items-center justify-between py-3 px-3 text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors">
+                            class="w-full flex items-center justify-between py-3 text-[#222222] hover:text-[#F98900] rounded-lg transition-colors">
                             <div class="flex items-center gap-2">
                                 <lang-icon :color="'currentColor'" />
                                 <span class="font-medium">Dil</span>
@@ -246,6 +262,7 @@ const appStore = useAppStore()
 const openNotification = ref(false)
 const mobileMenuOpen = ref(false)
 const mobileLangDropdown = ref(false)
+const toggleOrder = ref(false)
 const mobileDropdowns = ref({})
 
 const navbar_menu = ref([
@@ -263,7 +280,7 @@ const navbar_menu = ref([
         name: 'Sargyt ugratmak',
         link: '#',
         children: [
-            { name: 'Simple Order', link: '/order/request/new' },
+            { name: 'Simple Order', link: '/order/request/simple' },
             { name: 'Advanced Order', link: '/order/request/advanced' },
         ]
     },
@@ -275,7 +292,7 @@ const navbar_menu = ref([
 
 const langItems = ref([
     { id: 1, name: 'English', code: 'en', isActive: false },
-    { id: 2, name: 'Turkmen', code: 'tm', isActive: true },
+    { id: 2, name: 'Turkmen', code: 'tk', isActive: true },
 ])
 
 const langRef = ref(null)

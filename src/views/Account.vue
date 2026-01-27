@@ -19,7 +19,8 @@
                                     :class="activeSection === 'info' ? 'bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700' : 'text-[#222222] hover:bg-gray-50'">
                                     <div class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300"
                                         :class="activeSection === 'info' ? 'bg-gradient-to-br from-orange-400 to-orange-500' : 'bg-gray-100'">
-                                        <edit-icon :class="activeSection === 'info' ? 'text-white' : 'text-[#838589]'" />
+                                        <edit-icon
+                                            :class="activeSection === 'info' ? 'text-white' : 'text-[#838589]'" />
                                     </div>
                                     <span class="font-semibold">Hasap maglumatlary</span>
                                 </button>
@@ -34,14 +35,15 @@
                                         :class="activeSection === 'password'
                                             ? 'bg-gradient-to-br from-blue-400 to-blue-500'
                                             : 'bg-gray-100'">
-                                        <key-icon :class="activeSection === 'password' ? 'text-white' : 'text-[#838589]'" />
+                                        <key-icon
+                                            :class="activeSection === 'password' ? 'text-white' : 'text-[#838589]'" />
                                     </div>
                                     <span class="font-semibold">Açar sözüni täzelemek</span>
                                 </button>
 
                                 <div class="pt-4 mt-4 border-t border-gray-200">
                                     <!-- Logout -->
-                                    <button @click="handleLogout"
+                                    <button @click="showLogoutModal = true"
                                         class="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-300 group">
                                         <div
                                             class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center group-hover:bg-red-200 transition-all duration-300">
@@ -51,7 +53,7 @@
                                     </button>
 
                                     <!-- Delete Account -->
-                                    <button @click="handleDeleteAccount"
+                                    <button @click="showDeleteModal = true"
                                         class="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-300 group mt-2">
                                         <div
                                             class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center group-hover:bg-red-200 transition-all duration-300">
@@ -82,26 +84,27 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
                                             <label class="block text-sm font-medium text-[#838589] mb-2">Adyňyz</label>
-                                            <form-input v-model="profileData.firstName" type="text" />
+                                            <form-input v-model="profileData.first_name" type="text" />
                                         </div>
                                         <div>
                                             <label
                                                 class="block text-sm font-medium text-[#838589] mb-2">Familiýaňyz</label>
-                                            <form-input v-model="profileData.lastName" type="text" />
+                                            <form-input v-model="profileData.last_name" type="text" />
                                         </div>
                                     </div>
 
                                     <!-- Company Name -->
                                     <div>
-                                        <label class="block text-sm font-medium text-[#838589] mb-2">Kompaniýaňyz</label>
+                                        <label
+                                            class="block text-sm font-medium text-[#838589] mb-2">Kompaniýaňyz</label>
                                         <form-input v-model="profileData.company" type="text" />
                                     </div>
 
-                                    <!-- Phone Number -->
+                                    <!-- phone_number Number -->
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Telefon
                                             belgiňiz</label>
-                                        <form-input v-model="profileData.phone" type="tel" />
+                                        <form-input v-model="profileData.phone_number" type="tel" />
                                     </div>
 
                                     <!-- Save Button -->
@@ -127,25 +130,37 @@
                                 </div>
 
                                 <form @submit.prevent="handleChangePassword" class="space-y-6">
-                                    <!-- Current Password -->
-                                    <div>
-                                        <label class="block text-sm font-medium text-[#838589] mb-2">Häzirki açar
-                                            sözi</label>
-                                        <form-input v-model="passwordData.current" type="password" />
-                                    </div>
-
                                     <!-- New Password -->
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Täze açar
                                             sözi</label>
-                                        <form-input v-model="passwordData.new" type="password" />
+                                        <div class="relative">
+                                            <form-input :label="'password'" v-model="passwordData.new"
+                                                :type="passwordType" placeholder="" />
+                                            <div
+                                                class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
+                                                <eye_hide-icon v-if="passwordType === 'password'"
+                                                    @click="passwordType = 'text'" />
+                                                <eye-icon v-if="passwordType === 'text'"
+                                                    @click="passwordType = 'password'" />
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Confirm Password -->
                                     <div>
                                         <label class="block text-sm font-medium text-[#838589] mb-2">Täze açar sözüni
                                             tassyklaň</label>
-                                        <form-input v-model="passwordData.confirm" type="password" />
+                                        <div class="relative">
+                                            <form-input v-model="passwordData.confirm" :type="confirmPasswordType" placeholder="" />
+                                            <div
+                                                class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
+                                                <eye_hide-icon v-if="confirmPasswordType === 'password'"
+                                                    @click="confirmPasswordType = 'text'" />
+                                                <eye-icon v-if="confirmPasswordType === 'text'"
+                                                    @click="confirmPasswordType = 'password'" />
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Change Password Button -->
@@ -167,7 +182,8 @@
 
         <!-- Confirmation Modals -->
         <ConfirmModal :is-open="showLogoutModal" title="Ulgamdan çykmak" message="Ulgamdan çykmak isleýärsiňizmi?"
-            confirm-text="Hawa, çyk" type="danger" cancel-text="Ýok" @confirm="confirmLogout" @cancel="showLogoutModal = false" />
+            confirm-text="Hawa, çyk" type="danger" cancel-text="Ýok" @confirm="confirmLogout"
+            @cancel="showLogoutModal = false" />
 
         <ConfirmModal :is-open="showDeleteModal" title="Hasaby pozmak"
             message="Hasabyňyzy pozmak isleýärsiňizmi? Bu hereketi yzyna gaýtaryp bolmaýar." confirm-text="Hawa, poz"
@@ -179,22 +195,25 @@
 import background from '@/assets/images/background.webp'
 
 const authStore = useAuthStore()
+const userStore = useUserStore()
 
-const activeSection = ref('info')
 const isSaving = ref(false)
+const activeSection = ref('info')
 const isChangingPassword = ref(false)
 const showLogoutModal = ref(false)
 const showDeleteModal = ref(false)
+const passwordType = ref('password')
+const confirmPasswordType = ref('password')
 
 const profileData = reactive({
-    firstName: 'Aybibi',
-    lastName: 'Ataýewa',
-    company: 'Bereketli Logistika',
-    phone: '+993 616161'
+    id: null,
+    first_name: '',
+    last_name: '',
+    company: '',
+    phone_number: ''
 })
 
 const passwordData = reactive({
-    current: '',
     new: '',
     confirm: ''
 })
@@ -202,9 +221,7 @@ const passwordData = reactive({
 const handleSaveProfile = async () => {
     isSaving.value = true
     try {
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        console.log('Profile saved:', profileData)
-        // Show success message
+        await userStore.updateUser(profileData)
     } catch (error) {
         console.error('Error saving profile:', error)
     } finally {
@@ -220,10 +237,11 @@ const handleChangePassword = async () => {
 
     isChangingPassword.value = true
     try {
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        console.log('Password changed')
+        await userStore.updateUser({
+            id: userStore.user.id,
+            password: passwordData.new
+        })
         // Reset form
-        passwordData.current = ''
         passwordData.new = ''
         passwordData.confirm = ''
         // Show success message
@@ -234,24 +252,25 @@ const handleChangePassword = async () => {
     }
 }
 
-const handleLogout = () => {
-    showLogoutModal.value = true
-}
-
 const confirmLogout = async () => {
     await authStore.logout()
     showLogoutModal.value = false
 }
 
-const handleDeleteAccount = () => {
-    showDeleteModal.value = true
+const confirmDelete = async () => {
+    await userStore.deleteUser(userStore.user.id)
+    showDeleteModal.value = false
 }
 
-const confirmDelete = () => {
-    console.log('Deleting account...')
-    showDeleteModal.value = false
-    // Delete account and redirect
-}
+onMounted(async () => {
+    await userStore.getUser()
+    profileData.id = userStore.user.id
+    profileData.first_name = userStore.user.first_name
+    profileData.last_name = userStore.user.last_name
+    profileData.company = userStore.user.company
+    profileData.phone_number = userStore.user.phone_number
+    localStorage.setItem('user_id', userStore.user.id)
+})
 </script>
 
 <style scoped>

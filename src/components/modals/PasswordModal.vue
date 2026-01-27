@@ -141,9 +141,9 @@ const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        const register_data = JSON.parse(sessionStorage.getItem('register_data'))
+        const register_data = JSON.parse(localStorage.getItem('register_data'))
         register_data.password = formData.password
-        sessionStorage.setItem('register_data', JSON.stringify(register_data))
+        localStorage.setItem('register_data', JSON.stringify(register_data))
         await authStore.sendOtp({
             email: register_data.email,
             phone_number: register_data.phone_number,

@@ -109,7 +109,7 @@ const props = defineProps({
     },
     placeholder: {
         type: String,
-        default: 'Saýlaň'
+        default: ''
     },
     isSearch: Boolean,
     icon: String

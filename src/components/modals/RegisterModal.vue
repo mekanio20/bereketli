@@ -210,7 +210,7 @@ const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        sessionStorage.setItem('register_data', JSON.stringify({
+        localStorage.setItem('register_data', JSON.stringify({
             identifier: activeTab.value === 'phone' ? formData.phone : formData.email,
             phone_number: formData.phone,
             email: formData.email,

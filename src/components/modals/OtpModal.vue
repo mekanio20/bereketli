@@ -94,9 +94,6 @@ const timerInterval = ref(null)
 const isTimerActive = ref(false)
 const codeInputs = ref(["", "", "", "", "", ""])
 const inputRefs = ref([]);
-const register_data = ref(
-  JSON.parse(sessionStorage.getItem('register_data'))
-)
 
 const formattedTime = computed(() => {
     const minutes = Math.floor(timer.value / 60);
@@ -113,9 +110,8 @@ const handleSubmit = async () => {
     if (isCodeComplete.value) {
         isSubmitting.value = true
         try {
-            console.log('Response -> ', register_data.value);
-            
-            const response = await authStore.register({ ...register_data.value, otp: [...codeInputs.value].join('') })
+            const register_data = JSON.parse(localStorage.getItem('register_data'))
+            const response = await authStore.register({ ...register_data, otp: [...codeInputs.value].join('') })
             if (response.status === "ok") {
                 closeModal()
                 emit('success', true)
@@ -141,9 +137,11 @@ const startTimer = () => {
 }
 
 const resetTimer = async () => {
+    const register_data = JSON.parse(localStorage.getItem('register_data'))
+
     await authStore.sendOtp({
-        email: register_data.value.email,
-        phone_number: register_data.value.phone_number,
+        email: register_data.email,
+        phone_number: register_data.phone_number,
         purpose: "registration"
     })
     timer.value = 60;

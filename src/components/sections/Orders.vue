@@ -64,6 +64,7 @@
 </template>
 
 <script setup>
+const orderStore = useOrderStore()
 const { icons } = useIcons();
 const tabs = ref([
     { id: 'all', label: 'Ählisi', icon: 'box_linear-icon' },
@@ -153,6 +154,10 @@ const handleOrderClick = (order) => {
     console.log('Order clicked:', order)
     // Navigate to order details or open modal
 }
+
+onMounted(async () => {
+    await orderStore.fetchOrders()
+})
 </script>
 
 <style scoped>

@@ -15,7 +15,7 @@ const api = axios.create({
   xsrfHeaderName: "X-CSRFToken",
   headers: {
     "Content-Type": "application/json",
-    "Accept-Language": localStorage.getItem("lang") || "tm",
+    "Accept-Language": localStorage.getItem("lang") || "tk",
   },
   withCredentials: true,
 });

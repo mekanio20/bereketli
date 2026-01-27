@@ -27,21 +27,22 @@
                             <div class="flex items-end space-x-6 mb-4">
                                 <!-- From Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.fromLocation"
-                                        :options="['Aşgabat', 'Mary', 'Türkmenabat']" placeholder="Nirden"
+                                    <SimpleSelect v-model="formData.from_country"
+                                        :options="nirdenOptions" @change="selectedCountry('nirden', $event)" placeholder="Nirden"
                                         :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                                 <!-- Swap Button -->
                                 <div class="flex-shrink-0">
                                     <button @click="swapLocations"
-                                        class="w-[50px] h-[50px] bg-custom-gradient rounded-full -space-x-1 flex items-center justify-center transform hover:rotate-180 transition-all duration-300">
+                                        class="w-[50px] h-[50px] bg-custom-gradient rounded-full -space-x-1 flex items-center justify-center transform transition-all duration-300"
+                                        :class="[isSwap ? 'rotate-180' : '']">
                                         <arrow_group-icon class="rotate-[90deg]" />
                                     </button>
                                 </div>
                                 <!-- To Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.toLocation"
-                                        :options="['Aşgabat', 'Mary', 'Türkmenabat']" placeholder="Nirä"
+                                    <SimpleSelect v-model="formData.to_country"
+                                        :options="niraOptions" @change="selectedCountry('nira', $event)" placeholder="Nirä"
                                         :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                             </div>
@@ -54,16 +55,16 @@
                                 class="bg-[#EBF3FD] w-full px-[30px] py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
                         </FormContainer>
 
-                        <!-- Cargo Type Section -->
+                        <!-- Categories Section -->
                         <FormContainer>
                             <h2 class="form_title mb-8">Ýüküň görnüşi</h2>
                             <div class="flex flex-wrap gap-3">
-                                <button v-for="type in cargoTypes" :key="type" @click="toggleCargoType(type)"
+                                <button v-for="(item, index) in itemCategoryStore.item_categories" :key="index" @click="toggleCargoType(item.id)"
                                     class="px-6 py-2.5 rounded-[14px] transition-all duration-300 transform hover:scale-105"
-                                    :class="formData.selectedCargoTypes.includes(type)
+                                    :class="formData.categories.includes(item.id)
                                         ? 'bg-[#002244] font-bold text-white shadow-lg'
                                         : 'bg-[#EBF3FD] text-[#222222] font-medium hover:bg-[#ddebfd]'">
-                                    {{ type }}
+                                    {{ item.name }}
                                 </button>
                             </div>
                         </FormContainer>
@@ -73,13 +74,13 @@
                             <h2 class="form_title mb-8">Eltip bermek görnüşi</h2>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <button v-for="transport in transportTypes" :key="transport.id"
-                                    @click="formData.selectedTransport = transport.id"
+                                    @click="formData.transportation_type = transport.id"
                                     class="flex items-center justify-center space-x-1 px-10 py-[13px] gap-2 rounded-[14px] transition-all duration-300 transform hover:scale-105"
-                                    :class="formData.selectedTransport === transport.id
+                                    :class="formData.transportation_type === transport.id
                                         ? 'bg-[#002244] font-bold text-white shadow-lg'
                                         : 'bg-[#EBF3FD] text-[#222222] font-medium  hover:bg-[#ddebfd]'">
                                     <component :is="icons[transport.icon]" :size="24"
-                                        :color="formData.selectedTransport === transport.id ? 'white' : '#222222'" />
+                                        :color="formData.transportation_type === transport.id ? 'white' : '#222222'" />
                                     <span class="text-sm">{{ transport.label }}</span>
                                 </button>
                             </div>
@@ -159,31 +160,22 @@
 <script setup>
 import background from '@/assets/images/background.webp'
 const { icons } = useIcons()
+const isSwap = ref(false)
 const showModal = ref(false)
-const cargoTypes = ref([
-    'Elektronika',
-    'Kosmetologiýa',
-    'Derman',
-    'Med tehnika',
-    'Mebel',
-    'Öý goslary',
-    'Eşik',
-    'Başgalar'
-])
 
 const transportTypes = ref([
-    { id: 'sea', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
-    { id: 'air', label: 'Uçar', icon: 'plane-icon' },
-    { id: 'road', label: 'Ulag', icon: 'truck_delivery-icon' },
-    { id: 'rail', label: 'Otly', icon: 'train_2-icon' }
+    { id: 'SEA', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
+    { id: 'AIR', label: 'Uçar', icon: 'plane-icon' },
+    { id: 'LAND', label: 'Ulag', icon: 'truck_delivery-icon' },
+    { id: 'RAIL', label: 'Otly', icon: 'train_2-icon' }
 ])
 
 const formData = reactive({
-    fromLocation: '',
-    toLocation: '',
+    from_country: '',
+    to_country: '',
     description: '',
-    selectedCargoTypes: [],
-    selectedTransport: '',
+    categories: [],
+    transportation_type: '',
     pickupDate: '',
     deliveryDate: '',
     items: [
@@ -192,17 +184,18 @@ const formData = reactive({
 })
 
 const swapLocations = () => {
-    const temp = formData.fromLocation
-    formData.fromLocation = formData.toLocation
-    formData.toLocation = temp
+    isSwap.value = !isSwap.value
+    const temp = formData.from_country
+    formData.from_country = formData.to_country
+    formData.to_country = temp
 }
 
-const toggleCargoType = (type) => {
-    const index = formData.selectedCargoTypes.indexOf(type)
+const toggleCargoType = (id) => {
+    const index = formData.categories.indexOf(id)
     if (index > -1) {
-        formData.selectedCargoTypes.splice(index, 1)
+        formData.categories.splice(index, 1)
     } else {
-        formData.selectedCargoTypes.push(type)
+        formData.categories.push(id)
     }
 }
 
@@ -218,6 +211,34 @@ const editItem = (index) => {
 const submitOrder = () => {
     console.log('Submit order:', formData)
 }
+
+
+// 
+
+import { normalizeToIdLabel } from '@/utils/normalizers'
+
+const countryStore = useCountryStore()
+const itemCategoryStore = useItemCategoryStore()
+
+const nirdenOptions = ref([])
+const niraOptions = ref([])
+
+const selectedCountry = async (type, data) => {
+    if (type === 'nirden') {
+        const countries = await countryStore.fetchCountries({ from_country: data.id })
+        niraOptions.value = normalizeToIdLabel(countries)
+    } else if (type === 'nira') {
+        const countries = await countryStore.fetchCountries({ to_country: data.id })
+        nirdenOptions.value = normalizeToIdLabel(countries)
+    }
+}
+
+onMounted(async () => {
+    await itemCategoryStore.fetchItemCategories()
+    const countries = await countryStore.fetchCountries()
+    nirdenOptions.value = normalizeToIdLabel(countries)
+    niraOptions.value = normalizeToIdLabel(countries)
+})
 </script>
 
 <style scoped>
