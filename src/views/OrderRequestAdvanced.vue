@@ -1,5 +1,5 @@
 <template>
-    <section class="overflow-x-hidden relative">
+    <section class="relative">
         <!-- Absolute -->
         <div class="absolute -z-10 w-full h-full bg-[#F3F8FF]">
             <img :src="background" class="w-full h-full object-contain" />
@@ -214,7 +214,7 @@
                     </div>
 
                     <!-- Right Column -->
-                    <div class="w-[35%] space-y-6">
+                    <div class="w-[35%] space-y-6 self-start sticky top-32">
                         <!-- Date Section -->
                         <FormContainer>
                             <h2 class="text-xl font-bold text-gray-900 mb-8">Eltip bermek möhleti</h2>

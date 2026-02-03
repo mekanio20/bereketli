@@ -169,6 +169,7 @@ const props = defineProps({
         default: false
     }
 })
+
 const authStore = useAuthStore()
 
 const activeTab = ref('phone')

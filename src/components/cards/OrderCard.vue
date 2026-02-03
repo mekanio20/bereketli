@@ -6,18 +6,18 @@
             <!-- Header -->
             <div class="flex items-center justify-between mb-8">
                 <h3 class="text-[20px] font-bold text-[#222222] group-hover:text-[#002244] transition-colors">
-                    {{ order.trackingNumber }}
+                    {{ order.code }}
                 </h3>
                 <span class="px-5 py-[7px] rounded-full text-sm font-medium" :class="statusBadgeClass">
-                    {{ order.statusLabel }}
+                    {{ getStatusLabel(order.status) }}
                 </span>
             </div>
 
             <!-- Route Information -->
             <div class="flex items-center justify-between mb-6">
                 <div class="flex-1">
-                    <p class="text-sm text-[#838589] mb-1">{{ order.fromDate }}</p>
-                    <p class="text-lg font-medium text-[#222222]">{{ order.fromLocation }}</p>
+                    <p class="text-sm text-[#838589] mb-1">{{ order.date_shipment_expected }}</p>
+                    <p class="text-lg font-medium text-[#222222]">{{ order.from_country?.name }}</p>
                 </div>
 
                 <div class="flex-shrink-0 mx-4">
@@ -25,8 +25,8 @@
                 </div>
 
                 <div class="flex-1 text-right">
-                    <p class="text-sm text-[#838589] mb-1">{{ order.toDate }}</p>
-                    <p class="text-lg font-medium text-[#222222]">{{ order.toLocation }}</p>
+                    <p class="text-sm text-[#838589] mb-1">{{ order.date_arrival_expected }}</p>
+                    <p class="text-lg font-medium text-[#222222]">{{ order.to_country?.name }}</p>
                 </div>
             </div>
 
@@ -35,17 +35,17 @@
                 <div class="w-full flex items-center justify-between bg-[#DADADA] rounded-full h-[2px] relative">
                     <div class="w-3 h-3 rounded-full bg-custom-gradient z-10"></div>
                     <div class="w-3 h-3 rounded-full z-10"
-                        :class="[order.progress >= 25 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
+                        :class="[orderProgress >= 25 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
                     <div class="w-9 h-9 rounded-full z-10 flex items-center justify-center"
-                        :class="[order.progress >= 50 ? 'bg-custom-gradient visible-yellow-pulse' : 'bg-[#DADADA]']">
+                        :class="[orderProgress >= 50 ? 'bg-custom-gradient visible-yellow-pulse' : 'bg-[#DADADA]']">
                         <mingcute_ship_line-icon :size="18" />
                     </div>
                     <div class="w-3 h-3 rounded-full z-10"
-                        :class="[order.progress >= 75 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
+                        :class="[orderProgress >= 75 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
                     <div class="w-3 h-3 rounded-full z-10"
-                        :class="[order.progress >= 100 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
+                        :class="[orderProgress >= 100 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
                     <div class="absolute bg-custom-gradient h-[2px] rounded-full transition-all duration-500"
-                        :style="{ width: order.progress + '%' }"></div>
+                        :style="{ width: orderProgress + '%' }"></div>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                 <div class="flex-1">
                     <p class="font-medium sm:text-base text-sm">
                         <span class="text-[#838589]">Status:</span>
-                        <span class="ml-1 text-[#222222]">{{ order.statusText }}</span>
+                        <span class="ml-1 text-[#222222]">{{ getStatusLabel(order.status) }}</span>
                     </p>
                 </div>
             </div>
@@ -75,7 +75,7 @@ const props = defineProps({
 })
 
 const statusBadgeClass = computed(() => {
-    switch (props.order.status) {
+    switch (String(props.order?.status).toLowerCase()) {
         case 'pending':
             return 'bg-[#FFECB4] text-[#D59E00]'
         case 'accepted':
@@ -86,6 +86,36 @@ const statusBadgeClass = computed(() => {
             return 'bg-[#FFC1C0] text-[#B50200]'
         default:
             return 'bg-[#1490FF33] text-[#1490FF]'
+    }
+})
+
+const getStatusLabel = (status) => {
+    switch (status) {
+        case 'PENDING':
+            return 'Garaşylýar'
+        case 'IN_TRANSIT':
+            return 'Transitda'
+        case 'CUSTOMS':
+            return 'Gümrükde'
+        case 'DELIVERED':
+            return 'Eltip berildi'
+        case 'CANCELLED':
+            return 'Ýatyrldy'
+    }
+}
+
+const orderProgress = computed(() => {
+    switch (String(props.order?.status)) {
+        case 'PENDING':
+            return 0
+        case 'IN_TRANSIT':
+            return 25
+        case 'CUSTOMS':
+            return 50
+        case 'DELIVERED':
+            return 100
+        case 'CANCELLED':
+            return 0
     }
 })
 </script>

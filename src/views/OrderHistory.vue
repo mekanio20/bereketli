@@ -27,24 +27,25 @@
                         :class="activeTab === 'pending' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
                         Garaşylýanlar
                     </button>
-                    <button @click="activeTab = 'accepted'"
+                    <button @click="activeTab = 'delivered'"
                         class="py-[9px] px-10 font-semibold transition-all duration-300 rounded-xl -ml-px"
-                        :class="activeTab === 'accepted' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
+                        :class="activeTab === 'delivered' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
                         Tamamlananlar
                     </button>
                 </div>
 
+                <!-- Loader -->
+                <Loading v-if="orderStore.loading" />
+
                 <!-- Warehouses Grid -->
-                <TransitionGroup name="card-list" tag="div"
+                <TransitionGrou v-else name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     <OrderCard v-for="order in filteredOrders" :key="order.id" :order="order"
                         @click="handleOrderClick(order)" />
-                </TransitionGroup>
+                </TransitionGrou>
 
                 <!-- Empty State -->
-                <Transition name="fade">
-                    <NoData v-if="filteredOrders.length === 0" :message="'Sargyt tapylmady'" />
-                </Transition>
+                <NoData v-show="filteredOrders.length === 0 && !orderStore.loading" :message="'Sargyt tapylmady'" />
             </SectionContainer>
         </MainContainer>
         <!-- Modal -->
@@ -54,87 +55,29 @@
 
 <script setup>
 import background from '@/assets/images/background.webp'
+const router = useRouter()
+const orderStore = useOrderStore()
 const activeTab = ref('pending')
 const selectedWarehouse = ref({})
 const showModal = ref(false)
 
-// Sample orders data
-const orders = ref([
-    {
-        id: 1,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'road'
-    },
-    {
-        id: 2,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 25,
-        type: 'sea'
-    },
-    {
-        id: 3,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'air'
-    },
-    {
-        id: 4,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'air'
-    },
-    {
-        id: 5,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'accepted',
-        statusLabel: 'Kabul edildi',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'rail'
-    }
-])
-
 const handleOrderClick = (order) => {
-    console.log('Order clicked:', order)
-    // Navigate to order details or open modal
+    router.push({ name: 'OrderDetail', params: { id: order.id } })
 }
 
+onMounted(async () => {
+    await orderStore.fetchOrders()
+})
+
 const filteredOrders = computed(() => {
-    if (activeTab.value === 'all') return orders.value
-    return orders.value.filter(order => order.status === activeTab.value)
+    return orderStore.orders.filter(order => {
+        if (activeTab.value === 'pending') {
+            return order.status === 'PENDING' || order.status === 'IN_TRANSIT' || order.status === 'CUSTOMS'
+        } else if (activeTab.value === 'delivered') {
+            return order.status === 'DELIVERED' || order.status === 'CANCELLED'
+        }
+        return true
+    })
 })
 </script>
 

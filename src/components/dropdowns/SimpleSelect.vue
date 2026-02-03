@@ -7,7 +7,7 @@
 
             <!-- Icon -->
             <component v-if="icon" :is="icons[icon]" :color="'currentColor'" class="absolute left-6"
-                :class="[modelValue.length > 0 ? 'text-[#222222]' : 'text-[#838589]']" />
+                :class="[selectedOption ? 'text-[#222222]' : 'text-[#838589]']" />
 
             <span class="text-base truncate max-w-[200px]">
                 {{ selectedOption?.label || placeholder }}

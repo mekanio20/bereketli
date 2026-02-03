@@ -1,5 +1,5 @@
 <template>
-    <section class="overflow-x-hidden relative">
+    <section class="relative">
         <!-- Absolute -->
         <div class="absolute -z-10 w-full h-full bg-[#F3F8FF]">
             <img :src="background" class="w-full h-full object-contain" />
@@ -94,8 +94,8 @@
                                     class="flex items-center justify-between p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
                                     @click="editItem(index)">
                                     <div>
-                                        <p class="font-semibold text-gray-900">{{ item.name }}</p>
-                                        <p class="text-sm text-[#EBF3FD]0">{{ item.dimensions }}</p>
+                                        <p class="font-semibold text-gray-900">{{ `${item.name} #${item.id}` }}</p>
+                                        <p class="text-sm text-[#EBF3FD]0">{{ formattedMeasurement(item) }}</p>
                                     </div>
                                     <svg class="w-5 h-5 text-gray-400 group-hover:text-[#939393] transition-colors"
                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +120,7 @@
                     </div>
 
                     <!-- Right Column -->
-                    <div class="w-[35%] space-y-6">
+                    <div class="w-[35%] space-y-6 self-start sticky top-32">
                         <!-- Date Section -->
                         <FormContainer>
                             <h2 class="text-xl font-bold text-gray-900 mb-8">Eltip bermek möhleti</h2>
@@ -128,16 +128,16 @@
                             <div class="space-y-6">
                                 <!-- Pickup Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Requested delivery date</label>
-                                    <VueDatePicker v-model="formData.pickupDate" :enable-time-picker="false"
+                                    <label class="block text-sm text-[#939393] mb-2">Ugradylmaly senesi</label>
+                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false"
                                         placeholder="Sene saýlaň">
                                     </VueDatePicker>
                                 </div>
 
                                 <!-- Delivery Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Requested delivery date</label>
-                                    <VueDatePicker v-model="formData.deliveryDate" :enable-time-picker="false"
+                                    <label class="block text-sm text-[#939393] mb-2">Barmaly senesi</label>
+                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false"
                                         placeholder="Sene saýlaň" />
                                 </div>
                             </div>
@@ -153,13 +153,25 @@
             </SectionContainer>
         </MainContainer>
         <!-- Modals -->
-        <AddItemModal :is-open="showModal" @close="showModal = false" @submit="handleItemSubmit" />
+        <AddItemModal :is-open="showModal" :approximate="approximate" @close="showModal = false" @submit="handleItemSubmit" />
     </section>
 </template>
 
 <script setup>
+import { normalizeToIdLabel } from '@/utils/normalizers'
+import { formattedMeasurement } from '@/utils/strings'
 import background from '@/assets/images/background.webp'
+
 const { icons } = useIcons()
+const countryStore = useCountryStore()
+const itemSizeStore = useItemSizeStore()
+const itemCategoryStore = useItemCategoryStore()
+const orderRequestStore = useOrderRequestStore()
+
+const nirdenOptions = ref([])
+const niraOptions = ref([])
+const approximate = ref([])
+
 const isSwap = ref(false)
 const showModal = ref(false)
 
@@ -171,16 +183,14 @@ const transportTypes = ref([
 ])
 
 const formData = reactive({
-    from_country: '',
-    to_country: '',
+    from_country: null,
+    to_country: null,
     description: '',
     categories: [],
     transportation_type: '',
-    pickupDate: '',
-    deliveryDate: '',
-    items: [
-        { name: 'Item #1', dimensions: '34 × 27 × 2 cm' }
-    ]
+    date_shipment_expected: '',
+    date_arrival_expected: '',
+    items: []
 })
 
 const swapLocations = () => {
@@ -199,29 +209,26 @@ const toggleCargoType = (id) => {
     }
 }
 
-const handleItemSubmit = (data) => {
-    console.log('Item submitted:', data)
-    submittedData.value = data
+const handleItemSubmit = (array) => {
+    if (array.tab === "approximate") {
+        array.data.forEach(item => {
+            formData.items.push(item)
+        })
+    } else {
+        
+    }
 }
 
 const editItem = (index) => {
-    console.log('Edit item:', index)
+    
 }
 
-const submitOrder = () => {
-    console.log('Submit order:', formData)
+const submitOrder = async () => {
+    console.log('Form data -> ', formData);
+    await orderRequestStore.createOrderRequest(formData)
 }
 
 
-// 
-
-import { normalizeToIdLabel } from '@/utils/normalizers'
-
-const countryStore = useCountryStore()
-const itemCategoryStore = useItemCategoryStore()
-
-const nirdenOptions = ref([])
-const niraOptions = ref([])
 
 const selectedCountry = async (type, data) => {
     if (type === 'nirden') {
@@ -234,10 +241,12 @@ const selectedCountry = async (type, data) => {
 }
 
 onMounted(async () => {
-    await itemCategoryStore.fetchItemCategories()
+    const itemSizes = await itemSizeStore.fetchItemSizes()
     const countries = await countryStore.fetchCountries()
+    await itemCategoryStore.fetchItemCategories()
     nirdenOptions.value = normalizeToIdLabel(countries)
     niraOptions.value = normalizeToIdLabel(countries)
+    approximate.value = itemSizes
 })
 </script>
 

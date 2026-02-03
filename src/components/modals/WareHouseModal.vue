@@ -38,13 +38,13 @@
               </div>
 
               <!-- View on Map Button -->
-              <button
+              <a target="_blank" :href="warehouse.location"
                 class="flex items-center gap-3 px-[10px] py-2 bg-[#002645] text-white rounded-full hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 group">
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center group-hover:scale-105 transform transition-all duration-300">
                     <route-icon />
                 </div>
                 <span class="font-semibold pl-4 pr-6">Kartada görmek</span>
-              </button>
+              </a>
             </div>
 
             <!-- Information Section -->

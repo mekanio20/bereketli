@@ -28,23 +28,24 @@
                     </div>
                 </div>
 
+                <!-- Loading -->
+                <Loading v-if="orderRequestStore.loading" />
+
                 <!-- Cards -->
-                <TransitionGroup name="card-list" tag="div"
+                <TransitionGroup v-else name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <RequestCard v-for="item in filteredData" :key="item.id" :order="item"
+                    <RequestCard v-for="item in orderRequestStore.order_requests" :key="item.id" :order="item"
                         @click="handleDetail(item.id)" />
                 </TransitionGroup>
 
                 <!-- Empty State -->
-                <Transition name="fade">
-                    <div v-if="filteredData.length === 0" class="text-center py-20">
-                        <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
-                            <search-icon :size="40" />
-                        </div>
-                        <p class="text-xl text-[#222222]">Tapylmady</p>
-                        <p class="text-sm text-[#838589] mt-2">Başga söz bilen gözläp görüň</p>
+                <div v-show="orderRequestStore.order_requests.length === 0 && !orderRequestStore.loading" class="text-center py-20">
+                    <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
+                        <search-icon :size="40" />
                     </div>
-                </Transition>
+                    <p class="text-xl text-[#222222]">Tapylmady</p>
+                    <p class="text-sm text-[#838589] mt-2">Başga söz bilen gözläp görüň</p>
+                </div>
             </SectionContainer>
         </MainContainer>
     </section>
@@ -52,36 +53,14 @@
 
 <script setup>
 import background from '@/assets/images/background.webp'
+const orderRequestStore = useOrderRequestStore()
 const searchQuery = ref('')
-const dataOptions = ref([
-    {
-        id: 1,
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        status: 'pending',
-        createdAt: '18.08.2025',
-        statusText: 'Kabul edilmegine garaşylýar'
-    },
-    {
-        id: 2,
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        status: 'pending',
-        createdAt: '18.08.2025',
-        statusText: 'Kabul edilmegine garaşylýar'
-    },
-])
-const filteredData = computed(() => {
-    if (!searchQuery.value) return dataOptions.value
 
-    const query = searchQuery.value.toLowerCase()
-    return dataOptions.value.filter(item =>
-        item.fromLocation.toLowerCase().includes(query) ||
-        item.toLocation.toLowerCase().includes(query)
-    )
+onMounted(async () => {
+    await orderRequestStore.fetchOrderRequests()
+})
+
+watch(searchQuery, async (newQuery) => {
+    await orderRequestStore.fetchOrderRequests({ search: newQuery })
 })
 </script>

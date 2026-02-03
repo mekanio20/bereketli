@@ -6,8 +6,8 @@
             <!-- Route Information -->
             <div class="flex items-center justify-between mb-10">
                 <div class="flex-1">
-                    <p class="text-sm text-[#838589] mb-1">{{ order.fromDate }}</p>
-                    <p class="text-lg font-medium text-[#222222]">{{ order.fromLocation }}</p>
+                    <p class="text-sm text-[#838589] mb-1">{{ order.date_shipment_expected }}</p>
+                    <p class="text-lg font-medium text-[#222222]">{{ order.from_country?.name }}</p>
                 </div>
 
                 <div class="flex-shrink-0 mx-4">
@@ -15,8 +15,8 @@
                 </div>
 
                 <div class="flex-1 text-right">
-                    <p class="text-sm text-[#838589] mb-1">{{ order.toDate }}</p>
-                    <p class="text-lg font-medium text-[#222222]">{{ order.toLocation }}</p>
+                    <p class="text-sm text-[#838589] mb-1">{{ order.date_arrival_expected }}</p>
+                    <p class="text-lg font-medium text-[#222222]">{{ order.to_country?.name }}</p>
                 </div>
             </div>
 
@@ -25,12 +25,12 @@
                     Arzanyň döredilen wagty:
                 </p>
                 <p class="text-[#222222] font-medium">
-                    {{ order.createdAt }}
+                    {{ order.date_created }}
                 </p>
             </div>
 
             <div class="text-sm font-medium px-7 py-2 rounded-full w-fit" :class="statusBadgeClass">
-                {{ order.statusText }}
+                {{ getStatusLabel(order.status) }}
             </div>
 
         </div>
@@ -47,7 +47,7 @@ const props = defineProps({
 })
 
 const statusBadgeClass = computed(() => {
-    switch (props.order.status) {
+    switch (String(props.order?.status).toLowerCase()) {
         case 'pending':
             return 'bg-[#1490FF33] text-[#1490FF]'
         case 'accepted':
@@ -60,4 +60,19 @@ const statusBadgeClass = computed(() => {
             return 'bg-[#1490FF33] text-[#1490FF]'
     }
 })
+
+const getStatusLabel = (status) => {
+    switch (String(status).toLowerCase()) {
+        case 'pending':
+            return 'Garaşylýar'
+        case 'accepted':
+            return 'Tassyklanan'
+        case 'completed':
+            return 'Tamamlanan'
+        case 'rejected':
+            return 'Ret edilen'
+        default:
+            return 'N/A'
+    }
+}
 </script>

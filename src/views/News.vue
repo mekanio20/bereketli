@@ -19,13 +19,13 @@
                 <!-- Warehouses Grid -->
                 <TransitionGroup name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <NewsCard v-for="item in newsStore.newsData" :key="item.id" :title="item.title" :date="item.date"
+                    <NewsCard v-for="item in newsStore.news" :key="item.id" :title="item.title" :date="item.date_created"
                         :image="item.image" @click="handleNewsDetail(item.id)" />
                 </TransitionGroup>
 
                 <!-- Empty State -->
                 <Transition name="fade">
-                    <div v-if="newsStore.newsData.length === 0" class="text-center py-20">
+                    <div v-if="newsStore.news.length === 0" class="text-center py-20">
                         <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
                             <search-icon :size="40" />
                         </div>
@@ -44,6 +44,10 @@ const newsStore = useNewsStore()
 const handleNewsDetail = (id) => {
     router.push({ name: 'NewsDetail', params: { id } })
 }
+
+onMounted(async () => {
+   await newsStore.fetchNews()
+})
 </script>
 
 <style scoped>

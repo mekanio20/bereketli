@@ -13,8 +13,8 @@ export const useOrderStore = defineStore("orders", {
             this.loading = true;
             try {
                 const response = await api.get("orders/", { params: filteredOptions });
-                this.orders = response.data;
-                return response.data
+                this.orders = response.data.results;
+                return response.data.results
             } catch (error) {
                 console.log('GET orders: ', error);
                 this.error = error;

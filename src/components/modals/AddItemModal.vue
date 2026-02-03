@@ -67,11 +67,11 @@
                                             </div>
                                         </div>
 
-                                        <!-- Volume and Quantity -->
+                                        <!-- size and Quantity -->
                                         <div class="grid grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-sm text-[#939393] mb-2">Volume, m³</label>
-                                                <form-input v-model="formData.volume" type="number" />
+                                                <label class="block text-sm text-[#939393] mb-2">Size, m³</label>
+                                                <form-input v-model="formData.size" type="number" />
                                             </div>
 
                                             <div>
@@ -89,14 +89,33 @@
                                     </div>
                                 </div>
 
-                                <div v-else key="approximate" class="space-y-3 max-h-96 overflow-y-auto pb-4 pt-2">
-                                    <div v-for="item in approximate" :key="item.id" class="flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] hover:bg-[#ddebff] cursor-pointer duration-100">
+                                <div v-else key="approximate" class="space-y-3 max-h-96 overflow-y-auto pb-2">
+                                    <div class="grid grid-cols-2 gap-2 px-1">
+                                        <div>
+                                            <label class="block text-sm text-[#939393] mb-2">Size, m³</label>
+                                            <form-input v-model="formData.size" type="number" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-[#939393] mb-2">Quantity</label>
+                                            <form-input v-model="formData.quantity" type="number" />
+                                        </div>
+                                    </div>
+                                    <!-- Description -->
+                                    <div class="px-1">
+                                        <label class="block text-sm text-[#939393] mb-2">Description</label>
+                                        <textarea v-model="formData.description" rows="2"
+                                            class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
+                                    </div>
+                                    <div v-for="item in approximate" :key="item.id" @click="selectItem(item)"
+                                        class="flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] hover:bg-[#ddebff] cursor-pointer duration-100"
+                                        :class="[findArrayItem(approximateData, 'id', item.id) ? 'bg-[#ddebff]' : '']">
                                         <div class="w-[58px] h-[40px]">
                                             <img :src="item.icon" class="w-full h-full object-cover" />
                                         </div>
                                         <div class="flex flex-col space-y-2">
-                                            <h4 class="text-[#222222] font-semibold">{{ item.name }}</h4>
-                                            <p class="text-[#838589] text-sm">{{ item.weight }}</p>
+                                            <h4 class="text-[#222222] font-semibold">{{ `${item.name} #${item.id}` }}
+                                            </h4>
+                                            <p class="text-[#838589] text-sm">{{ formattedMeasurement(item) }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -122,17 +141,22 @@
 </template>
 
 <script setup>
+import { formattedMeasurement, findArrayItem } from '@/utils/strings'
+const emit = defineEmits(['close', 'submit'])
 const props = defineProps({
+    approximate: {
+        type: Array,
+    },
     isOpen: {
         type: Boolean,
         default: false
     }
 })
 
-const emit = defineEmits(['close', 'submit'])
 const activeTab = ref('individual')
 const isSubmitting = ref(false)
 
+const approximateData = ref([])
 const formData = reactive({
     type: '',
     weight: null,
@@ -140,30 +164,26 @@ const formData = reactive({
     width: null,
     length: null,
     height: null,
-    volume: null,
+    size: null,
     quantity: null,
     description: ''
 })
-
-const approximate = ref([
-    { id: 1, icon: '/icons/mail.webp', name: 'Envelope', weight: '(34x27x2 cm)' },
-    { id: 2, icon: '/icons/mail.webp', name: 'Box', weight: '(34x27x2 cm)' },
-    { id: 3, icon: '/icons/mail.webp', name: 'Package', weight: '(34x27x2 cm)' },
-    { id: 3, icon: '/icons/mail.webp', name: 'Package', weight: '(34x27x2 cm)' },
-    { id: 3, icon: '/icons/mail.webp', name: 'Package', weight: '(34x27x2 cm)' },
-])
 
 const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500))
-
-        emit('submit', {
-            tab: activeTab.value,
-            ...formData
-        })
+        if (activeTab.value === 'approximate') {
+            emit('submit', {
+                tab: activeTab.value,
+                data: approximateData.value
+            })
+        } else {
+            emit('submit', {
+                tab: activeTab.value,
+                ...formData
+            })
+        }
 
         closeModal()
         resetForm()
@@ -172,6 +192,21 @@ const handleSubmit = async () => {
     } finally {
         isSubmitting.value = false
     }
+}
+
+const selectItem = (item) => {
+    approximateData.value.push({
+        id: item?.id,
+        name: item?.name,
+        description: formData.description,
+        size: Number(formData.size),
+        weight_kg: item.weight_kg,
+        length_m: item.length_m,
+        width_m: item.width_m,
+        height_m: item.height_m,
+        measurement: item.measurement,
+        quantity: Number(formData.quantity)
+    })
 }
 
 const closeModal = () => {
@@ -185,7 +220,7 @@ const resetForm = () => {
     formData.width = null
     formData.length = null
     formData.height = null
-    formData.volume = null
+    formData.size = null
     formData.quantity = null
     formData.description = ''
     activeTab.value = 'individual'

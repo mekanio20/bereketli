@@ -21,20 +21,25 @@
                 </div>
             </div>
 
+            <!-- Loading -->
+            <Loading v-if="orderStore.loading" />
+
             <!-- Orders Grid -->
-            <TransitionGroup name="card-list" tag="div" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                <OrderCard v-for="order in filteredOrders" :key="order.id" :order="order"
+            <TransitionGroup v-else name="card-list" tag="div"
+                class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <OrderCard v-for="order in orderStore.orders" :key="order.id" :order="order"
                     @click="handleOrderClick(order)" />
             </TransitionGroup>
 
-            <div class="flex justify-center items-center my-10 transition-all duration-700">
+            <div v-if="orderStore.orders.length > 0"
+                class="flex justify-center items-center my-10 transition-all duration-700">
                 <router-link to="#" class="group relative flex items-center w-fit">
                     <!-- Text -->
                     <button type="button"
                         class="py-[10px] px-8 rounded-full bg-[#002645] text-white sm:text-lg text-base font-semibold">
                         Ählisini görmek
                     </button>
-    
+
                     <!-- Animated Dot -->
                     <span class="absolute -z-10 right-3 p-1 rounded-full bg-[#0B2545]
                 rotate-[-180deg]
@@ -46,117 +51,34 @@
                 </router-link>
             </div>
 
-
             <!-- Empty State -->
-            <Transition name="fade">
-                <div v-if="filteredOrders.length === 0" class="text-center py-20">
-                    <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
-                        <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                        </svg>
-                    </div>
-                    <p class="text-xl text-gray-500">Sargyt tapylmady</p>
-                </div>
-            </Transition>
+            <NoData v-show="orderStore.orders.length === 0 && !orderStore.loading" :message="'Sargyt tapylmady'" />
         </MainContainer>
     </section>
 </template>
 
 <script setup>
-const orderStore = useOrderStore()
 const { icons } = useIcons();
+const orderStore = useOrderStore()
+const activeTab = ref('ALL')
 const tabs = ref([
-    { id: 'all', label: 'Ählisi', icon: 'box_linear-icon' },
-    { id: 'sea', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
-    { id: 'air', label: 'Uçar', icon: 'plane-icon' },
-    { id: 'road', label: 'Ulag', icon: 'truck_delivery-icon' },
-    { id: 'rail', label: 'Otly', icon: 'train_2-icon' }
+    { id: 'ALL', label: 'Ählisi', icon: 'box_linear-icon' },
+    { id: 'SEA', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
+    { id: 'AIR', label: 'Uçar', icon: 'plane-icon' },
+    { id: 'LAND', label: 'Ulag', icon: 'truck_delivery-icon' },
+    { id: 'RAIL', label: 'Otly', icon: 'train_2-icon' }
 ])
-
-const activeTab = ref('sea')
-
-// Sample orders data
-const orders = ref([
-    {
-        id: 1,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'road'
-    },
-    {
-        id: 2,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 25,
-        type: 'sea'
-    },
-    {
-        id: 3,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'air'
-    },
-    {
-        id: 4,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'pending',
-        statusLabel: 'Garasylyar',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'air'
-    },
-    {
-        id: 5,
-        trackingNumber: '#RW3E-74ESW4',
-        status: 'accepted',
-        statusLabel: 'Kabul edildi',
-        statusText: 'Tianjin portyna getirildi',
-        fromDate: '18.08.2025',
-        fromLocation: 'Tianjin porty',
-        toDate: '28.08.2025',
-        toLocation: 'Aşgabat',
-        progress: 65,
-        type: 'rail'
-    }
-])
-
-const filteredOrders = computed(() => {
-    if (activeTab.value === 'all') return orders.value
-    return orders.value.filter(order => order.type === activeTab.value)
-})
 
 const handleOrderClick = (order) => {
-    console.log('Order clicked:', order)
-    // Navigate to order details or open modal
+    router.push({ name: 'OrderDetail', params: { id: order.id } })
 }
 
 onMounted(async () => {
     await orderStore.fetchOrders()
+})
+
+watch(activeTab, async (newTab) => {
+    await orderStore.fetchOrders({ transportation_type: newTab === 'ALL' ? '' : newTab })
 })
 </script>
 

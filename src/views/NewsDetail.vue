@@ -17,7 +17,7 @@
                     <!-- Date -->
                     <div class="flex items-center text-[#838589] text-sm">
                         <calendar-icon :size="20" />
-                        <span class="ml-2">{{ newsStore.news_detail.date }}</span>
+                        <span class="ml-2">{{ newsStore.news_detail.date_created }}</span>
                     </div>
                 </div>
 
