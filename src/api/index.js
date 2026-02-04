@@ -70,7 +70,6 @@ api.interceptors.response.use(
 
         setAccessToken(data.access);
         setRefreshToken(data.refresh);
-        setUserData(data.user);
         processQueue(null, data.access);
         originalRequest.headers.Authorization = `Bearer ${data.access}`;
         return api(originalRequest);

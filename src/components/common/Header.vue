@@ -110,15 +110,16 @@
                     <div class="relative group" ref="langRef">
                         <button @click="toggleDropdown('lang')" class="flex items-center space-x-1 select-none">
                             <lang-icon :color="'#222222'" />
-                            <span class="sm:text-base text-sm leading-[100%] tracking-[0%] text-[#222222]">EN</span>
+                            <span class="sm:text-base text-sm leading-[100%] tracking-[0%] text-[#222222]">{{
+                                String($i18n.locale).toUpperCase() }}</span>
                             <chevron_down-icon :size="16" :color="'#222222'"
                                 :class="{ 'rotate-180 transition-transform duration-200': dropdowns.lang }" />
                         </button>
                         <div v-if="dropdowns.lang"
                             class="absolute top-8 right-0 w-32 bg-white shadow-lg rounded-lg p-2 border border-gray-100 animate-in fade-in duration-200">
-                            <span v-for="item in langItems" :key="item.id" @click="changLanguage(item.id)"
+                            <span v-for="item in langItems" :key="item.id" @click="switchLanguage(item.code)"
                                 class="block px-4 py-2 mb-1 text-[#222222] hover:bg-gray-100 rounded transition cursor-pointer"
-                                :class="{ 'bg-gray-100': item.isActive }">
+                                :class="{ 'bg-gray-100': $i18n.locale === item.code }">
                                 {{ item.name }}
                             </span>
                         </div>
@@ -230,9 +231,9 @@
                                 :class="{ 'rotate-180 transition-transform duration-200': mobileLangDropdown }" />
                         </button>
                         <div v-if="mobileLangDropdown" class="pl-4 space-y-1 pb-2">
-                            <button v-for="item in langItems" :key="item.id" @click="changLanguage(item.id)"
+                            <button v-for="item in langItems" :key="item.id" @click="switchLanguage(item.code)"
                                 class="w-full text-left py-2.5 px-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors"
-                                :class="{ 'text-[#F98900] bg-[#F3F8FF]': item.isActive }">
+                                :class="{ 'text-[#F98900] bg-[#F3F8FF]': $i18n.locale === item.code }">
                                 {{ item.name }}
                             </button>
                         </div>
@@ -256,6 +257,9 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
+
 const route = useRoute()
 const autStore = useAuthStore()
 const appStore = useAppStore()
@@ -291,8 +295,8 @@ const navbar_menu = ref([
 ])
 
 const langItems = ref([
-    { id: 1, name: 'English', code: 'en', isActive: false },
-    { id: 2, name: 'Turkmen', code: 'tk', isActive: true },
+    { id: 1, name: 'English', code: 'en' },
+    { id: 2, name: 'Turkmen', code: 'tk' },
 ])
 
 const langRef = ref(null)
@@ -312,17 +316,10 @@ const toggleMobileLangDropdown = () => {
     mobileLangDropdown.value = !mobileLangDropdown.value
 }
 
-const changLanguage = (id) => {
-    langItems.value.map((item) => {
-        if (item.id === id) {
-            item.isActive = true
-            localStorage.setItem('lang', item.code)
-        } else {
-            item.isActive = false
-        }
-    })
-    dropdowns.value.lang = false
-    mobileLangDropdown.value = false
+const switchLanguage = (language) => {
+    locale.value = language
+    localStorage.setItem('lang', language)
+    window.location.reload()
 }
 
 /* ---------------- CLICK OUTSIDE ---------------- */

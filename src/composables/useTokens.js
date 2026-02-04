@@ -3,7 +3,6 @@ export const getRefreshToken = () => localStorage.getItem('bereketli_refresh');
 
 export const setAccessToken = (token) => localStorage.setItem('bereketli_access', token);
 export const setRefreshToken = (token) => localStorage.setItem('bereketli_refresh', token);
-export const setUserData = (user) => localStorage.setItem('user', JSON.stringify(user));
 
 export const clearTokens = () => {
   localStorage.removeItem('bereketli_access');

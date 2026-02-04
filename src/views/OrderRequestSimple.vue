@@ -27,8 +27,8 @@
                             <div class="flex items-end space-x-6 mb-4">
                                 <!-- From Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.from_country"
-                                        :options="nirdenOptions" @change="selectedCountry('nirden', $event)" placeholder="Nirden"
+                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions"
+                                        @change="selectedCountry('nirden', $event)" placeholder="Nirden"
                                         :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                                 <!-- Swap Button -->
@@ -41,9 +41,9 @@
                                 </div>
                                 <!-- To Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.to_country"
-                                        :options="niraOptions" @change="selectedCountry('nira', $event)" placeholder="Nirä"
-                                        :isSearch="true" :icon="'map_pin-icon'" />
+                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions"
+                                        @change="selectedCountry('nira', $event)" placeholder="Nirä" :isSearch="true"
+                                        :icon="'map_pin-icon'" />
                                 </div>
                             </div>
                         </FormContainer>
@@ -59,7 +59,8 @@
                         <FormContainer>
                             <h2 class="form_title mb-8">Ýüküň görnüşi</h2>
                             <div class="flex flex-wrap gap-3">
-                                <button v-for="(item, index) in itemCategoryStore.item_categories" :key="index" @click="toggleCargoType(item.id)"
+                                <button v-for="(item, index) in itemCategoryStore.item_categories" :key="index"
+                                    @click="toggleCargoType(item.id)"
                                     class="px-6 py-2.5 rounded-[14px] transition-all duration-300 transform hover:scale-105"
                                     :class="formData.categories.includes(item.id)
                                         ? 'bg-[#002244] font-bold text-white shadow-lg'
@@ -129,23 +130,28 @@
                                 <!-- Pickup Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">Ugradylmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false"
-                                        placeholder="Sene saýlaň">
+                                    <VueDatePicker v-model="formData.date_shipment_expected"
+                                        :enable-time-picker="false" placeholder="Sene saýlaň">
                                     </VueDatePicker>
                                 </div>
 
                                 <!-- Delivery Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">Barmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false"
-                                        placeholder="Sene saýlaň" />
+                                    <VueDatePicker v-model="formData.date_arrival_expected"
+                                        :enable-time-picker="false" placeholder="Sene saýlaň" />
                                 </div>
                             </div>
 
                             <!-- Submit Button -->
-                            <button @click="submitOrder"
-                                class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300">
-                                Tassyklamak
+                            <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
+                                class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
+                                :class="{'opacity-50 cursor-not-allowed' : orderRequestStore.loading}">
+                                <span v-if="!orderRequestStore.loading">Tassyklamak</span>
+                                    <span v-else class="flex items-center justify-center">
+                                        <animate_spin-icon />
+                                        Ýüklenýär...
+                                    </span>
                             </button>
                         </FormContainer>
                     </div>
@@ -153,16 +159,19 @@
             </SectionContainer>
         </MainContainer>
         <!-- Modals -->
-        <AddItemModal :is-open="showModal" :approximate="approximate" @close="showModal = false" @submit="handleItemSubmit" />
+        <AddItemModal :is-open="showModal" :approximate="approximate" @close="showModal = false"
+            @submit="handleItemSubmit" />
     </section>
 </template>
 
 <script setup>
 import { normalizeToIdLabel } from '@/utils/normalizers'
 import { formattedMeasurement } from '@/utils/strings'
+import { formatToYYYYMMDD } from '@/utils/date'
 import background from '@/assets/images/background.webp'
 
 const { icons } = useIcons()
+const router = useRouter()
 const countryStore = useCountryStore()
 const itemSizeStore = useItemSizeStore()
 const itemCategoryStore = useItemCategoryStore()
@@ -183,6 +192,7 @@ const transportTypes = ref([
 ])
 
 const formData = reactive({
+    type: 'SIMPLE',
     from_country: null,
     to_country: null,
     description: '',
@@ -215,17 +225,25 @@ const handleItemSubmit = (array) => {
             formData.items.push(item)
         })
     } else {
-        
+
     }
 }
 
 const editItem = (index) => {
-    
+
 }
 
 const submitOrder = async () => {
-    console.log('Form data -> ', formData);
-    await orderRequestStore.createOrderRequest(formData)
+    try {
+        await orderRequestStore.createOrderRequest({
+            ...formData,
+            date_arrival_expected: formatToYYYYMMDD(formData.date_arrival_expected),
+            date_shipment_expected: formatToYYYYMMDD(formData.date_shipment_expected)
+        })
+        router.push({ name: 'OrderRequests' })
+    } catch (error) {
+        
+    }
 }
 
 

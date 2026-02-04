@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import { useAuthStore } from "./auth";
+import { useAuthStore } from "@/stores/auth";
+import { useToastStore } from "@/stores/toast";
 import api from "@/api/index";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+    user: {},
     loading: false,
     error: null,
   }),
@@ -32,12 +33,24 @@ export const useUserStore = defineStore("user", {
       }
     },
     async updateUser(user) {
+      const toast = useToastStore();
       this.loading = true;
       try {
         const response = await api.put(`users/${user.id}/`, user);
         this.user = response.data;
+
+        toast.show({
+          type: "success",
+          title: "Üstünlikli",
+          message: "Ulanyjy maglumatlary üstünlikli täzelendi.",
+        });
       } catch (error) {
         this.error = error;
+        toast.show({
+          type: "error",
+          title: "Ýalňyşlyk",
+          message: "Ulanyjy maglumatlaryny täzeläp bolmady.",
+        });
       } finally {
         this.loading = false;
       }

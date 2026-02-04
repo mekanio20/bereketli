@@ -70,11 +70,6 @@
                                         <!-- size and Quantity -->
                                         <div class="grid grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-sm text-[#939393] mb-2">Size, m³</label>
-                                                <form-input v-model="formData.size" type="number" />
-                                            </div>
-
-                                            <div>
                                                 <label class="block text-sm text-[#939393] mb-2">Quantity</label>
                                                 <form-input v-model="formData.quantity" type="number" />
                                             </div>
@@ -90,21 +85,16 @@
                                 </div>
 
                                 <div v-else key="approximate" class="space-y-3 max-h-96 overflow-y-auto pb-2">
-                                    <div class="grid grid-cols-2 gap-2 px-1">
-                                        <div>
-                                            <label class="block text-sm text-[#939393] mb-2">Size, m³</label>
-                                            <form-input v-model="formData.size" type="number" />
-                                        </div>
-                                        <div>
+                                    <div class="grid grid-cols-3 gap-3">
+                                        <div class="px-1">
                                             <label class="block text-sm text-[#939393] mb-2">Quantity</label>
                                             <form-input v-model="formData.quantity" type="number" />
                                         </div>
-                                    </div>
-                                    <!-- Description -->
-                                    <div class="px-1">
-                                        <label class="block text-sm text-[#939393] mb-2">Description</label>
-                                        <textarea v-model="formData.description" rows="2"
-                                            class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
+                                        <!-- Description -->
+                                        <div class="px-1 col-span-2">
+                                            <label class="block text-sm text-[#939393] mb-2">Description</label>
+                                            <form-input v-model="formData.description" type="text" />
+                                        </div>
                                     </div>
                                     <div v-for="item in approximate" :key="item.id" @click="selectItem(item)"
                                         class="flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] hover:bg-[#ddebff] cursor-pointer duration-100"
@@ -195,18 +185,23 @@ const handleSubmit = async () => {
 }
 
 const selectItem = (item) => {
-    approximateData.value.push({
-        id: item?.id,
-        name: item?.name,
-        description: formData.description,
-        size: Number(formData.size),
-        weight_kg: item.weight_kg,
-        length_m: item.length_m,
-        width_m: item.width_m,
-        height_m: item.height_m,
-        measurement: item.measurement,
-        quantity: Number(formData.quantity)
-    })
+    if (findArrayItem(approximateData.value, 'id', item.id)) {
+        approximateData.value = approximateData.value.filter(i => i.id !== item.id)
+        return
+    } else {
+        approximateData.value.push({
+            id: item.id,
+            name: item.name,
+            description: formData.description,
+            size: item.id,
+            weight_kg: item.weight_kg,
+            length_m: item.length_m,
+            width_m: item.width_m,
+            height_m: item.height_m,
+            measurement: item.measurement,
+            quantity: formData.quantity
+        })
+    }
 }
 
 const closeModal = () => {

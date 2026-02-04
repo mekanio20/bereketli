@@ -5,7 +5,6 @@
   <LoginModal :isOpen="appStore.activeModal === 'login'" @close="appStore.toggleModal('login')" @redirect="redirectModal" />
   <OtpModal :isOpen="appStore.activeModal === 'otp'" @close="appStore.toggleModal('otp')" @redirect="redirectModal" />
   <PasswordModal :isOpen="appStore.activeModal === 'password'" @close="appStore.toggleModal('password')" @redirect="redirectModal" />
-  
 </template>
 
 <script setup>
