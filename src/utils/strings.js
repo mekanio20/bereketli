@@ -1,7 +1,3 @@
 export const formattedMeasurement = (option) => {
     return `(${option.width_m}x${option.height_m}x${option.length_m} cm)`
 };
-
-export const findArrayItem = (array, key, value) => {
-    return array.find((item) => item[key] === value);
-}

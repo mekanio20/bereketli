@@ -3,11 +3,11 @@
         <Transition name="modal">
             <div v-if="isOpen"
                 class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-                @click.self="closeModal">
+                @click.self="$emit('close')">
                 <div class="relative w-full max-w-[800px] max-h-[710px] bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-300"
                     :class="{ 'animate-scale-in': isOpen }">
                     <!-- Close Button -->
-                    <button @click="closeModal"
+                    <button type="button" @click="$emit('close')"
                         class="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-[#F3F8FF] hover:bg-[#edf5ff] hover:scale-110 transform transition-all duration-300 group"
                         aria-label="Close">
                         <close-icon :size="20" />
@@ -16,7 +16,7 @@
                     <div class="p-8 md:p-10">
                         <!-- Header -->
                         <h2 class="text-[30px] text-[#222222] font-bold mb-8 text-center animate-fade-in">
-                            Add Item
+                            {{ mode === 'add' ? 'Täze haryt goşmak' : 'Harydy redaktirläň' }}
                         </h2>
 
                         <!-- Tab Buttons -->
@@ -37,42 +37,37 @@
                         <!-- Form -->
                         <form @submit.prevent="handleSubmit" class="space-y-6">
                             <Transition name="fade" mode="out-in">
-                                <div v-if="activeTab === 'individual'" key="individual" class="space-y-6">
+                                <div v-if="activeTab === 'individual'" key="individual" class="space-y-2">
                                     <!-- Type and Weight -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <!-- size and Quantity -->
                                         <div>
-                                            <label class="block text-sm text-[#939393] mb-2">Type</label>
-                                            <SimpleSelect v-model="formData.fromLocation"
-                                                :options="['Box', 'Package', 'Pallet']" placeholder="" />
+                                            <label class="block text-sm text-[#939393] mb-2">Quantity</label>
+                                            <form-input v-model="formData.quantity" type="number" />
                                         </div>
                                         <div>
                                             <label class="block text-sm text-[#939393] mb-2">Agramy</label>
                                             <div class="flex gap-2">
                                                 <form-input v-model="formData.weight" type="number" />
-                                                <SimpleSelect v-model="formData.weightUnit" :options="['kg', 'g', 't']"
+                                                <SimpleSelect v-model="formData.weightUnit" :options="measurementItems"
                                                     class="flex-1" />
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <!-- Dimensions -->
-                                            <label class="block text-sm text-[#939393] mb-2">Giňligi, uzynlygy,
-                                                beýikligi</label>
-                                            <div class="grid grid-cols-3 gap-3">
-                                                <form-input v-model="formData.dimensions" type="number" />
-                                                <form-input v-model="formData.length" type="number" />
-                                                <form-input v-model="formData.height" type="number" />
-                                            </div>
+                                    <!-- Dimensions -->
+                                    <div class="grid grid-cols-3 gap-3">
+                                        <div class="space-y-2">
+                                            <label class="text-sm text-[#939393]">Giňligi</label>
+                                            <form-input v-model="formData.width" type="number" />
                                         </div>
-
-                                        <!-- size and Quantity -->
-                                        <div class="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <label class="block text-sm text-[#939393] mb-2">Quantity</label>
-                                                <form-input v-model="formData.quantity" type="number" />
-                                            </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm text-[#939393]">Uzynlygy</label>
+                                            <form-input v-model="formData.length" type="number" />
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm text-[#939393]">Beýikligi</label>
+                                            <form-input v-model="formData.height" type="number" />
                                         </div>
                                     </div>
 
@@ -96,7 +91,7 @@
                                             <form-input v-model="formData.description" type="text" />
                                         </div>
                                     </div>
-                                    <div v-for="item in approximate" :key="item.id" @click="selectItem(item)"
+                                    <div v-for="item in approximateItems" :key="item.id" @click="selectItem(item)"
                                         class="flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] hover:bg-[#ddebff] cursor-pointer duration-100"
                                         :class="[findArrayItem(approximateData, 'id', item.id) ? 'bg-[#ddebff]' : '']">
                                         <div class="w-[58px] h-[40px]">
@@ -131,11 +126,25 @@
 </template>
 
 <script setup>
-import { formattedMeasurement, findArrayItem } from '@/utils/strings'
+import { formattedMeasurement } from '@/utils/strings'
+import { findArrayItem } from '@/utils/arrays'
 const emit = defineEmits(['close', 'submit'])
 const props = defineProps({
-    approximate: {
+    mode: {
+        type: String,
+        default: 'add'
+    },
+    editData: {
+        type: Object,
+        default: () => ({})
+    },
+    approximateItems: {
         type: Array,
+        default: () => []
+    },
+    measurementItems: {
+        type: Array,
+        default: () => []
     },
     isOpen: {
         type: Boolean,
@@ -150,7 +159,7 @@ const approximateData = ref([])
 const formData = reactive({
     type: '',
     weight: null,
-    weightUnit: 'kg',
+    weightUnit: '',
     width: null,
     length: null,
     height: null,
@@ -164,18 +173,42 @@ const handleSubmit = async () => {
 
     try {
         if (activeTab.value === 'approximate') {
+            const selected = approximateData.value[0]
+            if (!selected) {
+                isSubmitting.value = false
+                return
+            }
+
             emit('submit', {
-                tab: activeTab.value,
-                data: approximateData.value
+                tab: 'approximate',
+                mode: props.mode,
+                data: {
+                    ...selected,
+                    description: formData.description,
+                    quantity: formData.quantity
+                }
             })
         } else {
+            const individualItem = {
+                name: formData.type || 'Item',
+                description: formData.description,
+                size: formData.size,
+                weight_kg: formData.weight,
+                length_m: formData.length,
+                width_m: formData.width,
+                height_m: formData.height,
+                measurement: formData.weightUnit,
+                quantity: formData.quantity
+            }
+
             emit('submit', {
-                tab: activeTab.value,
-                ...formData
+                tab: 'individual',
+                mode: props.mode,
+                data: individualItem
             })
         }
 
-        closeModal()
+        emit('close')
         resetForm()
     } catch (error) {
         console.error('Submission error:', error)
@@ -186,40 +219,81 @@ const handleSubmit = async () => {
 
 const selectItem = (item) => {
     if (findArrayItem(approximateData.value, 'id', item.id)) {
-        approximateData.value = approximateData.value.filter(i => i.id !== item.id)
+        approximateData.value = []
         return
-    } else {
-        approximateData.value.push({
-            id: item.id,
-            name: item.name,
-            description: formData.description,
-            size: item.id,
-            weight_kg: item.weight_kg,
-            length_m: item.length_m,
-            width_m: item.width_m,
-            height_m: item.height_m,
-            measurement: item.measurement,
-            quantity: formData.quantity
-        })
     }
-}
 
-const closeModal = () => {
-    emit('close')
+    approximateData.value = [{
+        id: item.id,
+        name: item.name || 'Item',
+        description: formData.description,
+        size: item.id,
+        weight_kg: item.weight_kg,
+        length_m: item.length_m,
+        width_m: item.width_m,
+        height_m: item.height_m,
+        measurement: item.measurement,
+        quantity: formData.quantity
+    }]
 }
 
 const resetForm = () => {
     formData.type = ''
     formData.weight = null
-    formData.weightUnit = 'kg'
+    formData.weightUnit = ''
     formData.width = null
     formData.length = null
     formData.height = null
     formData.size = null
     formData.quantity = null
     formData.description = ''
+    approximateData.value = []
     activeTab.value = 'individual'
 }
+
+const initEditState = () => {
+    if (props.mode !== 'edit' || !props.editData) {
+        resetForm()
+        return
+    }
+
+    const item = props.editData
+    const tab = item.tab || 'approximate'
+    activeTab.value = tab
+
+    if (tab === 'approximate') {
+        approximateData.value = [item]
+        formData.quantity = item.quantity ?? null
+        formData.description = item.description ?? ''
+    } else {
+        formData.type = item.name || ''
+        formData.weight = item.weight_kg ?? null
+        formData.width = item.width_m ?? null
+        formData.length = item.length_m ?? null
+        formData.height = item.height_m ?? null
+        formData.size = item.size ?? null
+        formData.quantity = item.quantity ?? null
+        formData.description = item.description ?? ''
+    }
+}
+
+onMounted(() => {
+    if (props.mode === 'edit' && props.isOpen) {
+        initEditState()
+    } else {
+        resetForm()
+    }
+})
+
+watch(
+    () => [props.isOpen, props.mode, props.editData],
+    ([isOpen]) => {
+        if (isOpen && props.mode === 'edit') {
+            initEditState()
+        }
+    },
+    { deep: true }
+)
 </script>
 
 <style scoped>

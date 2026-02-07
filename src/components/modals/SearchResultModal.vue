@@ -20,7 +20,7 @@
                                 class="text-[20px] font-bold text-[#222222] group-hover:text-[#002244] transition-colors">
                                 {{ order.trackingNumber }}
                             </h3>
-                            <span class="px-5 py-[7px] rounded-full text-sm font-medium" :class="statusBadgeClass">
+                            <span class="px-5 py-[7px] rounded-full text-sm font-medium" :class="statusBadgeClass(order.status)">
                                 {{ order.statusLabel }}
                             </span>
                         </div>
@@ -90,26 +90,12 @@
 </template>
 
 <script setup>
+import { statusBadgeClass } from '@/utils/switch';
 const emit = defineEmits(['close'])
 const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false
-    }
-})
-
-const statusBadgeClass = computed(() => {
-    switch (order.status) {
-        case 'pending':
-            return 'bg-[#FFECB4] text-[#D59E00]'
-        case 'accepted':
-            return 'bg-gradient-to-r from-green-100 to-green-200 text-green-800'
-        case 'completed':
-            return 'bg-[#B3FFCE] text-[#009D37]'
-        case 'rejected':
-            return 'bg-[#FFC1C0] text-[#B50200]'
-        default:
-            return 'bg-[#1490FF33] text-[#1490FF]'
     }
 })
 

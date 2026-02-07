@@ -95,25 +95,27 @@
                                     class="flex items-center justify-between p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
                                     @click="editItem(index)">
                                     <div>
-                                        <p class="font-semibold text-gray-900">{{ `${item.name} #${item.id}` }}</p>
+                                        <p class="font-semibold text-gray-900">{{ `${item.name}` }}</p>
                                         <p class="text-sm text-[#EBF3FD]0">{{ formattedMeasurement(item) }}</p>
                                     </div>
-                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-[#939393] transition-colors"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7" />
-                                    </svg>
+                                    <div class="flex items-center gap-3">
+                                        <!-- DELETE ICON (sadece hover olunca çıkacak) -->
+                                        <button @click.stop="deleteItem(index)"
+                                            class="opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 text-red-500 hover:text-red-600">
+                                            <delete-icon :size="22" />
+                                        </button>
+
+                                        <!-- Chevron -->
+                                        <chevron_down-icon class="rotate-[-90deg]" :size="24" />
+                                    </div>
                                 </div>
                             </div>
 
-                            <button @click="showModal = true"
+                            <button @click="() => { itemMode = 'add'; showModal = true }"
                                 class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2">
-                                <div class="w-6 h-6 bg-[#002244] rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
+                                <div
+                                    class="w-6 h-6 rounded-full text-white bg-[#002244] flex items-center justify-center">
+                                    <plus-icon :size="20" />
                                 </div>
                                 Add Item
                             </button>
@@ -130,28 +132,28 @@
                                 <!-- Pickup Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">Ugradylmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_shipment_expected"
-                                        :enable-time-picker="false" placeholder="Sene saýlaň">
+                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false"
+                                        placeholder="Sene saýlaň">
                                     </VueDatePicker>
                                 </div>
 
                                 <!-- Delivery Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">Barmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_arrival_expected"
-                                        :enable-time-picker="false" placeholder="Sene saýlaň" />
+                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false"
+                                        placeholder="Sene saýlaň" />
                                 </div>
                             </div>
 
                             <!-- Submit Button -->
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
-                                :class="{'opacity-50 cursor-not-allowed' : orderRequestStore.loading}">
+                                :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
                                 <span v-if="!orderRequestStore.loading">Tassyklamak</span>
-                                    <span v-else class="flex items-center justify-center">
-                                        <animate_spin-icon />
-                                        Ýüklenýär...
-                                    </span>
+                                <span v-else class="flex items-center justify-center">
+                                    <animate_spin-icon />
+                                    Ýüklenýär...
+                                </span>
                             </button>
                         </FormContainer>
                     </div>
@@ -159,8 +161,8 @@
             </SectionContainer>
         </MainContainer>
         <!-- Modals -->
-        <AddItemModal :is-open="showModal" :approximate="approximate" @close="showModal = false"
-            @submit="handleItemSubmit" />
+        <ItemModal :mode="itemMode" :is-open="showModal" :edit-data="editData" :approximateItems="approximateItems"
+            :measurementItems="measurementItems" @close="showModal = false" @submit="handleItemSubmit" />
     </section>
 </template>
 
@@ -176,13 +178,17 @@ const countryStore = useCountryStore()
 const itemSizeStore = useItemSizeStore()
 const itemCategoryStore = useItemCategoryStore()
 const orderRequestStore = useOrderRequestStore()
+const measurementStore = useMeasurementStore()
 
+const measurementItems = ref([])
+const approximateItems = ref([])
 const nirdenOptions = ref([])
 const niraOptions = ref([])
-const approximate = ref([])
 
+const itemMode = ref('add')
 const isSwap = ref(false)
 const showModal = ref(false)
+const editingIndex = ref(null)
 
 const transportTypes = ref([
     { id: 'SEA', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
@@ -191,6 +197,7 @@ const transportTypes = ref([
     { id: 'RAIL', label: 'Otly', icon: 'train_2-icon' }
 ])
 
+const editData = ref({})
 const formData = reactive({
     type: 'SIMPLE',
     from_country: null,
@@ -219,18 +226,32 @@ const toggleCargoType = (id) => {
     }
 }
 
-const handleItemSubmit = (array) => {
-    if (array.tab === "approximate") {
-        array.data.forEach(item => {
-            formData.items.push(item)
-        })
-    } else {
+const handleItemSubmit = (payload) => {
+    const { tab, mode, data } = payload
 
+    if (mode === 'add') {
+        formData.items.push({
+            ...data,
+            tab
+        })
+    } else if (mode === 'edit' && editingIndex.value !== null) {
+        formData.items[editingIndex.value] = {
+            ...data,
+            tab
+        }
+        editingIndex.value = null
     }
 }
 
 const editItem = (index) => {
+    showModal.value = true
+    itemMode.value = 'edit'
+    editingIndex.value = index
+    editData.value = { ...formData.items[index] }
+}
 
+const deleteItem = (index) => {
+    formData.items.splice(index, 1)
 }
 
 const submitOrder = async () => {
@@ -240,13 +261,11 @@ const submitOrder = async () => {
             date_arrival_expected: formatToYYYYMMDD(formData.date_arrival_expected),
             date_shipment_expected: formatToYYYYMMDD(formData.date_shipment_expected)
         })
-        router.push({ name: 'OrderRequests' })
+        resetForm()
     } catch (error) {
         
     }
 }
-
-
 
 const selectedCountry = async (type, data) => {
     if (type === 'nirden') {
@@ -261,11 +280,24 @@ const selectedCountry = async (type, data) => {
 onMounted(async () => {
     const itemSizes = await itemSizeStore.fetchItemSizes()
     const countries = await countryStore.fetchCountries()
+    const measurements = await measurementStore.fetchMeasurements()
     await itemCategoryStore.fetchItemCategories()
     nirdenOptions.value = normalizeToIdLabel(countries)
     niraOptions.value = normalizeToIdLabel(countries)
-    approximate.value = itemSizes
+    measurementItems.value = normalizeToIdLabel(measurements)
+    approximateItems.value = itemSizes
 })
+
+const resetForm = () => {
+    formData.from_country = null
+    formData.to_country = null
+    formData.description = ''
+    formData.categories = []
+    formData.transportation_type = ''
+    formData.date_shipment_expected = ''
+    formData.date_arrival_expected = ''
+    formData.items = []
+}
 </script>
 
 <style scoped>

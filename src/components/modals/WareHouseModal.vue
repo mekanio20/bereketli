@@ -109,16 +109,6 @@ const props = defineProps({
     default: () => {}
   }
 })
-const statusBadgeClass = computed(() => {
-    switch (props.warehouse.status) {
-        case 'open':
-            return 'bg-[#B3FFCE] text-[#009D37]'
-        case 'closed':
-            return 'bg-[#FFC1C0] text-[#B50200]'
-        default:
-            return 'bg-gray-100 text-gray-800'
-    }
-})
 </script>
 
 <style scoped>

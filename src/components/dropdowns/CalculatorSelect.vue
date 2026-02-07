@@ -93,7 +93,8 @@
 
 <script setup>
 import { normalizeToIdLabel } from '@/utils/normalizers'
-import { formattedMeasurement, findArrayItem } from '@/utils/strings'
+import { formattedMeasurement } from '@/utils/strings'
+import { findArrayItem } from '@/utils/arrays'
 const itemCategoryStore = useItemCategoryStore()
 const measurementStore = useMeasurementStore()
 const { icons } = useIcons()

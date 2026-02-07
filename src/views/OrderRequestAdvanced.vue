@@ -247,7 +247,7 @@
             </SectionContainer>
         </MainContainer>
         <!-- Modals -->
-        <AddItemModal :is-open="showModal" @close="showModal = false" @submit="handleItemSubmit" />
+        <ItemModal :is-open="showModal" @close="showModal = false" @submit="handleItemSubmit" />
     </section>
 </template>
 

@@ -29,7 +29,7 @@
                 </p>
             </div>
 
-            <div class="text-sm font-medium px-7 py-2 rounded-full w-fit" :class="statusBadgeClass">
+            <div class="text-sm font-medium px-7 py-2 rounded-full w-fit" :class="statusBadgeClass(order.status)">
                 {{ getStatusLabel(order.status) }}
             </div>
 
@@ -38,6 +38,7 @@
 </template>
 
 <script setup>
+import { statusBadgeClass, getStatusLabel } from '@/utils/switch';
 defineEmits(['click'])
 const props = defineProps({
     order: {
@@ -45,34 +46,4 @@ const props = defineProps({
         required: true
     }
 })
-
-const statusBadgeClass = computed(() => {
-    switch (String(props.order?.status).toLowerCase()) {
-        case 'pending':
-            return 'bg-[#1490FF33] text-[#1490FF]'
-        case 'accepted':
-            return 'bg-gradient-to-r from-green-100 to-green-200 text-green-800'
-        case 'completed':
-            return 'bg-[#B3FFCE] text-[#009D37]'
-        case 'rejected':
-            return 'bg-[#FFC1C0] text-[#B50200]'
-        default:
-            return 'bg-[#1490FF33] text-[#1490FF]'
-    }
-})
-
-const getStatusLabel = (status) => {
-    switch (String(status).toLowerCase()) {
-        case 'pending':
-            return 'Garaşylýar'
-        case 'accepted':
-            return 'Tassyklanan'
-        case 'completed':
-            return 'Tamamlanan'
-        case 'rejected':
-            return 'Ret edilen'
-        default:
-            return 'N/A'
-    }
-}
 </script>
