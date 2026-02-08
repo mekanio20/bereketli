@@ -68,6 +68,17 @@ export const useOrderRequestStore = defineStore("order_requests", {
         this.loading = false;
       }
     },
+    async cancelOrderRequest(id) {
+      this.loading = true;
+      try {
+        const response = await api.post(`order-requests/${id}/cancel/`);
+        return response.data;
+      } catch (error) {
+        this.error = error;
+      } finally {
+        this.loading = false;
+      }
+    },
     // PATCH
     async updateOrder(id, data) {
       const toast = useToastStore();

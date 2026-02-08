@@ -39,13 +39,8 @@
                 </TransitionGroup>
 
                 <!-- Empty State -->
-                <div v-show="orderRequestStore.order_requests.length === 0 && !orderRequestStore.loading" class="text-center py-20">
-                    <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
-                        <search-icon :size="40" />
-                    </div>
-                    <p class="text-xl text-[#222222]">Tapylmady</p>
-                    <p class="text-sm text-[#838589] mt-2">Başga söz bilen gözläp görüň</p>
-                </div>
+                <NoData v-show="orderRequestStore.order_requests.length === 0 && !orderRequestStore.loading"
+                    :message="'Sargyt islegi tapylmady'" />
             </SectionContainer>
         </MainContainer>
     </section>
@@ -55,6 +50,7 @@
 import background from '@/assets/images/background.webp'
 const orderRequestStore = useOrderRequestStore()
 const searchQuery = ref('')
+const router = useRouter()
 
 onMounted(async () => {
     await orderRequestStore.fetchOrderRequests()
@@ -63,4 +59,8 @@ onMounted(async () => {
 watch(searchQuery, async (newQuery) => {
     await orderRequestStore.fetchOrderRequests({ search: newQuery })
 })
+
+const handleDetail = (id) => {
+    router.push({ name: 'OrderRequestDetail', params: { id } })
+}
 </script>

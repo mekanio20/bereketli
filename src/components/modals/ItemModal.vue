@@ -16,7 +16,7 @@
                     <div class="p-8 md:p-10">
                         <!-- Header -->
                         <h2 class="text-[30px] text-[#222222] font-bold mb-8 text-center animate-fade-in">
-                            {{ mode === 'add' ? 'Täze haryt goşmak' : 'Harydy redaktirläň' }}
+                            {{ mode === 'add' ? 'Täze haryt goşmak' : mode === 'view' ? 'Harytlar' : 'Harydy redaktirläň' }}
                         </h2>
 
                         <!-- Tab Buttons -->
@@ -43,13 +43,13 @@
                                         <!-- size and Quantity -->
                                         <div>
                                             <label class="block text-sm text-[#939393] mb-2">Quantity</label>
-                                            <form-input v-model="formData.quantity" type="number" />
+                                            <form-input :readonly="isReadonly" v-model="formData.quantity" type="number" />
                                         </div>
                                         <div>
                                             <label class="block text-sm text-[#939393] mb-2">Agramy</label>
                                             <div class="flex gap-2">
-                                                <form-input v-model="formData.weight" type="number" />
-                                                <SimpleSelect v-model="formData.weightUnit" :options="measurementItems"
+                                                <form-input :readonly="isReadonly" v-model="formData.weight" type="number" />
+                                                <SimpleSelect :readonly="isReadonly" v-model="formData.weightUnit" :options="measurementItems"
                                                     class="flex-1" />
                                             </div>
                                         </div>
@@ -59,22 +59,22 @@
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393]">Giňligi</label>
-                                            <form-input v-model="formData.width" type="number" />
+                                            <form-input :readonly="isReadonly" v-model="formData.width" type="number" />
                                         </div>
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393]">Uzynlygy</label>
-                                            <form-input v-model="formData.length" type="number" />
+                                            <form-input :readonly="isReadonly" v-model="formData.length" type="number" />
                                         </div>
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393]">Beýikligi</label>
-                                            <form-input v-model="formData.height" type="number" />
+                                            <form-input :readonly="isReadonly" v-model="formData.height" type="number" />
                                         </div>
                                     </div>
 
                                     <!-- Description -->
                                     <div>
                                         <label class="block text-sm text-[#939393] mb-2">Description</label>
-                                        <textarea v-model="formData.description" rows="2"
+                                        <textarea :readonly="isReadonly" v-model="formData.description" rows="2"
                                             class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
                                     </div>
                                 </div>
@@ -83,32 +83,32 @@
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="px-1">
                                             <label class="block text-sm text-[#939393] mb-2">Quantity</label>
-                                            <form-input v-model="formData.quantity" type="number" />
+                                            <form-input :readonly="isReadonly" v-model="formData.quantity" type="number" />
                                         </div>
                                         <!-- Description -->
                                         <div class="px-1 col-span-2">
                                             <label class="block text-sm text-[#939393] mb-2">Description</label>
-                                            <form-input v-model="formData.description" type="text" />
+                                            <form-input :readonly="isReadonly" v-model="formData.description" type="text" />
                                         </div>
                                     </div>
-                                    <div v-for="item in approximateItems" :key="item.id" @click="selectItem(item)"
-                                        class="flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] hover:bg-[#ddebff] cursor-pointer duration-100"
-                                        :class="[findArrayItem(approximateData, 'id', item.id) ? 'bg-[#ddebff]' : '']">
+                                    <button type="button" v-for="item in approximateItems" :key="item.id" :disabled="isReadonly" @click="selectItem(item)"
+                                        class="w-full flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] cursor-pointer duration-100"
+                                        :class="[findArrayItem(approximateData, 'id', item.id) ? 'bg-[#bad7ff]' : '']">
                                         <div class="w-[58px] h-[40px]">
                                             <img :src="item.icon" class="w-full h-full object-cover" />
                                         </div>
-                                        <div class="flex flex-col space-y-2">
+                                        <div class="flex flex-col space-y-2 items-start">
                                             <h4 class="text-[#222222] font-semibold">{{ `${item.name} #${item.id}` }}
                                             </h4>
                                             <p class="text-[#838589] text-sm">{{ formattedMeasurement(item) }}</p>
                                         </div>
-                                    </div>
+                                    </button>
                                 </div>
                             </Transition>
 
                             <div class="flex items-center justify-center">
                                 <!-- Submit Button -->
-                                <button type="submit" :disabled="isSubmitting"
+                                <button type="submit" :disabled="isSubmitting || isReadonly"
                                     class="w-fit px-28 py-4 bg-custom-gradient text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                                     <span v-if="!isSubmitting">Ýatda saklamak</span>
                                     <span v-else class="flex items-center justify-center">
@@ -152,14 +152,15 @@ const props = defineProps({
     }
 })
 
-const activeTab = ref('individual')
+const activeTab = ref('')
 const isSubmitting = ref(false)
+const isReadonly = ref(false)
 
 const approximateData = ref([])
 const formData = reactive({
     type: '',
     weight: null,
-    weightUnit: '',
+    weightUnit: null,
     width: null,
     length: null,
     height: null,
@@ -222,7 +223,6 @@ const selectItem = (item) => {
         approximateData.value = []
         return
     }
-
     approximateData.value = [{
         id: item.id,
         name: item.name || 'Item',
@@ -240,29 +240,26 @@ const selectItem = (item) => {
 const resetForm = () => {
     formData.type = ''
     formData.weight = null
-    formData.weightUnit = ''
+    formData.weightUnit = null
     formData.width = null
     formData.length = null
     formData.height = null
     formData.size = null
     formData.quantity = null
     formData.description = ''
+
     approximateData.value = []
     activeTab.value = 'individual'
 }
 
 const initEditState = () => {
-    if (props.mode !== 'edit' || !props.editData) {
-        resetForm()
-        return
-    }
-
     const item = props.editData
-    const tab = item.tab || 'approximate'
-    activeTab.value = tab
+    isReadonly.value = props.mode === 'view' ? true : false
+    activeTab.value = item.size ? 'approximate' : 'individual'
 
-    if (tab === 'approximate') {
-        approximateData.value = [item]
+    if (activeTab.value === 'approximate') {
+        const approximateItem = findArrayItem(props.approximateItems, 'id', item.size)
+        selectItem(approximateItem)
         formData.quantity = item.quantity ?? null
         formData.description = item.description ?? ''
     } else {
@@ -272,28 +269,19 @@ const initEditState = () => {
         formData.length = item.length_m ?? null
         formData.height = item.height_m ?? null
         formData.size = item.size ?? null
+        formData.weightUnit = item.measurement ?? null  
         formData.quantity = item.quantity ?? null
         formData.description = item.description ?? ''
     }
 }
 
-onMounted(() => {
-    if (props.mode === 'edit' && props.isOpen) {
-        initEditState()
-    } else {
-        resetForm()
-    }
-})
-
 watch(
     () => [props.isOpen, props.mode, props.editData],
     ([isOpen]) => {
-        if (isOpen && props.mode === 'edit') {
-            initEditState()
-        }
-    },
-    { deep: true }
-)
+        if (isOpen && props.mode === 'edit' || props.mode === 'view') initEditState()
+        else resetForm()
+    }, { deep: true })
+
 </script>
 
 <style scoped>

@@ -14,10 +14,11 @@
                             {{ cancelText }}
                         </button>
                         <button @click="$emit('confirm')"
-                            class="flex-1 py-3 px-6 font-semibold rounded-xl transition-all duration-300" :class="type === 'danger'
+                            class="flex-1 flex items-center justify-center space-x-2 py-3 px-6 font-semibold rounded-xl transition-all duration-300" :class="[type === 'danger'
                                 ? 'bg-red-600 text-white hover:bg-red-700'
-                                : 'bg-gradient-to-r from-orange-400 to-orange-500 text-white hover:shadow-lg'">
-                            {{ confirmText }}
+                                : 'bg-gradient-to-r from-orange-400 to-orange-500 text-white hover:shadow-lg', loading ? 'opacity-50 cursor-not-allowed' : '']">
+                                <span>{{ confirmText }}</span>
+                                <animate_spin-icon v-if="loading" />
                         </button>
                     </div>
                 </div>
@@ -33,7 +34,8 @@ defineProps({
     message: String,
     confirmText: { type: String, default: 'Confirm' },
     cancelText: { type: String, default: 'Cancel' },
-    type: { type: String, default: 'normal' }
+    type: { type: String, default: 'normal' },
+    loading: { type: Boolean, default: false }
 })
 
 defineEmits(['confirm', 'cancel'])

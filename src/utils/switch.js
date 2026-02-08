@@ -8,6 +8,8 @@ export const statusBadgeClass = (status) => {
       return "bg-[#B3FFCE] text-[#009D37]";
     case "rejected":
       return "bg-[#FFC1C0] text-[#B50200]";
+    case "cancelled":
+      return "bg-[#FFC1C0] text-[#B50200]";
     default:
       return "bg-[#1490FF33] text-[#1490FF]";
   }

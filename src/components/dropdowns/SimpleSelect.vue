@@ -1,7 +1,7 @@
 <template>
     <div ref="wrapper" class="relative w-full">
         <!-- Trigger Button -->
-        <button type="button" @click="isOpen = !isOpen" class="w-full relative bg-[#EBF3FD] font-medium px-6 py-[13px] rounded-[10px]
+        <button type="button" :disabled="readonly" @click="isOpen = !isOpen" class="w-full relative bg-[#EBF3FD] font-medium px-6 py-[13px] rounded-[10px]
              flex items-center justify-between transition-all duration-300" :class="[
                 selectedOption ? 'text-[#222222]' : 'text-[#838589]', icon && 'pl-12']">
 
@@ -9,11 +9,11 @@
             <component v-if="icon" :is="icons[icon]" :color="'currentColor'" class="absolute left-6"
                 :class="[selectedOption ? 'text-[#222222]' : 'text-[#838589]']" />
 
-            <span class="text-base truncate max-w-[200px]">
+            <span class="text-base truncate max-w-[200px]" :class="{ 'h-[24px]': readonly }">
                 {{ selectedOption?.label || placeholder }}
             </span>
 
-            <chevron_down-icon :class="[
+            <chevron_down-icon v-if="!readonly" :class="[
                 'transition-transform duration-300',
                 isOpen && 'rotate-180'
             ]" :color="'#222222'" :size="20" />
@@ -62,6 +62,7 @@ const props = defineProps({
         default: ''
     },
     isSearch: Boolean,
+    readonly: Boolean,
     icon: String
 })
 

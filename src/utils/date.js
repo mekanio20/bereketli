@@ -8,3 +8,10 @@ export const formatToYYYYMMDD = (input) => {
 
   return `${day}.${month}.${year}`;
 };
+
+export const parseTRDate = (str) => {
+  if (!str) return null
+
+  const [dd, mm, yyyy] = str.split('.')
+  return new Date(Number(yyyy), Number(mm) - 1, Number(dd))
+}
