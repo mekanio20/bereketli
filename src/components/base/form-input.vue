@@ -7,7 +7,7 @@
 <script setup>
 defineProps({
     modelValue: {
-        type: String,
+        type: [String, Number],
         default: ''
     },
     placeholder: {

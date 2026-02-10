@@ -5,12 +5,12 @@
             <img :src="background" class="w-full h-full object-contain" />
         </div>
         <MainContainer>
-            <SectionContainer class="pb-20">
+            <SectionContainer>
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
                     { label: 'Order Requests', to: '/order/requests' },
-                    { label: 'Request New Order' }
+                    { label: 'Request New Simple Order' }
                 ]" />
 
                 <!-- Title -->
@@ -27,8 +27,7 @@
                             <div class="flex items-end space-x-6 mb-4">
                                 <!-- From Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions"
-                                        @change="selectedCountry('nirden', $event)" placeholder="Nirden"
+                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions" placeholder="Nirden"
                                         :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                                 <!-- Swap Button -->
@@ -41,8 +40,7 @@
                                 </div>
                                 <!-- To Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions"
-                                        @change="selectedCountry('nira', $event)" placeholder="Nirä" :isSearch="true"
+                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions" placeholder="Nirä" :isSearch="true"
                                         :icon="'map_pin-icon'" />
                                 </div>
                             </div>
@@ -100,7 +98,7 @@
                                     </div>
                                     <div class="flex items-center gap-3">
                                         <!-- DELETE ICON (sadece hover olunca çıkacak) -->
-                                        <button @click.stop="deleteItem(index)"
+                                        <button @click.stop="formData.items.splice(index, 1)"
                                             class="opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 text-red-500 hover:text-red-600">
                                             <delete-icon :size="22" />
                                         </button>
@@ -126,7 +124,7 @@
                     <div class="w-[35%] space-y-6 self-start sticky top-32">
                         <!-- Date Section -->
                         <FormContainer>
-                            <h2 class="text-xl font-bold text-gray-900 mb-8">Eltip bermek möhleti</h2>
+                            <h2 class="form_title mb-8">Eltip bermek möhleti</h2>
 
                             <div class="space-y-6">
                                 <!-- Pickup Date -->
@@ -167,13 +165,12 @@
 </template>
 
 <script setup>
+import background from '@/assets/images/background.webp'
 import { normalizeToIdLabel } from '@/utils/normalizers'
 import { formattedMeasurement } from '@/utils/strings'
 import { formatToYYYYMMDD } from '@/utils/date'
-import background from '@/assets/images/background.webp'
 
 const { icons } = useIcons()
-const router = useRouter()
 const countryStore = useCountryStore()
 const itemSizeStore = useItemSizeStore()
 const itemCategoryStore = useItemCategoryStore()
@@ -250,10 +247,6 @@ const editItem = (index) => {
     editData.value = { ...formData.items[index] }
 }
 
-const deleteItem = (index) => {
-    formData.items.splice(index, 1)
-}
-
 const submitOrder = async () => {
     try {
         await orderRequestStore.createOrderRequest({
@@ -263,17 +256,7 @@ const submitOrder = async () => {
         })
         resetForm()
     } catch (error) {
-        
-    }
-}
-
-const selectedCountry = async (type, data) => {
-    if (type === 'nirden') {
-        const countries = await countryStore.fetchCountries({ from_country: data.id })
-        niraOptions.value = normalizeToIdLabel(countries)
-    } else if (type === 'nira') {
-        const countries = await countryStore.fetchCountries({ to_country: data.id })
-        nirdenOptions.value = normalizeToIdLabel(countries)
+        console.log(error);
     }
 }
 

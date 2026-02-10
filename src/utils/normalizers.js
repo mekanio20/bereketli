@@ -1,4 +1,4 @@
-export const normalizeToIdLabel = (list = []) =>
+export const normalizeToIdLabel = (list = [], all = false) =>
   list.map((item) => {
     const ID_KEYS = ["id"];
     const LABEL_KEYS = ["name", "title", "label"];
@@ -13,6 +13,7 @@ export const normalizeToIdLabel = (list = []) =>
     );
 
     if (!label || !label.trim()) label = "-";
+    if (all) return { id, label, ...item };
 
     return { id, label };
   });

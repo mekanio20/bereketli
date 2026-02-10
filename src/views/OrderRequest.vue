@@ -5,7 +5,7 @@
             <img :src="background" class="w-full h-full object-contain" />
         </div>
         <MainContainer>
-            <SectionContainer class="pb-20">
+            <SectionContainer>
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
@@ -53,7 +53,7 @@ const searchQuery = ref('')
 const router = useRouter()
 
 onMounted(async () => {
-    await orderRequestStore.fetchOrderRequests()
+    await orderRequestStore.fetchOrderRequests({ sort: 'date_created' })
 })
 
 watch(searchQuery, async (newQuery) => {

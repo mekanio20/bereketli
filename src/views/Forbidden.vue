@@ -1,7 +1,7 @@
 <template>
     <section class="overflow-x-hidden relative">
         <MainContainer>
-            <SectionContainer class="py-20">
+            <SectionContainer>
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },

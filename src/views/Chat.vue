@@ -5,7 +5,7 @@
             <img :src="background" class="w-full h-full object-contain" />
         </div>
         <MainContainer>
-            <SectionContainer class="pb-20">
+            <SectionContainer>
                 <div class="flex space-x-5">
                     <!-- Hidden File Inputs -->
                     <input ref="imageInput" type="file" accept="image/*" multiple class="hidden"

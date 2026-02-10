@@ -5,7 +5,7 @@
             <img :src="background" class="w-full h-full object-contain" />
         </div>
         <MainContainer>
-            <SectionContainer class="pb-20">
+            <SectionContainer>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- Sidebar -->
                     <aside class="lg:col-span-1">
