@@ -50,7 +50,7 @@
                     <div class="relative rounded-3xl overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-3xl h-96"
                         :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
                         :style="{ transitionDelay: `${index * 100}ms` }">
-                        <NewsCard :image="item.image" :date="item.date" :title="item.title" @click="handleNewsDetail(item.id)" />
+                        <NewsCard :image="item.image" :date="item.date_created" :title="item.title" @click="handleNewsDetail(item.id)" />
                     </div>
                 </swiper-slide>
             </swiper>

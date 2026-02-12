@@ -13,130 +13,170 @@
                     <input ref="fileInput" type="file" multiple class="hidden" @change="handleFileSelect" />
 
                     <!-- Sidebar - Chat List -->
-                    <aside class="w-full md:w-96 bg-white flex flex-col rounded-[26px] max-h-[600px] overflow-y-auto">
+                    <aside class="w-1/3 bg-white flex flex-col rounded-[26px] max-h-[600px] overflow-y-auto">
                         <!-- Sidebar Header -->
                         <div class="p-6">
                             <h1 class="text-[22px] font-semibold text-[#222222]">Habarlaşmak</h1>
+                            
+                            <!-- Search Input -->
+                            <div class="mt-4">
+                                <form-input 
+                                    v-model="searchQuery" 
+                                    type="text" 
+                                    placeholder="Gözleg..."
+                                    @input="handleSearch"
+                                    class="rounded-full placeholder:text-[#838589] font-normal text-[#222222]" 
+                                />
+                            </div>
                         </div>
 
                         <!-- Chat List -->
                         <div class="flex-1 overflow-y-auto">
-                            <!-- Active Chat -->
-                            <button v-for="chat in chats" :key="chat.id" @click="selectChat(chat)"
-                                class="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-100"
-                                :class="{ 'bg-blue-50 border-l-2 border-l-[#3B82F6]': selectedChat?.id === chat.id }">
+                            <!-- Loading State -->
+                            <div v-if="roomStore.loading" class="flex items-center justify-center p-8">
+                                <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+
+                            <!-- Chat Items -->
+                            <button v-for="(room, index) in roomStore.rooms" :key="room.id" @click="selectChat(room)"
+                                class="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors duration-200"
+                                :class="{ 'bg-blue-50 border-l-2 border-l-[#3B82F6]': selectedRoom?.id === room.id, 'border-b border-gray-100': index < roomStore.rooms.length - 1}">
                                 <div class="relative">
                                     <div
                                         class="w-[50px] h-[50px] bg-[#D4D9E7] rounded-full flex items-center justify-center overflow-hidden">
-                                        <img v-if="chat.avatar" :src="chat.avatar" :alt="chat.name"
-                                            class="w-full h-full object-cover" />
+                                        <span class="text-lg font-semibold text-gray-600">
+                                            {{ getChatInitials(room) }}
+                                        </span>
                                     </div>
                                     <!-- Badge -->
-                                    <span v-if="chat.unreadCount"
+                                    <span v-if="room.unread_count > 0"
                                         class="absolute -top-1 -right-1 w-[20px] h-[20px] bg-[#E62927] text-white text-xs font-semibold rounded-full flex items-center justify-center">
-                                        {{ chat.unreadCount }}
+                                        {{ room.unread_count }}
                                     </span>
                                 </div>
                                 <div class="flex-1 text-left min-w-0">
                                     <div class="flex items-center justify-between mb-1">
-                                        <h3 class="font-semibold text-[#222222] truncate">{{ chat.name }}</h3>
+                                        <h3 class="font-semibold text-[#222222] truncate">{{ getChatName(room) }}</h3>
                                     </div>
-                                    <p class="text-sm text-[#838589] truncate">{{ chat.lastMessage }}</p>
+                                    <p class="text-sm text-[#838589] truncate">
+                                        {{ room.last_message?.text || 'Täze söhbet' }}
+                                    </p>
+                                    <p v-if="room.last_message_time" class="text-xs text-[#838589] mt-1">
+                                        {{ room.last_message_time }}
+                                    </p>
                                 </div>
                             </button>
                         </div>
                     </aside>
 
                     <!-- Main Chat Area -->
-                    <main v-if="selectedChat" class="flex-1 flex flex-col bg-white rounded-[26px] max-h-[600px] overflow-y-auto">
+                    <main v-if="selectedRoom"
+                        class="flex-1 flex flex-col bg-white rounded-[26px] max-h-[600px] overflow-y-auto">
                         <!-- Chat Header -->
                         <header class="flex items-center gap-4 px-6 py-5 border-b border-[#EDEDED]">
                             <div
-                                class="w-10 h-10 bg-[#EBF3FD] rounded-full flex items-center justify-center overflow-hidden cursor-pointer hover:bg-blue-100 duration-100">
-                                 <arrow_down-icon class="rotate-[90deg]" :size="18" />
+                                class="w-10 h-10 bg-[#EBF3FD] rounded-full flex items-center justify-center overflow-hidden cursor-pointer hover:bg-blue-100 duration-100"
+                                @click="selectedRoom = null">
+                                <arrow_down-icon class="rotate-[90deg]" :size="18" />
                             </div>
                             <div>
-                                <h2 class="text-xl font-bold text-[#222222]">Bereketli Logistika</h2>
+                                <h2 class="text-xl font-bold text-[#222222]">{{ getChatName(selectedRoom) }}</h2>
+                                <p class="text-sm text-[#838589]">{{ selectedRoom.code }}</p>
                             </div>
                         </header>
 
                         <!-- Messages Area -->
                         <div ref="messagesContainer" class="flex-1 overflow-y-auto p-6 space-y-6">
-                            <!-- Date Separator -->
-                            <div class="flex justify-center">
-                                <span
-                                    class="px-4 py-1.5 bg-[#EBF3FD] text-[#474747] text-[12px] font-medium rounded-full">
-                                    Sentyabr 2, 2025
-                                </span>
+                            <!-- Load More Button -->
+                            <div v-if="hasMoreMessages" class="flex justify-center">
+                                <button 
+                                    @click="loadMoreMessages"
+                                    :disabled="loadingMoreMessages"
+                                    class="px-4 py-2 bg-[#EBF3FD] hover:bg-blue-200 text-[#002645] rounded-full text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                                    <div v-if="loadingMoreMessages" class="w-4 h-4 border-2 border-[#002645] border-t-transparent rounded-full animate-spin"></div>
+                                    <span>{{ loadingMoreMessages ? 'Ýükleniýär...' : 'Öňki habarlary ýükle' }}</span>
+                                </button>
+                            </div>
+
+                            <!-- Loading Messages -->
+                            <div v-if="messageStore.loading && currentMessages.length === 0" class="flex items-center justify-center p-8">
+                                <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+
+                            <!-- Empty State -->
+                            <div v-else-if="currentMessages.length === 0" class="flex items-center justify-center p-8">
+                                <p class="text-[#838589]">Heniz sms ýok</p>
                             </div>
 
                             <!-- Messages -->
-                            <div v-for="message in messages" :key="message.id" class="flex items-start gap-3"
-                                :class="{ 'flex-row-reverse': message.isMine }">
+                            <div v-for="message in currentMessages" :key="message.id" class="flex items-start gap-3"
+                                :class="{ 'flex-row-reverse': isMyMessage(message) }">
                                 <!-- Avatar -->
-                                <div v-if="!message.isMine"
+                                <div v-if="!isMyMessage(message)"
                                     class="w-10 h-10 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
-                                    <img v-if="message.avatar" :src="message.avatar" :alt="message.sender"
+                                    <img v-if="message.sender?.avatar" :src="message.sender.avatar" 
+                                        :alt="getSenderName(message)"
                                         class="w-full h-full object-cover" />
+                                    <span v-else class="text-sm font-semibold text-gray-600">
+                                        {{ getSenderInitials(message) }}
+                                    </span>
                                 </div>
 
-                                <div class="flex flex-col max-w-xl" :class="{ 'items-end': message.isMine }">
-                                    <!-- Sender Name -->
-                                    <span v-if="!message.isMine"
-                                        class="text-[15px] font-semibold text-[#222222] mb-2 ml-1">
-                                        {{ message.sender }}
-                                    </span>
-
+                                <div class="flex flex-col max-w-xl" :class="{ 'items-end': isMyMessage(message) }">
                                     <!-- Text Message Bubble -->
-                                    <div v-if="message.type === 'text'" class="relative group">
-                                        <div class="px-5 py-3 rounded-2xl shadow-sm" :class="message.isMine
+                                    <div v-if="message.text" class="relative group">
+                                        <div class="px-5 py-3 rounded-2xl shadow-sm" :class="isMyMessage(message)
                                             ? 'bg-[#002645] text-white rounded-tr-sm'
                                             : 'bg-[#EBF3FD] text-[#222222] rounded-tl-sm'">
-                                            <p class="text-base leading-relaxed">{{ message.content }}</p>
+                                            <p class="text-base leading-relaxed">{{ message.text }}</p>
                                         </div>
                                         <span class="text-xs text-[#838589] mt-1 block"
-                                            :class="{ 'text-right': message.isMine }">
-                                            {{ message.time }}
+                                            :class="{ 'text-right': isMyMessage(message) }">
+                                            {{ message.date_created }}
                                         </span>
                                     </div>
 
-                                    <!-- Image Message -->
-                                    <div v-else-if="message.type === 'image'" class="relative group">
-                                        <div
-                                            class="rounded-2xl overflow-hidden shadow-lg max-w-sm cursor-pointer hover:opacity-90 transition-opacity">
-                                            <img :src="message.imageUrl" :alt="message.fileName" class="w-full h-auto"
-                                                @click="downloadFile(message.imageUrl, message.fileName)" />
-                                        </div>
-                                        <button @click="downloadFile(message.imageUrl, message.fileName)"
-                                            class="absolute top-2 right-2 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100">
-                                            <arrow_down-icon color="white" :size="20" />
-                                        </button>
-                                        <span class="text-xs text-[#838589] mt-1 block"
-                                            :class="{ 'text-right': message.isMine }">
-                                            {{ message.time }}
-                                        </span>
-                                    </div>
-
-                                    <!-- File Message -->
-                                    <div v-else-if="message.type === 'file'"
-                                        class="bg-[#EBF3FD] rounded-b-[20px] rounded-tr-[20px] p-4 shadow-sm hover:bg-blue-100 transition-colors cursor-pointer group">
-                                        <button @click="downloadFile(message.fileUrl, message.fileName)" class="w-full">
-                                            <div class="flex items-center gap-3">
+                                    <!-- Attachments -->
+                                    <div v-if="message.attachments && message.attachments.length > 0" 
+                                        class="space-y-2 mt-2">
+                                        <div v-for="attachment in message.attachments" :key="attachment.id">
+                                            <!-- Image Attachment -->
+                                            <div v-if="isImageFile(attachment)" class="relative group">
                                                 <div
-                                                    class="p-2 bg-[#002645] rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                                                    class="rounded-2xl overflow-hidden shadow-lg max-w-sm cursor-pointer hover:opacity-90 transition-opacity">
+                                                    <img :src="attachment.file" :alt="attachment.original_filename" 
+                                                        class="w-full h-auto"
+                                                        @click="downloadFile(attachment.file, attachment.original_filename)" />
+                                                </div>
+                                                <button @click="downloadFile(attachment.file, attachment.original_filename)"
+                                                    class="absolute top-2 right-2 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100">
                                                     <arrow_down-icon color="white" :size="20" />
-                                                </div>
-                                                <div class="flex-1 min-w-[200px] text-left">
-                                                    <p class="font-medium text-[#222222] truncate">{{ message.fileName
-                                                        }}</p>
-                                                    <div class="flex items-center justify-between mt-[2px]">
-                                                        <p class="text-[13px] text-[#838589]">{{ message.fileSize }}</p>
-                                                        <span class="text-[13px] text-[#838589]">{{ message.time
-                                                            }}</span>
-                                                    </div>
-                                                </div>
+                                                </button>
                                             </div>
-                                        </button>
+
+                                            <!-- File Attachment -->
+                                            <div v-else
+                                                class="bg-[#EBF3FD] rounded-b-[20px] rounded-tr-[20px] p-4 shadow-sm hover:bg-blue-100 transition-colors cursor-pointer group">
+                                                <button @click="downloadFile(attachment.file, attachment.original_filename)" class="w-full">
+                                                    <div class="flex items-center gap-3">
+                                                        <div
+                                                            class="p-2 bg-[#002645] rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                                                            <arrow_down-icon color="white" :size="20" />
+                                                        </div>
+                                                        <div class="flex-1 min-w-[200px] text-left">
+                                                            <p class="font-medium text-[#222222] truncate">
+                                                                {{ attachment.original_filename }}
+                                                            </p>
+                                                            <div class="flex items-center justify-between mt-[2px]">
+                                                                <p class="text-[13px] text-[#838589]">
+                                                                    {{ formatFileSize(attachment.size) }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -146,15 +186,15 @@
                         <Transition name="slide-up">
                             <div v-if="selectedFiles.length > 0" class="border-t border-[#EDEDED] p-4">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <span class="text-sm font-semibold text-[#222222]">Selected Files ({{
-                                        selectedFiles.length }})</span>
+                                    <span class="text-sm font-semibold text-[#222222]">
+                                        Saýlanan faýllar ({{ selectedFiles.length }})
+                                    </span>
                                     <button @click="clearAllFiles"
                                         class="ml-auto text-sm text-red-600 hover:text-red-700 font-medium">
-                                        Clear All
+                                        Hemmesini aýyr
                                     </button>
                                 </div>
                                 <div class="flex gap-3 overflow-x-auto py-2">
-                                    <!-- Image Previews -->
                                     <div v-for="(file, index) in selectedFiles" :key="index"
                                         class="relative flex-shrink-0 group">
                                         <div v-if="file.type === 'image'"
@@ -163,21 +203,19 @@
                                                 class="w-full h-full object-cover" />
                                         </div>
 
-                                        <!-- File Preview -->
                                         <div v-else
                                             class="w-24 h-24 rounded-xl bg-white border-2 border-gray-200 shadow-md p-2 flex flex-col items-center justify-center">
                                             <file-icon />
-                                            <span class="text-xs text-gray-600 truncate w-full text-center">{{ file.name
-                                            }}</span>
+                                            <span class="text-xs text-gray-600 truncate w-full text-center">
+                                                {{ file.name }}
+                                            </span>
                                         </div>
 
-                                        <!-- Remove Button -->
                                         <button @click="removeFile(index)"
                                             class="absolute -top-2 -right-2 p-1 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
                                             <close-icon color="white" :size="14" />
                                         </button>
 
-                                        <!-- File Size -->
                                         <span
                                             class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs bg-gray-800 text-white px-2 py-0.5 rounded-full whitespace-nowrap">
                                             {{ file.size }}
@@ -190,26 +228,24 @@
                         <!-- Message Input -->
                         <footer class="p-6 border-t border-[#EDEDED]">
                             <form @submit.prevent="sendMessage" class="flex items-center gap-1">
-                                <!-- Attachment Button -->
                                 <button type="button" @click="openImagePicker"
                                     class="p-2 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
                                     <camera-icon />
                                 </button>
 
-                                <!-- File Button -->
                                 <button type="button" @click="openFilePicker"
                                     class="p-2 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
                                     <attachment-icon />
                                 </button>
 
-                                <!-- Message Input -->
                                 <form-input v-model="newMessage" type="text" placeholder="SMS ýazyň..."
                                     class="rounded-full placeholder:text-[#838589] font-normal text-[#222222] mx-2" />
 
-                                <!-- Send Button -->
-                                <button type="submit" :disabled="!newMessage.trim() && selectedFiles.length === 0"
+                                <button type="submit" 
+                                    :disabled="(!newMessage.trim() && selectedFiles.length === 0) || isSending"
                                     class="px-6 py-3 bg-custom-gradient rounded-full transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2">
-                                    <send_solid-icon />
+                                    <send_solid-icon v-if="!isSending" />
+                                    <div v-else class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                     <span class="hidden sm:inline text-white font-semibold text-sm">Ugrat</span>
                                 </button>
                             </form>
@@ -234,121 +270,325 @@
 
 <script setup>
 import background from '@/assets/images/background.webp'
-const selectedChat = ref(null)
+const roomStore = useRoomStore()
+const messageStore = useMessageStore()
+const fileStore = useFileStore()
+const selectedRoom = ref(null)
 const newMessage = ref('')
 const messagesContainer = ref(null)
 const imageInput = ref(null)
 const fileInput = ref(null)
 const selectedFiles = ref([])
+const isSending = ref(false)
+const searchQuery = ref('')
+const searchTimeout = ref(null)
 
-const chats = reactive([
-    {
-        id: 1,
-        name: 'Bereketli Logistika',
-        lastMessage: '#RW3E-74ESW4',
-        unreadCount: 3,
-        verified: true,
-        avatar: null
-    },
-    {
-        id: 2,
-        name: '#RW3E-74ESW4',
-        lastMessage: '',
-        unreadCount: 0,
-        verified: false,
-        avatar: null
-    },
-    {
-        id: 3,
-        name: '#RW3E-74ESW4',
-        lastMessage: '',
-        unreadCount: 0,
-        verified: false,
-        avatar: null
-    },
-    {
-        id: 4,
-        name: '#RW3E-74ESW4',
-        lastMessage: '',
-        unreadCount: 0,
-        verified: false,
-        avatar: null
+// Pagination
+const currentOffset = ref(0)
+const messageLimit = ref(10)
+const hasMoreMessages = ref(false)
+const loadingMoreMessages = ref(false)
+
+// WebSocket
+const socket = ref(null)
+const reconnectTimer = ref(null)
+const isManuallyClosed = ref(false)
+const currentUser = ref(null)
+
+const currentMessages = computed(() => {
+    if (!selectedRoom.value) return []
+    return messageStore.messages
+        .filter(msg => msg.room_code === selectedRoom.value.code)
+        .sort((a, b) => new Date(a.date_created) - new Date(b.date_created))
+})
+
+// Helper functions
+const getChatName = (room) => {
+    if (!room) return ''
+    return room.room_type === 'order' ? `ORD-${room.code}` : 'Bereketli support'
+}
+
+const getChatInitials = (room) => {
+    if (!room) return '?'
+    const name = getChatName(room)
+    return String(name).slice(0, 2).toUpperCase()
+}
+
+const getSenderName = (message) => {
+    if (!message?.sender) return 'Unknown'
+    const { first_name, last_name } = message.sender
+    if (first_name || last_name) {
+        return `${first_name || ''} ${last_name || ''}`.trim()
     }
-])
+    return message.sender.phone_number || message.sender.email || 'Unknown'
+}
 
-const messages = reactive([
-    {
-        id: 1,
-        sender: 'Aman Myradow',
-        content: 'Salam! Hawa, sargydyňyz paylaýyş merkezimize gelipdir.',
-        time: '18:30',
-        isMine: false,
-        type: 'text',
-        avatar: null
-    },
-    {
-        id: 2,
-        content: 'Haýsy adrese baryp almalyň?',
-        time: '6:34 pm',
-        isMine: true,
-        type: 'text'
-    },
-    {
-        id: 3,
-        sender: 'Leýli Aşyrowa',
-        fileName: 'Sertnama.docx',
-        fileSize: '30.4 KB',
-        fileUrl: 'data:text/plain;base64,SGVsbG8gV29ybGQ=',
-        time: '18:30',
-        isMine: false,
-        type: 'file'
+const getSenderInitials = (message) => {
+    const name = getSenderName(message)
+    const parts = name.split(' ')
+    if (parts.length >= 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase()
     }
-])
+    return name.slice(0, 2).toUpperCase()
+}
 
-const selectChat = (chat) => {
-    selectedChat.value = chat
-    chat.unreadCount = 0
+const isMyMessage = (message) => {
+    if (!currentUser.value || !message?.sender) return false
+    return currentUser.value === message.sender.id
+}
+
+const isImageFile = (attachment) => {
+    if (!attachment?.original_filename) return false
+    const ext = attachment.original_filename.split('.').pop()?.toLowerCase()
+    return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext)
+}
+
+// Search handling
+const handleSearch = () => {
+    clearTimeout(searchTimeout.value)
+    searchTimeout.value = setTimeout(async () => {
+        await roomStore.getRooms({ search: searchQuery.value })
+    }, 500)
+}
+
+// Load more messages
+const loadMoreMessages = async () => {
+    if (!selectedRoom.value || loadingMoreMessages.value) return
+    
+    loadingMoreMessages.value = true
+    const newOffset = currentOffset.value + messageLimit.value
+    
+    try {
+        const result = await messageStore.getMessages({
+            room_code: selectedRoom.value.code,
+            limit: messageLimit.value,
+            offset: newOffset
+        })
+        
+        if (result && result.length > 0) {
+            currentOffset.value = newOffset
+            hasMoreMessages.value = result.length === messageLimit.value
+        } else {
+            hasMoreMessages.value = false
+        }
+    } catch (error) {
+        console.error('Error loading more messages:', error)
+    } finally {
+        loadingMoreMessages.value = false
+    }
+}
+
+// WebSocket connection
+const connectToWebSocket = () => {
+    const token = localStorage.getItem('bereketli_access')
+    if (!token) {
+        console.warn('WebSocket token not found')
+        return
+    }
+
+    if (socket.value && socket.value.readyState === WebSocket.OPEN) return
+
+    isManuallyClosed.value = false
+
+    const WS_URL = `wss://bereketlilogistika.com/ws/chat/?token=${token}`
+    socket.value = new WebSocket(WS_URL)
+
+    socket.value.onopen = () => {
+        console.log('WebSocket connected')
+    }
+
+    socket.value.onmessage = (event) => {
+        try {
+            const data = JSON.parse(event.data)
+
+            if (data.type === 'receive_message') {
+                const message = data.message
+                
+                // Add message to store if not already exists
+                const exists = messageStore.messages.some(m => m.id === message.id)
+                if (!exists) {
+                    messageStore.messages.push(message)
+                }
+
+                // Update room's last message and unread count
+                const room = roomStore.rooms.find(r => r.code === message.room_code)
+                if (room) {
+                    room.last_message = {
+                        id: message.id,
+                        text: message.text,
+                        sender: message.sender,
+                        date_created: message.date_created
+                    }
+                    room.last_message_time = message.date_created
+                    
+                    if (!isMyMessage(message) && selectedRoom.value?.code !== message.room_code) {
+                        room.unread_count = (room.unread_count || 0) + 1
+                    }
+                }
+
+                nextTick(scrollToBottom)
+            } else if (data.type === 'message_delivered') {
+                isSending.value = false
+                const message = data.message
+
+                // Replace temp message with real message
+                const tempIndex = messageStore.messages.findIndex(m => 
+                    typeof m.id === 'string' && m.id.startsWith('temp-')
+                )
+                
+                if (tempIndex !== -1) {
+                    messageStore.messages.splice(tempIndex, 1)
+                }
+                
+                const exists = messageStore.messages.some(m => m.id === message.id)
+                if (!exists) {
+                    messageStore.messages.push(message)
+                }
+
+                // Update room's last message
+                const room = roomStore.rooms.find(r => r.code === message.room_code)
+                if (room) {
+                    room.last_message = {
+                        id: message.id,
+                        text: message.text,
+                        sender: message.sender,
+                        date_created: message.date_created
+                    }
+                    room.last_message_time = message.date_created
+                }
+
+                nextTick(scrollToBottom)
+            } else if (data.type === 'error') {
+                console.error('WebSocket error:', data.error)
+                isSending.value = false
+            }
+        } catch (err) {
+            console.error('WS message parse error:', err)
+        }
+    }
+
+    socket.value.onerror = (err) => {
+        console.error('WebSocket error:', err)
+        isSending.value = false
+    }
+
+    socket.value.onclose = () => {
+        console.log('WebSocket closed')
+
+        if (isManuallyClosed.value) return
+
+        clearTimeout(reconnectTimer.value)
+        reconnectTimer.value = setTimeout(() => {
+            connectToWebSocket()
+        }, 5000)
+    }
+}
+
+const disconnectWebSocket = () => {
+    isManuallyClosed.value = true
+    clearTimeout(reconnectTimer.value)
+
+    if (socket.value) {
+        socket.value.close()
+        socket.value = null
+    }
+}
+
+// Chat selection
+const selectChat = async (room) => {
+    selectedRoom.value = room
+    room.unread_count = 0
+    currentOffset.value = 0
+    hasMoreMessages.value = false
+
+    const result = await messageStore.getMessages({
+        room_code: room.code,
+        limit: messageLimit.value,
+        offset: 0
+    })
+    
+    if (result && result.length === messageLimit.value) {
+        hasMoreMessages.value = true
+    }
+
     nextTick(() => {
         scrollToBottom()
     })
 }
 
-const sendMessage = () => {
+// Upload file
+const uploadFile = async (file) => {
+    const formData = new FormData()
+    formData.append('path', file)
+
+    try {
+        const response = await fileStore.addFile(formData)
+        return response.data.id
+    } catch (error) {
+        console.error('Error uploading file:', error)
+        return null
+    }
+}
+
+// Send message
+const sendMessage = async () => {
     const hasText = newMessage.value.trim()
     const hasFiles = selectedFiles.value.length > 0
 
     if (!hasText && !hasFiles) return
-
-    const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-
-    // Send text message if exists
-    if (hasText) {
-        const textMessage = {
-            id: messages.length + 1,
-            content: newMessage.value,
-            time: currentTime,
-            isMine: true,
-            type: 'text'
-        }
-        messages.push(textMessage)
-        newMessage.value = ''
+    if (!socket.value || socket.value.readyState !== WebSocket.OPEN) {
+        console.error('WebSocket not connected')
+        return
     }
 
-    // Send all selected files
-    selectedFiles.value.forEach(file => {
-        const fileMessage = {
-            id: messages.length + 1,
-            type: file.type === 'image' ? 'image' : 'file',
-            ...(file.type === 'image' ? { imageUrl: file.preview } : { fileUrl: file.preview }),
-            fileName: file.name,
-            fileSize: file.size,
-            time: currentTime,
-            isMine: true
-        }
-        messages.push(fileMessage)
-    })
+    isSending.value = true
 
-    // Clear selected files
+    // Upload files first
+    const attachmentIds = []
+    if (hasFiles) {
+        for (const fileData of selectedFiles.value) {
+            const id = await uploadFile(fileData.file)
+            if (id) attachmentIds.push(id)
+        }
+    }
+
+    const payload = {
+        type: 'send_message',
+        data: {
+            receiver: selectedRoom.value.owner?.id,
+            room_code: selectedRoom.value.code,
+            text: newMessage.value.trim() || '',
+            attachments: attachmentIds
+        }
+    }
+
+    socket.value.send(JSON.stringify(payload))
+
+    // Optimistically add message to UI
+    const tempMessage = {
+        id: `temp-${Date.now()}`,
+        text: newMessage.value.trim(),
+        sender: { id: currentUser.value },
+        room_code: selectedRoom.value.code,
+        date_created: new Date().toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }),
+        attachments: selectedFiles.value.map(f => ({
+            id: `temp-${Date.now()}-${Math.random()}`,
+            original_filename: f.name,
+            file: f.preview,
+            size: f.file.size
+        }))
+    }
+
+    messageStore.messages.push(tempMessage)
+
+    newMessage.value = ''
     selectedFiles.value = []
 
     nextTick(() => {
@@ -356,6 +596,7 @@ const sendMessage = () => {
     })
 }
 
+// File handling
 const openImagePicker = () => {
     imageInput.value?.click()
 }
@@ -438,10 +679,30 @@ const scrollToBottom = () => {
         messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
     }
 }
+
+const getCurrentUser = () => {
+    const userStr = localStorage.getItem('user_id')
+    if (userStr) {
+        try {
+            currentUser.value = JSON.parse(userStr)
+        } catch (e) {
+            console.error('Error parsing user data:', e)
+        }
+    }
+}
+
+onMounted(async () => {
+    getCurrentUser()
+    await roomStore.getRooms()
+    connectToWebSocket()
+})
+
+onUnmounted(() => {
+    disconnectWebSocket()
+})
 </script>
 
 <style scoped>
-/* Slide up transition */
 .slide-up-enter-active,
 .slide-up-leave-active {
     transition: all 0.3s ease;

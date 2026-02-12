@@ -26,9 +26,9 @@
                             <h2 class="form_title mb-8">Eltip bermek</h2>
                             <div class="flex items-center space-x-6 mb-4">
                                 <div class="flex-1 flex flex-col space-y-8">
-                                    <!-- From Location -->
                                     <SimpleSelect v-model="formData.from_incoterm" :options="incoTerms"
                                         placeholder="From Incoterm" :isSearch="true" :icon="'map_pin-icon'" />
+                                    <!-- From Location -->
                                     <SimpleSelect v-model="formData.from_country" :options="nirdenOptions"
                                         placeholder="Nirden" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
@@ -41,16 +41,11 @@
                                     </button>
                                 </div>
                                 <div class="flex-1 flex flex-col space-y-8">
+                                    <SimpleSelect v-model="formData.to_incoterm" :options="incoTerms"
+                                        placeholder="To Incoterm" :isSearch="true" :icon="'map_pin-icon'" />
                                     <!-- To Location -->
-                                    <div class="flex-1">
-                                        <SimpleSelect v-model="formData.to_incoterm" :options="incoTerms"
-                                            placeholder="To Incoterm" :isSearch="true" :icon="'map_pin-icon'" />
-                                    </div>
-                                    <!-- To Location -->
-                                    <div class="flex-1">
-                                        <SimpleSelect v-model="formData.to_country" :options="niraOptions"
-                                            placeholder="Nirä" :isSearch="true" :icon="'map_pin-icon'" />
-                                    </div>
+                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions"
+                                        placeholder="Nirä" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                             </div>
                         </FormContainer>

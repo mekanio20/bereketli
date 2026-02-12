@@ -27,19 +27,25 @@
                         {{ newsStore.news_detail.description }}
                     </p>
                 </div>
+
+                <!-- Loading -->
+                <Loading v-if="newsStore.loading" />
             </SectionContainer>
         </MainContainer>
-        <Slider v-if="newsStore.news_detail.related_news?.length > 0" title="Meňzeş täzelikler" :data="newsStore.news_detail.related_news" />
+        <Slider v-if="related_news?.length > 0" title="Meňzeş täzelikler" :data="related_news" />
     </section>
 </template>
 
 <script setup>
 const route = useRoute()
 const newsStore = useNewsStore()
+const related_news = ref([])
+
 watch(
     () => route.params.id,
     async () => {
        await newsStore.fetchNewsById(route.params.id)
+       related_news.value = await newsStore.relatedNews(route.params.id)
     }, { immediate: true })
 </script>
 

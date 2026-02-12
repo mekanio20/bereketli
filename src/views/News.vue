@@ -19,20 +19,14 @@
                 <!-- Warehouses Grid -->
                 <TransitionGroup name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <NewsCard v-for="item in newsStore.news" :key="item.id" :title="item.title" :date="item.date_created"
-                        :image="item.image" @click="handleNewsDetail(item.id)" />
+                    <NewsCard v-for="item in newsStore.news" :key="item.id" :title="item.title"
+                        :date="item.date_created" :image="item.image" @click="handleNewsDetail(item.id)" />
                 </TransitionGroup>
 
-                <!-- Empty State -->
-                <Transition name="fade">
-                    <div v-if="newsStore.news.length === 0" class="text-center py-20">
-                        <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
-                            <search-icon :size="40" />
-                        </div>
-                        <p class="text-xl text-[#222222]">Täzelik tapylmady</p>
-                        <p class="text-sm text-[#838589] mt-2">Başga söz bilen gözläp görüň</p>
-                    </div>
-                </Transition>
+                <!-- Loading -->
+                <Loading v-if="newsStore.loading" />
+
+                <NoData v-show="newsStore.news.length === 0 && !newsStore.loading" :message="'Täzelik tapylmady'" :image="''" />
             </SectionContainer>
         </MainContainer>
     </section>
@@ -46,7 +40,7 @@ const handleNewsDetail = (id) => {
 }
 
 onMounted(async () => {
-   await newsStore.fetchNews()
+    await newsStore.fetchNews()
 })
 </script>
 

@@ -25,6 +25,8 @@ export const useNewsStore = defineStore("news", {
         console.log("GET news: ", error);
         this.error = error;
         throw error;
+      } finally {
+        this.loading = false;
       }
     },
 
@@ -38,6 +40,22 @@ export const useNewsStore = defineStore("news", {
         console.log("GET news: ", error);
         this.error = error;
         throw error;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async relatedNews(id) {
+      this.loading = true;
+      try {
+        const response = await api.get(`news/${id}/related/`);
+        return response.data;
+      } catch (error) {
+        console.log("GET related news: ", error);
+        this.error = error;
+        throw error;
+      } finally {
+        this.loading = false;
       }
     },
   },
