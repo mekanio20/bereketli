@@ -88,8 +88,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior() {
-    document.getElementById("app").scrollIntoView();
+  scrollBehavior(to) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        top: 120,
+        behavior: "smooth",
+      };
+    }
+
+    return { top: 0 };
   },
 });
 

@@ -5,7 +5,7 @@
             <MainContainer>
                 <div class="space-y-16 pt-20">
                     <Calculator @showResult="showResult" />
-                    <Services />
+                    <Services id="services" />
                     <Orders v-if="authStore.isAuthenticated" />
                 </div>
             </MainContainer>

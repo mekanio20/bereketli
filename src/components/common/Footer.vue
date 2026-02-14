@@ -21,12 +21,12 @@
 
                         <!-- App Download Buttons -->
                         <div class="flex items-center space-x-4">
-                            <a href="#"
+                            <a href="https://play.google.com/store/apps/details?id=tm.bereketli.logistika" target="_blank"
                                 class="w-[167px] block hover:scale-105 transform transition-all duration-300 group">
                                 <img src="/icons/play_store.webp">
                             </a>
 
-                            <a href="#"
+                            <a href="https://apps.apple.com/tm/app/bereketli-logistika/id6755937543" target="_blank"
                                 class="w-[167px] block hover:scale-105 transform transition-all duration-300 group">
                                 <img src="/icons/app_store.webp">
                             </a>
@@ -41,12 +41,12 @@
                                 Baş sahypa</router-link>
                         </div>
                         <div>
-                            <router-link to="#"
+                            <router-link to="/chat"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
                                 Habarlaşmak</router-link>
                         </div>
                         <div>
-                            <router-link to="#"
+                            <router-link to="/#services"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
                                 Hyzmatlarymyz</router-link>
                         </div>
@@ -55,17 +55,17 @@
                     <!-- Navigation Column 2 -->
                     <nav class="space-y-8" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.3s">
                         <div>
-                            <router-link to="#"
+                            <router-link to="/warehouses"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                Biz barada</router-link>
+                                Ammarlar</router-link>
                         </div>
                         <div>
-                            <router-link to="#"
+                            <router-link to="/faq"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                Kömek</router-link>
+                                FAQ</router-link>
                         </div>
                         <div>
-                            <router-link to="#"
+                            <router-link to="/privacy"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
                                 Howpsuzlyk</router-link>
                         </div>
@@ -83,13 +83,13 @@
 
                         <div>
                             <h3 class="text-sm font-medium text-gray-300 mb-3">Contact us</h3>
-                            <a href="tel:+99361616161"
+                            <a href="tel:+99371984704"
                                 class="block text-base mb-2 hover:text-orange-400 transition-colors duration-300 hover:underline">
-                                +99361 616161
+                                +99371984704
                             </a>
-                            <a href="mailto:bereketlilogistika@gmail.com"
+                            <a href="mailto:info@bereketlilogistika.com"
                                 class="block text-base hover:text-orange-400 transition-colors duration-300 hover:underline break-all">
-                                bereketlilogistika@gmail.com
+                                info@bereketlilogistika.com
                             </a>
                         </div>
                     </div>
@@ -109,22 +109,16 @@
     
                         <!-- Social Media Icons -->
                         <div class="flex items-center space-x-4">
-                            <a href="#"
+                            <a href="https://www.instagram.com/bereketli_logistika/" target="_blank"
                                 class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:scale-110 hover:rotate-12 transform transition-all duration-300 shadow-lg hover:shadow-xl group"
                                 aria-label="Instagram">
                                 <instagram-icon class="text-[#002244] group-hover:text-pink-600 transition-colors duration-300" />
                             </a>
     
-                            <a href="#"
+                            <a href="https://www.tiktok.com/@bereketlilogistika" target="_blank"
                                 class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:scale-110 hover:rotate-12 transform transition-all duration-300 shadow-lg hover:shadow-xl group"
                                 aria-label="TikTok">
-                                <tiktok-icon class="text-[#002244] group-hover:text-pink-600 transition-colors duration-300" /> 
-                            </a>
-    
-                            <a href="#"
-                                class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:scale-110 hover:rotate-12 transform transition-all duration-300 shadow-lg hover:shadow-xl group"
-                                aria-label="X (Twitter)">
-                                <x-icon class="text-[#002244] group-hover:text-blue-500 transition-colors duration-300" />
+                                <tiktok-icon class="text-[#002244] group-hover:text-blue-500 transition-colors duration-300" /> 
                             </a>
                         </div>
                     </div>

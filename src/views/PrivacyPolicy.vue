@@ -163,14 +163,14 @@
                             <div class="space-y-2">
                                 <p class="text-gray-700">
                                     <strong class="text-[#222222]">Email:</strong>
-                                    <a href="mailto:info@bereketli.com" class="text-[#F98900] hover:underline">
-                                        info@bereketli.com
+                                    <a href="mailto:info@bereketlilogistika.com" class="text-[#F98900] hover:underline">
+                                        info@bereketlilogistika.com
                                     </a>
                                 </p>
                                 <p class="text-gray-700">
                                     <strong class="text-[#222222]">Phone:</strong>
-                                    <a href="tel:+99361626364" class="text-[#F98900] hover:underline">
-                                        +993 61 62 63 64
+                                    <a href="tel:+99371984704" class="text-[#F98900] hover:underline">
+                                        +99371984704
                                     </a>
                                 </p>
                             </div>
