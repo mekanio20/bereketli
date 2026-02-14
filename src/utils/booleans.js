@@ -23,3 +23,14 @@ export const isWarehouseOpen = (startTime, endTime, now = new Date()) => {
     nowMinutes < endMinutes
   )
 }
+
+export const isMyMessage = (message, currentUser) => {
+    if (!currentUser || !message?.sender) return false
+    return currentUser === message.sender.id
+}
+
+export const isImageFile = (attachment) => {
+    if (!attachment?.original_filename) return false
+    const ext = attachment.original_filename.split('.').pop()?.toLowerCase()
+    return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext)
+}

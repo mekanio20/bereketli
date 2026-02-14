@@ -3,16 +3,17 @@ import api from "@/api/index";
 
 export const useSupportStore = defineStore("support", {
   state: () => ({
-    su: [],
+    support: {},
     loading: false,
     error: null,
   }),
   actions: {
-    async getMessages(filteredOptions = {}) {
+    async getMessages() {
       this.loading = true;
       try {
-        const response = await api.get("messages/", { params: filteredOptions });
-        this.messages = response.data.results.reverse();
+        const response = await api.get("support-room/");
+        console.log('Response -> ', response);
+        this.support = response.data;
       } catch (error) {
         this.error = error;
       } finally {

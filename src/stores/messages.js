@@ -8,6 +8,9 @@ export const useMessageStore = defineStore("messages", {
     error: null,
   }),
   actions: {
+    pushMessage(message) {
+      this.messages.push(message);
+    },
     async getMessages(filteredOptions = {}) {
       this.loading = true;
       try {

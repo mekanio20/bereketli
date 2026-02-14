@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "@/stores/auth";
 import { useToastStore } from "@/stores/toast";
+import { setUserId } from "@/composables/useTokens";
 import api from "@/api/index";
 
 export const useUserStore = defineStore("user", {
@@ -14,6 +15,7 @@ export const useUserStore = defineStore("user", {
       this.loading = true;
       try {
         const response = await api.get("users/me/");
+        setUserId(response.data.id);
         this.user = response.data;
       } catch (error) {
         this.error = error;

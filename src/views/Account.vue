@@ -269,7 +269,6 @@ onMounted(async () => {
     profileData.last_name = userStore.user.last_name
     profileData.company = userStore.user.company
     profileData.phone_number = userStore.user.phone_number
-    localStorage.setItem('user_id', userStore.user.id)
 })
 </script>
 

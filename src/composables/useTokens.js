@@ -1,13 +1,15 @@
 export const getAccessToken = () => localStorage.getItem('bereketli_access');
 export const getRefreshToken = () => localStorage.getItem('bereketli_refresh');
+export const getUserId = () => localStorage.getItem('user_id');
 
 export const setAccessToken = (token) => localStorage.setItem('bereketli_access', token);
 export const setRefreshToken = (token) => localStorage.setItem('bereketli_refresh', token);
+export const setUserId = (id) => localStorage.setItem('user_id', id);
 
 export const clearTokens = () => {
   localStorage.removeItem('bereketli_access');
   localStorage.removeItem('bereketli_refresh');
-  localStorage.removeItem('user')
+  localStorage.removeItem('user_id')
 };
 
 export const isTokenExpired = (token) => {
