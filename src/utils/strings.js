@@ -4,7 +4,13 @@ export const formattedMeasurement = (option) => {
 
 export const getChatName = (room) => {
     if (!room) return ''
-    return room.room_type === 'order' ? `ORD-${room.code}` : 'Bereketli support'
+    if (room.room_type === 'order' && room.order) {
+        return `ORD-${room.order.code}`
+    } else if (room.room_type === 'order' && !room.order) {
+        return `REQ-${room.code}`
+    } else {
+        return 'Bereketli support'
+    }
 }
 
 export const getChatInitials = (room) => {

@@ -166,7 +166,7 @@
                                                             class="p-2 bg-[#002645] rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                                                             <arrow_down-icon color="white" :size="20" />
                                                         </div>
-                                                        <div class="flex-1 min-w-[200px] text-left">
+                                                        <div class="flex-1 max-w-[200px] text-left">
                                                             <p class="font-medium text-[#222222] truncate">
                                                                 {{ attachment.name }}
                                                             </p>
@@ -281,7 +281,6 @@ import { formatFileSize } from '@/utils/numbers'
 
 // Stores
 const roomStore = useRoomStore()
-const supportRoomStore = useSupportStore()
 const messageStore = useMessageStore()
 const fileStore = useFileStore()
 
