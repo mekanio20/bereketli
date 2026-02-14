@@ -7,29 +7,29 @@
                 <div class="relative w-full max-w-[620px] max-h-[560px] bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-300"
                     :class="{ 'animate-scale-in': isOpen }">
                     <!-- Close Button -->
-                    <button @click="$emit('close')"
+                    <button type="button" @click="$emit('close')"
                         class="absolute top-6 right-6 z-10 w-[50px] h-[50px] flex items-center justify-center rounded-full bg-[#F3F8FF] hover:bg-[#edf5ff] hover:scale-110 transform transition-all duration-300 group"
-                        aria-label="Close">
+                        aria-label="close">
                         <close-icon :size="24" />
                     </button>
 
-                    <div class="p-10">
+                    <div v-if="order" class="p-10">
                         <!-- Header -->
                         <div class="flex items-center space-x-4 mb-8">
                             <h3
                                 class="text-[20px] font-bold text-[#222222] group-hover:text-[#002244] transition-colors">
-                                {{ order.trackingNumber }}
+                                {{ order.code }}
                             </h3>
                             <span class="px-5 py-[7px] rounded-full text-sm font-medium" :class="statusBadgeClass(order.status)">
-                                {{ order.statusLabel }}
+                                {{ getStatusLabel(order.status) }}
                             </span>
                         </div>
 
                         <!-- Route Information -->
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex-1">
-                                <p class="text-sm text-[#838589] mb-1">{{ order.fromDate }}</p>
-                                <p class="text-lg font-medium text-[#222222]">{{ order.fromLocation }}</p>
+                                <p class="text-sm text-[#838589] mb-1">{{ order.date_shipment_expected }}</p>
+                                <p class="text-lg font-medium text-[#222222]">{{ order.from_country?.name }}</p>
                             </div>
 
                             <div class="flex-shrink-0 mx-4">
@@ -37,8 +37,8 @@
                             </div>
 
                             <div class="flex-1 text-right">
-                                <p class="text-sm text-[#838589] mb-1">{{ order.toDate }}</p>
-                                <p class="text-lg font-medium text-[#222222]">{{ order.toLocation }}</p>
+                                <p class="text-sm text-[#838589] mb-1">{{ order.date_arrival_expected }}</p>
+                                <p class="text-lg font-medium text-[#222222]">{{ order.to_country?.name }}</p>
                             </div>
                         </div>
 
@@ -48,17 +48,17 @@
                                 class="w-full flex items-center justify-between bg-[#DADADA] rounded-full h-[2px] relative">
                                 <div class="w-3 h-3 rounded-full bg-custom-gradient z-10"></div>
                                 <div class="w-3 h-3 rounded-full z-10"
-                                    :class="[order.progress >= 25 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
+                                    :class="[orderProgress(order.status) >= 25 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
                                 <div class="w-9 h-9 rounded-full z-10 flex items-center justify-center"
-                                    :class="[order.progress >= 50 ? 'bg-custom-gradient visible-yellow-pulse' : 'bg-[#DADADA]']">
+                                    :class="[orderProgress(order.status) >= 50 ? 'bg-custom-gradient visible-yellow-pulse' : 'bg-[#DADADA]']">
                                     <mingcute_ship_line-icon :size="18" />
                                 </div>
                                 <div class="w-3 h-3 rounded-full z-10"
-                                    :class="[order.progress >= 75 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
+                                    :class="[orderProgress(order.status) >= 75 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
                                 <div class="w-3 h-3 rounded-full z-10"
-                                    :class="[order.progress >= 100 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
+                                    :class="[orderProgress(order.status) >= 100 ? 'bg-custom-gradient' : 'bg-[#DADADA]']"></div>
                                 <div class="absolute bg-custom-gradient h-[2px] rounded-full transition-all duration-500"
-                                    :style="{ width: order.progress + '%' }"></div>
+                                    :style="{ width: orderProgress(order.status) + '%' }"></div>
                             </div>
                         </div>
 
@@ -70,18 +70,21 @@
                             <div class="flex-1">
                                 <p class="font-medium sm:text-base text-sm">
                                     <span class="text-[#838589]">Status:</span>
-                                    <span class="ml-1 text-[#222222]">{{ order.statusText }}</span>
+                                    <span class="ml-1 text-[#222222]">{{ getStatusLabel(order.status) }}</span>
                                 </p>
                             </div>
                         </div>
 
                         <div class="flex items-center space-x-4 mt-14">
-                            <button type="button" class="bg-custom-gradient px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">Doly görmek</button>
-                            <button type="button" class="bg-[#002645] px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                            <router-link :to="{ name: 'OrderDetail', params: { id: order.id } }" class="bg-custom-gradient px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">Doly görmek</router-link>
+                            <router-link :to="{ name: 'Chat', query: { code: order.code } }" class="bg-[#002645] px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                                 <comment-icon />
                                 <span>Habarlaşmak</span>
-                            </button>
+                            </router-link>
                         </div>
+                    </div>
+                    <div v-else class="py-10">
+                        <NoData :message="'Sargyt tapylmady'" />
                     </div>
                 </div>
             </div>
@@ -90,28 +93,15 @@
 </template>
 
 <script setup>
-import { statusBadgeClass } from '@/utils/switch';
+import { getStatusLabel, statusBadgeClass, orderProgress } from '@/utils/switch';
 const emit = defineEmits(['close'])
 const props = defineProps({
+    order: Object,
     isOpen: {
         type: Boolean,
         default: false
     }
 })
-
-const order = ref({
-    id: 1,
-    trackingNumber: '#RW3E-74ESW4',
-    status: 'pending',
-    statusLabel: 'Garasylyar',
-    statusText: 'Tianjin portyna getirildi',
-    fromDate: '18.08.2025',
-    fromLocation: 'Tianjin porty',
-    toDate: '28.08.2025',
-    toLocation: 'Aşgabat',
-    progress: 65,
-    type: 'road'
-},)
 </script>
 
 <style scoped>

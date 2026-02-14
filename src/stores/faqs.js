@@ -21,7 +21,7 @@ export const useFaqsStore = defineStore("faqs", {
       this.loading = true;
       try {
         const response = await api.get("faqs/");
-        this.faqs = response.data;
+        this.faqs = response.data.map((item) => ({ ...item, contentHeight: 200, isOpen: false }));
         return response.data;
       } catch (error) {
         console.log('GET faqs: ', error);

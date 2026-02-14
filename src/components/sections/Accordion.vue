@@ -64,7 +64,7 @@ const props = defineProps({
 const contentRefs = ref([])
 onMounted(async () => {
     await nextTick()
-    props.data.forEach((item, index) => {
+    props.data.forEach((_, index) => {
         const contentEl = contentRefs.value[index]
         if (contentEl) {
             emit('setContentHeight', index, contentEl.scrollHeight)

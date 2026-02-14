@@ -56,7 +56,7 @@
                 class="absolute right-full bottom-2 mr-3 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">+99361626364</span>
         </a>
     </div>
-    <SearchResultModal :isOpen="searchOpen" @close="searchOpen = false" />
+    <SearchResultModal :isOpen="searchOpen" :order="searchResult" @close="searchOpen = false" />
     <ResultPrices :options="resultOptions" :isOpen="showResultModal" @close="showResultModal = false" />
 </template>
 
@@ -69,14 +69,20 @@ const authStore = useAuthStore()
 const faqStore = useFaqsStore()
 const newsStore = useNewsStore()
 const configStore = useConfigStore()
+const orderStore = useOrderStore()
 
 const searchOpen = ref(false)
 const showResultModal = ref(false)
 const resultOptions = ref([])
+const searchResult = ref({})
 
 const toggleAccordion = (index) => faqStore.toggleAccordion(index)
 const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
-const handleSearch = (value) => { searchOpen.value = true }
+const handleSearch = async (search) => {
+    const results = await orderStore.fetchOrders({ search })
+    searchResult.value = results[0]
+    searchOpen.value = true
+}
 
 const showResult = async (results) => {
     showResultModal.value = true

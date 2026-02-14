@@ -19,6 +19,10 @@
 const faqStore = useFaqsStore()
 const toggleAccordion = (index) => faqStore.toggleAccordion(index)
 const setContentHeight = (index, height) => faqStore.setContentHeight(index, height)
+
+onMounted(async () => {
+    await faqStore.fetchFaqs()
+})
 </script>
 
 <style scoped>

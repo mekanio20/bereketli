@@ -37,9 +37,11 @@
                         @click="handleWarehouseClick(warehouse)" />
                 </TransitionGroup>
 
+                <Loading v-if="warehouseStore.loading" />
+
                 <!-- Empty State -->
                 <Transition name="fade">
-                    <div v-if="warehouses.length === 0" class="text-center py-20">
+                    <div v-if="warehouses.length === 0 && !warehouseStore.loading" class="text-center py-20">
                         <div class="w-24 h-24 mx-auto mb-6 bg-gray-200 rounded-full flex items-center justify-center">
                             <search-icon :size="40" />
                         </div>

@@ -6,8 +6,14 @@ export const statusBadgeClass = (status) => {
       return "bg-gradient-to-r from-green-100 to-green-200 text-green-800";
     case "completed":
       return "bg-[#B3FFCE] text-[#009D37]";
+    case "delivered":
+      return "bg-[#B3FFCE] text-[#009D37]";
     case "rejected":
       return "bg-[#FFC1C0] text-[#B50200]";
+    case "in_transit":
+      return "bg-[#CFE9FF] text-[#0B63B6]";
+    case "customs":
+      return "bg-[#E7DDFF] text-[#5B21B6]";
     case "cancelled":
       return "bg-[#FFC1C0] text-[#B50200]";
     default:
@@ -62,7 +68,7 @@ export const getTransportTypeIcon = (transportation_type) => {
     case "rail":
       return "train-icon";
   }
-}
+};
 
 export const getTransportTypeLabel = (transportation_type) => {
   switch (String(transportation_type).trim().toLowerCase()) {
@@ -75,4 +81,4 @@ export const getTransportTypeLabel = (transportation_type) => {
     case "rail":
       return "Demir ýol";
   }
-}
+};

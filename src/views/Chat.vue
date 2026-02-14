@@ -280,6 +280,7 @@ import { isImageFile, isMyMessage } from '@/utils/booleans'
 import { formatFileSize } from '@/utils/numbers'
 
 // Stores
+const route = useRoute()
 const roomStore = useRoomStore()
 const messageStore = useMessageStore()
 const fileStore = useFileStore()
@@ -611,6 +612,14 @@ onMounted(async () => {
     currentUser.value = JSON.parse(getUserId())
     await roomStore.getRooms()
     connectToWebSocket()
+    if (route.query.code) {
+        const splitCode = route.query.code.split('-')?.[1]
+        selectedRoom.value = roomStore.rooms.find(r => r.code === splitCode)
+        if (selectedRoom.value) {
+            selectChat(selectedRoom.value)
+        }
+        return
+    }
 })
 
 onUnmounted(() => {

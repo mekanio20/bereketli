@@ -21,7 +21,7 @@ export const useForbiddenStore = defineStore("forbidden", {
       this.loading = true;
       try {
         const response = await api.get("forbidden-cargos/");
-        this.forbidden_cargos = response.data;
+        this.forbidden_cargos = response.data.map((item) => ({ ...item, question: item.name, answer: item.description, contentHeight: 200, isOpen: false }));
         return response.data;
       } catch (error) {
         console.log('GET forbidden: ', error);

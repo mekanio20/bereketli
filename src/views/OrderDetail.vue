@@ -19,16 +19,15 @@
                         Sargyt maglumatlary
                     </h1>
                     <!-- Action Buttons -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <button
+                    <div class="grid grid-cols-1 gap-3">
+                        <!-- <button
                             class="py-3 bg-custom-gradient text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
                             <span>Hasap - Faktura</span>
-                        </button>
-                        <button
-                            class="py-3 px-10 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+                        </button> -->
+                        <router-link :to="{ name: 'Chat', query: { code: order.code } }" class="py-3 px-10 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
                             <message_circle-icon />
                             <span>Habarlaşmak</span>
-                        </button>
+                        </router-link>
                     </div>
 
                 </div>
@@ -89,8 +88,8 @@
                                 <div v-for="(event, index) in timeline" :key="index" class="flex gap-4">
                                     <div class="flex flex-col items-center">
                                         <dote border_width="24px" border_height="24px" bg_width="12px" bg_height="12px"
-                                            :border_color="index >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'"
-                                            :bg_color="index >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'" />
+                                            :border_color="index - 1 >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'"
+                                            :bg_color="index - 1 >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'" />
                                         <div v-if="index < timeline.length - 1" class="flex-1" :style="{
                                             background: `repeating-linear-gradient(to bottom, ${index >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'}, ${index >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'} 5px, transparent 2px, transparent 8px)`,
                                             width: '1px'
@@ -148,6 +147,7 @@
 <script setup>
 import { statusBadgeClass, getStatusLabel, getTransportTypeLabel, getTransportTypeIcon } from '@/utils/switch'
 import background from '@/assets/images/background.webp'
+import router from '../router'
 const { icons } = useIcons()
 const route = useRoute()
 const orderStore = useOrderStore()
