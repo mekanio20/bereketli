@@ -7,22 +7,7 @@
                 <h1 class="section_title">
                     {{ title }}
                 </h1>
-                <router-link to="/news" class="group relative flex items-center">
-                    <!-- Text -->
-                    <button type="button"
-                        class="py-[10px] px-8 rounded-full bg-[#002645] text-white sm:text-lg text-base font-semibold">
-                        Ählisini görmek
-                    </button>
-
-                    <!-- Animated Dot -->
-                    <span class="absolute -z-10 right-3 p-1 rounded-full bg-[#0B2545]
-            rotate-[-180deg]
-             transition-all duration-500 ease-out
-             group-hover:translate-x-14
-             group-hover:rotate-[360deg]">
-                        <arrow_right-icon />
-                    </span>
-                </router-link>
+                <BaseLink :to="'/news'" />
             </div>
 
             <!-- Swiper Container -->

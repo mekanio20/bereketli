@@ -22,7 +22,7 @@
         <!-- Title with Underline Effect -->
         <div class="relative">
             <h3 class="text-[20px] font-semibold leading-tight text-[#222222] 
-           group-hover:text-[#ffa50d] transition-colors duration-300">
+           group-hover:text-[#ffa50d] transition-colors duration-300 truncate">
                 {{ title }}
             </h3>
         </div>

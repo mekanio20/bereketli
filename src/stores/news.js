@@ -14,13 +14,13 @@ export const useNewsStore = defineStore("news", {
       return this.newsData.find((news) => news.id === Number(id));
     },
 
-    async fetchNews() {
+    async fetchNews(filteredOptions = {}) {
       this.loading = true;
       try {
-        const response = await api.get("news/");
+        const response = await api.get("news/", { params: filteredOptions });
         this.news = response.data.results;
         this.news_count = response.data.count;
-        return response.data;
+        return response.data.results;
       } catch (error) {
         console.log("GET news: ", error);
         this.error = error;

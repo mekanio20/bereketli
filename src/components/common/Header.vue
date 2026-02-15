@@ -143,7 +143,7 @@
                 </div>
 
                 <!-- Mobile Actions -->
-                <div class="space-x-4">
+                <div class="flex items-center space-x-4">
                     <!-- Notification -->
                     <button v-if="isMobile" ref="notifRef" type="button"
                         class="cursor-pointer relative text-[#002645] hover:text-[#F98900] transition-colors duration-200"

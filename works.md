@@ -1,1 +1,5 @@
-- [x] Order Request detail
+- [x] BaseLink component
+- [x] Paginations
+- [] Languages (en, ru, tr, ch, tm)
+- [] Form validations
+- [] Responsive mobile

@@ -341,12 +341,8 @@ const viewItem = (index) => {
     viewData.value = { ...formData.value.items[index] }
 }
 
-const redirectContact = async () => {
-    try {
-
-    } catch (error) {
-
-    }
+const redirectContact = () => {
+    router.push({ name: 'Chat', query: { code: order_request.value.code } })
 }
 
 watch(

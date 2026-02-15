@@ -34,15 +34,17 @@
                     </button>
                 </div>
 
-                <!-- Loader -->
-                <Loading v-if="orderStore.loading" />
-
                 <!-- Warehouses Grid -->
-                <TransitionGrou v-else name="card-list" tag="div"
+                <TransitionGrou name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     <OrderCard v-for="order in filteredOrders" :key="order.id" :order="order"
                         @click="handleOrderClick(order)" />
                 </TransitionGrou>
+
+                <div ref="sentinel" class="h-5"></div>
+
+                <!-- Loader -->
+                <Loading v-if="orderStore.loading" />
 
                 <!-- Empty State -->
                 <NoData v-show="filteredOrders.length === 0 && !orderStore.loading" :message="'Sargyt tapylmady'" />
@@ -57,28 +59,96 @@
 import background from '@/assets/images/background.webp'
 const router = useRouter()
 const orderStore = useOrderStore()
+
 const activeTab = ref('pending')
 const selectedWarehouse = ref({})
 const showModal = ref(false)
+
+const orders = ref([]);
+const offset = ref(0);
+const limit = 10;
+
+const hasMore = ref(true);
+const localLoading = ref(false);
+
+const sentinel = ref(null);
+let observer = null;
 
 const handleOrderClick = (order) => {
     router.push({ name: 'OrderDetail', params: { id: order.id } })
 }
 
-onMounted(async () => {
-    await orderStore.fetchOrders()
-})
+const fetchOrders = async () => {
+  if (localLoading.value || orderStore.loading || !hasMore.value) return;
+
+  localLoading.value = true;
+
+  try {
+    const data = await orderStore.fetchOrders({
+      limit,
+      offset: offset.value,
+    });
+
+    const list = Array.isArray(data) ? data : [];
+
+    if (list.length < limit) {
+      hasMore.value = false;
+    }
+
+    orders.value.push(...list);
+
+    offset.value += limit;
+  } catch (err) {
+    console.log("Fetch error:", err);
+  } finally {
+    localLoading.value = false;
+  }
+};
 
 const filteredOrders = computed(() => {
-    return orderStore.orders.filter(order => {
-        if (activeTab.value === 'pending') {
-            return order.status === 'PENDING' || order.status === 'IN_TRANSIT' || order.status === 'CUSTOMS'
-        } else if (activeTab.value === 'delivered') {
-            return order.status === 'DELIVERED' || order.status === 'CANCELLED'
-        }
-        return true
-    })
-})
+  return orders.value.filter((order) => {
+    if (activeTab.value === "pending") {
+      return (
+        order.status === "PENDING" ||
+        order.status === "IN_TRANSIT" ||
+        order.status === "CUSTOMS"
+      );
+    }
+
+    if (activeTab.value === "delivered") {
+      return order.status === "DELIVERED" || order.status === "CANCELLED";
+    }
+
+    return true;
+  });
+});
+
+onMounted(async () => {
+  await fetchOrders();
+
+  observer = new IntersectionObserver(
+    async ([entry]) => {
+      if (entry.isIntersecting) {
+        await fetchOrders();
+      }
+    },
+    { threshold: 0.1 }
+  );
+
+  if (sentinel.value) observer.observe(sentinel.value);
+});
+
+watch(activeTab, async () => {
+  orders.value = [];
+  offset.value = 0;
+  hasMore.value = true;
+
+  await fetchOrders();
+});
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect();
+});
 </script>
 
 <style scoped>

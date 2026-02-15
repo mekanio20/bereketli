@@ -25,30 +25,37 @@
             <Loading v-if="orderStore.loading" />
 
             <!-- Orders Grid -->
-            <TransitionGroup v-else name="card-list" tag="div"
-                class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                <OrderCard v-for="order in orderStore.orders" :key="order.id" :order="order"
-                    @click="handleOrderClick(order)" />
+            <TransitionGroup v-else name="card-list" tag="div">
+                <!-- Swiper Container -->
+                <swiper :modules="modules" :slides-per-view="1" :space-between="20" :loop="true" :autoplay="{
+                    delay: 5000,
+                    disableOnInteraction: false,
+                }" :pagination="{
+                clickable: true,
+                dynamicBullets: false,
+            }" :breakpoints="{
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 24,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 24,
+                },
+            }" @swiper="onSwiper" class="transport-swiper">
+                    <swiper-slide v-for="order in orderStore.orders" :key="order.id">
+                        <OrderCard :order="order" @click="handleOrderClick(order)" />
+                    </swiper-slide>
+                </swiper>
             </TransitionGroup>
 
             <div v-if="orderStore.orders.length > 0"
                 class="flex justify-center items-center my-10 transition-all duration-700">
-                <router-link to="#" class="group relative flex items-center w-fit">
-                    <!-- Text -->
-                    <button type="button"
-                        class="py-[10px] px-8 rounded-full bg-[#002645] text-white sm:text-lg text-base font-semibold">
-                        Ählisini görmek
-                    </button>
-
-                    <!-- Animated Dot -->
-                    <span class="absolute -z-10 right-3 p-1 rounded-full bg-[#0B2545]
-                rotate-[-180deg]
-                 transition-all duration-500 ease-out
-                 group-hover:translate-x-14
-                 group-hover:rotate-[360deg]">
-                        <arrow_right-icon />
-                    </span>
-                </router-link>
+                <BaseLink :to="'/order/history'" />
             </div>
 
             <!-- Empty State -->
@@ -58,7 +65,17 @@
 </template>
 
 <script setup>
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+const swiperRef = ref(null);
+const modules = [Navigation, Pagination, Autoplay];
+
 const { icons } = useIcons();
+const router = useRouter()
 const orderStore = useOrderStore()
 const activeTab = ref('ALL')
 const tabs = ref([
@@ -80,6 +97,10 @@ onMounted(async () => {
 watch(activeTab, async (newTab) => {
     await orderStore.fetchOrders({ transportation_type: newTab === 'ALL' ? '' : newTab })
 })
+
+const onSwiper = (swiper) => {
+    swiperRef.value = swiper;
+};
 </script>
 
 <style scoped>

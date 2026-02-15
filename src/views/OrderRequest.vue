@@ -28,18 +28,21 @@
                     </div>
                 </div>
 
-                <!-- Loading -->
-                <Loading v-if="orderRequestStore.loading" />
-
                 <!-- Cards -->
-                <TransitionGroup v-else name="card-list" tag="div"
+                <TransitionGroup name="card-list" tag="div"
                     class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <RequestCard v-for="item in orderRequestStore.order_requests" :key="item.id" :order="item"
+                    <RequestCard v-for="item in requests" :key="item.id" :order="item"
                         @click="handleDetail(item.id)" />
                 </TransitionGroup>
 
+                <!-- Sentinel -->
+                <div ref="sentinel" class="h-5"></div>
+
+                <!-- Loading -->
+                <Loading v-if="orderRequestStore.loading" />
+
                 <!-- Empty State -->
-                <NoData v-show="orderRequestStore.order_requests.length === 0 && !orderRequestStore.loading"
+                <NoData v-show="requests.length === 0 && !orderRequestStore.loading"
                     :message="'Sargyt islegi tapylmady'" />
             </SectionContainer>
         </MainContainer>
@@ -49,18 +52,87 @@
 <script setup>
 import background from '@/assets/images/background.webp'
 const orderRequestStore = useOrderRequestStore()
-const searchQuery = ref('')
 const router = useRouter()
 
-onMounted(async () => {
-    await orderRequestStore.fetchOrderRequests({ sort: 'date_created' })
-})
 
-watch(searchQuery, async (newQuery) => {
-    await orderRequestStore.fetchOrderRequests({ search: newQuery })
-})
+const searchQuery = ref('')
+const requests = ref([]);
+const offset = ref(0);
+const limit = 10;
+
+const hasMore = ref(true);
+const localLoading = ref(false);
+
+const sentinel = ref(null);
+let observer = null;
 
 const handleDetail = (id) => {
     router.push({ name: 'OrderRequestDetail', params: { id } })
 }
+
+const fetchData = async ({ reset = false } = {}) => {
+  if (localLoading.value || orderRequestStore.loading) return;
+
+  // reset ise baştan başla
+  if (reset) {
+    requests.value = [];
+    offset.value = 0;
+    hasMore.value = true;
+  }
+
+  if (!hasMore.value) return;
+
+  localLoading.value = true;
+
+  try {
+    const data = await orderRequestStore.fetchOrderRequests({
+      sort: "date_created",
+      search: searchQuery.value?.trim() || undefined,
+      limit,
+      offset: offset.value,
+    });
+
+    const list = Array.isArray(data) ? data : [];
+
+    if (list.length < limit) {
+      hasMore.value = false;
+    }
+
+    requests.value.push(...list);
+    offset.value += limit;
+  } catch (err) {
+    console.log("Fetch error:", err);
+  } finally {
+    localLoading.value = false;
+  }
+};
+
+onMounted(async () => {
+  await fetchData({ reset: true });
+
+  observer = new IntersectionObserver(
+    async ([entry]) => {
+      if (entry.isIntersecting) {
+        await fetchData();
+      }
+    },
+    { threshold: 0.1 }
+  );
+
+  if (sentinel.value) observer.observe(sentinel.value);
+});
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect();
+});
+
+let searchTimer = null;
+
+watch(searchQuery, (newVal) => {
+  clearTimeout(searchTimer);
+
+  searchTimer = setTimeout(async () => {
+    await fetchData({ reset: true });
+  }, 400);
+});
 </script>
