@@ -1,23 +1,23 @@
 <template>
     <section class="w-full bg-white rounded-3xl p-8 md:p-16">
         <h1 class="lg:text-[34px] sm:text-[28px] text-[24px] font-bold text-gray-900 text-center mb-12">
-            Sargydyňyzy Hasaplaň
+            {{ $t('names.calucalate_order') }}
         </h1>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-14">
             <div class="relative">
                 <SimpleSelect :isSearch="true" v-model="formData.from_country" :options="nirdenOptions"
-                    @change="selectedCountry('nirden', $event)" placeholder="Nireden" />
+                    @change="selectedCountry('nirden', $event)" :placeholder="$t('forms.from')" />
             </div>
 
             <div class="relative">
                 <SimpleSelect :isSearch="true" v-model="formData.to_country" :options="niraOptions"
-                    @change="selectedCountry('nira', $event)" placeholder="Nira" />
+                    @change="selectedCountry('nira', $event)" :placeholder="$t('forms.to')" />
             </div>
 
             <div class="relative">
                 <CalculatorSelect :isSearch="true" v-model="formData.weight" :options="agramOptions" @change="handleAddData"
-                    placeholder="Agram" />
+                    :placeholder="$t('forms.weight')" />
             </div>
         </div>
 
@@ -26,11 +26,11 @@
                 class="bg-[#002645] text-white font-bold text-lg md:text-[20px] w-[380px] px-16 py-4 rounded-[100px] shadow-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none flex items-center justify-center"
                 :class="[calculatorStore.loading ? 'opacity-50 cursor-not-allowed' : '']">
                 <animate_spin-icon v-if="calculatorStore.loading" />
-                <span>Hasaplamak</span>
+                <span>{{ $t('buttons.calculate') }}</span>
             </button>
             <!-- Clear button -->
             <button type="button" @click="handleClear" class="text-[#002645] font-semibold hover:underline text-lg md:text-[20px]">
-                Arassala
+                {{ $t('buttons.clear') }}
             </button>
         </div>
     </section>

@@ -9,15 +9,15 @@
                     <p class="text-gray-600 mb-8">{{ message }}</p>
 
                     <div class="flex gap-3">
-                        <button @click="$emit('cancel')"
+                        <button type="button" @click="$emit('cancel')"
                             class="flex-1 py-3 px-6 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300">
-                            {{ cancelText }}
+                            {{ cancelText || $t('buttons.cancel') }}
                         </button>
-                        <button @click="$emit('confirm')"
+                        <button type="button" @click="$emit('confirm')"
                             class="flex-1 flex items-center justify-center space-x-2 py-3 px-6 font-semibold rounded-xl transition-all duration-300" :class="[type === 'danger'
                                 ? 'bg-red-600 text-white hover:bg-red-700'
                                 : 'bg-gradient-to-r from-orange-400 to-orange-500 text-white hover:shadow-lg', loading ? 'opacity-50 cursor-not-allowed' : '']">
-                                <span>{{ confirmText }}</span>
+                                <span>{{ confirmText || $t('buttons.confirm') }}</span>
                                 <animate_spin-icon v-if="loading" />
                         </button>
                     </div>
@@ -32,9 +32,9 @@ defineProps({
     isOpen: Boolean,
     title: String,
     message: String,
-    confirmText: { type: String, default: 'Confirm' },
-    cancelText: { type: String, default: 'Cancel' },
-    type: { type: String, default: 'normal' },
+    confirmText: { type: String },
+    cancelText: { type: String },
+    type: { type: String },
     loading: { type: Boolean, default: false }
 })
 

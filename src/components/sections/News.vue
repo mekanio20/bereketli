@@ -1,6 +1,6 @@
 <template>
     <section class="space-y-10 pb-10">
-        <h2 class="text-[44px] font-semibold text-[#222222]">Täzelikler</h2>
+        <h2 class="text-[44px] font-semibold text-[#222222]">{{ $t('menu.news') }}</h2>
         <!-- Swiper Container -->
         <swiper :modules="modules" :slides-per-view="1" :space-between="20" :loop="true" :autoplay="{
             delay: 5000,
@@ -28,7 +28,7 @@
             </swiper-slide>
         </swiper>
         <div class="flex items-center justify-center">
-            <BaseLink :to="'/news'" />
+            <Link :to="'/news'" />
         </div>
     </section>
 </template>

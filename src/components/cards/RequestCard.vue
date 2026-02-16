@@ -22,7 +22,7 @@
 
             <div class="flex items-center justify-between mb-10">
                 <p class="text-[#838589] font-medium">
-                    Arzanyň döredilen wagty:
+                    {{ $t('info.created_at') }}:
                 </p>
                 <p class="text-[#222222] font-medium">
                     {{ order.date_created }}

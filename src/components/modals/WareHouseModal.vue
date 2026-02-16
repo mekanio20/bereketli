@@ -17,7 +17,7 @@
             <!-- Header -->
             <div class="mb-4 animate-fade-in">
               <h2 class="text-[30px] text-center font-bold text-[#222222] mb-10">
-                Ammar maglumatlary
+                {{ $t('names.warehouse_info') }}
               </h2>
               <p class="text-gray-500 text-sm">
                {{ warehouse.name }}
@@ -43,14 +43,14 @@
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center group-hover:scale-105 transform transition-all duration-300">
                     <route-icon />
                 </div>
-                <span class="font-semibold pl-4 pr-6">Kartada görmek</span>
+                <span class="font-semibold pl-4 pr-6">{{ $t('buttons.view_map') }}</span>
               </a>
             </div>
 
             <!-- Information Section -->
             <div class="space-y-1 border-t border-[#EDEDED] pt-8 animate-slide-up" style="animation-delay: 0.2s">
               <h4 class="text-lg font-semibold text-[#222222] mb-4">
-                Maglumatlar
+                {{ $t('info.name') }}
               </h4>
 
               <!-- Working Hours -->

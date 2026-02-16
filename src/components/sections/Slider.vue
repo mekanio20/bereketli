@@ -7,7 +7,7 @@
                 <h1 class="section_title">
                     {{ title }}
                 </h1>
-                <BaseLink :to="'/news'" />
+                <Link :to="'/news'" />
             </div>
 
             <!-- Swiper Container -->

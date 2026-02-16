@@ -299,7 +299,7 @@ const searchTimeout = ref(null)
 
 // Pagination
 const currentOffset = ref(0)
-const messageLimit = ref(10)
+const messageLimit = ref(200)
 const hasMoreMessages = ref(false)
 const loadingMoreMessages = ref(false)
 

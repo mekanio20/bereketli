@@ -23,7 +23,7 @@
         <div v-show="isOpen" class="absolute z-30 w-full mt-2 bg-white rounded-2xl shadow-md overflow-hidden">
             <!-- Search -->
             <div v-if="isSearch" class="p-3 border-b">
-                <input v-model="search" type="text" placeholder="Gözle..." class="w-full px-4 py-2 rounded-lg bg-[#F5F7FA]
+                <input v-model="search" type="text" :placeholder="$t('buttons.search')" class="w-full px-4 py-2 rounded-lg bg-[#F5F7FA]
                  focus:outline-none focus:ring-2 focus:ring-blue-400 sm:text-base text-sm" />
             </div>
 
@@ -36,7 +36,7 @@
                 </button>
 
                 <div v-if="!filteredOptions.length" class="px-6 py-4 sm:text-sm text-xs text-gray-400">
-                    Netije tapylmady
+                    {{ $t('info.no_results') }}
                 </div>
             </div>
         </div>

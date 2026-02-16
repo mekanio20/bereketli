@@ -1,13 +1,14 @@
 import { createI18n } from 'vue-i18n'
-import TK from './locales/tk.json'
-import RU from './locales/ru.json'
+import tk from './locales/tk.json'
+import ru from './locales/ru.json'
+import en from './locales/en.json'
 const i18n = createI18n({
-    locale: 'TK',
-    fallbackLocale: 'TK',
+    locale: 'tk',
+    fallbackLocale: 'en',
     legacy: false,
     globalInjection: true,
     messages: {
-        TK, RU
+        tk, ru, en
     },
 })
 

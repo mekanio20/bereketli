@@ -1,6 +1,6 @@
 <template>
     <div class="w-full flex items-center justify-center py-20" >
-        <span class="font-medium text-[#002244]">Ýüklenýär...</span>
+        <span class="font-medium text-[#002244]">{{ $t('info.loading') }}</span>
     </div>
 </template>
 

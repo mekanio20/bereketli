@@ -29,12 +29,8 @@
 
                             <h2
                                 class="text-2xl lg:text-3xl font-bold text-[#222222] mb-8 text-center animate-slide-down">
-                                OTP Kody
+                                {{ $t('names.otp') }}
                             </h2>
-
-                            <p class="text-sm lg:text-base font-medium text-[#838589] mb-12 text-center">
-                                Kod şu telefon belgisine ugradyldy {{ }}
-                            </p>
 
                             <!-- Form -->
                             <form @submit.prevent="handleSubmit" class="flex-1 flex flex-col px-8">
@@ -50,7 +46,7 @@
 
                                 <div class="flex items-center justify-between pb-5">
                                     <button type="button" @click.stop="resetTimer" class="text-[#F98900] hover:underline cursor-pointer">
-                                        Täzeden iber
+                                        {{ $t('buttons.resend') }}
                                     </button>
                                     <span class="text-sm font-medium text-[#222222]">
                                         {{ formattedTime }}
@@ -60,10 +56,10 @@
                                 <!-- Submit Button -->
                                 <button type="submit" :disabled="isSubmitting || !isCodeComplete"
                                     class="w-full light_effect py-4 bg-[#002645] text-white font-semibold rounded-full hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-12">
-                                    <span v-if="!isSubmitting">Dowam etmek</span>
+                                    <span v-if="!isSubmitting">{{ $t('buttons.next') }}</span>
                                     <span v-else class="flex items-center justify-center">
                                         <animate_spin-icon />
-                                        Ýüklenýär...
+                                        {{ $t('info.loading') }}
                                     </span>
                                 </button>
                             </form>

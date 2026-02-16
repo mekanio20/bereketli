@@ -5,7 +5,7 @@
             <div class="flex justify-between items-center mb-12 transition-all duration-700"
                 :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'">
                 <h1 class="text-[44px] font-semibold text-[#222222]">
-                    Eltip Bermek Hyzmatlarymyz
+                    {{ $t('names.order_service') }}
                 </h1>
             </div>
 
@@ -84,13 +84,16 @@
 </template>
 
 <script setup>
-const { icons } = useIcons();
+import { useI18n } from 'vue-i18n';
+const { t, locale } = useI18n({ useScope: 'global' });
+
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+const { icons } = useIcons();
 const isVisible = ref(false);
 const swiperRef = ref(null);
 
@@ -99,27 +102,27 @@ const modules = [Navigation, Pagination, Autoplay];
 const services = ref([
     {
         id: 1,
-        title: 'Ýer üsti ýük gatnawy',
+        title: t('data.order_service.title_1'),
         number: '01',
         icon: 'truck-icon',
-        category: 'Transport',
-        image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80'
+        category: t('data.order_service.category'),
+        image: '/images/truck_service.webp'
     },
     {
         id: 2,
-        title: 'Gämi ýük gatnawy',
+        title: t('data.order_service.title_2'),
         number: '02',
         icon: 'mingcute_ship_line-icon',
-        category: 'Transport',
-        image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=80'
+        category: t('data.order_service.category'),
+        image: '/images/ship_service.webp'
     },
     {
         id: 3,
-        title: 'Uçar ýük gatnawy',
+        title: t('data.order_service.title_3'),
         number: '03',
         icon: 'train-icon',
-        category: 'Transport',
-        image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80'
+        category: t('data.order_service.category'),
+        image: '/images/airplane_service.webp'
     }
 ]);
 

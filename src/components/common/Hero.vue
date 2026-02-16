@@ -6,22 +6,24 @@
             <div
                 class="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-md rounded-full px-6 py-3 border border-white/30 animate-slide-down">
                 <dote />
-                <span class="text-white sm:text-sm text-xs font-medium">Siziň ynamyňyz - biziň borjumyzdyr</span>
+                <span class="text-white sm:text-sm text-xs font-medium">
+                    {{ $t('descriptions.hero_1') }}
+                </span>
             </div>
 
             <h1 class="md:text-[72px] sm:text-5xl text-4xl font-bold text-white sm:leading-[100%] leading-[110%] animate-slide-down pb-5"
                 style="animation-delay: 100ms">
-                Sargydyňyzy yzarlamak
+                {{ $t('descriptions.hero_2') }}
             </h1>
 
             <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 space-y-4 animate-slide-up">
                 <div class="relative">
-                    <input v-model="searchInput" @keyup.enter="$emit('search', searchInput)" type="text" placeholder="Sargydyňyzy trek kody boyunça gözläň..."
+                    <input v-model="searchInput" @keyup.enter="$emit('search', searchInput)" type="text" :placeholder="$t('descriptions.order_search')"
                         class="w-full md:text-lg sm:text-base text-sm px-6 py-[22px] bg-[#EBF3FD] rounded-[18px] sm:pr-48 pr-20 outline-none text-[#4D4D4D] placeholder-[#4D4D4D]" />
                     <button type="button" @click="$emit('search', searchInput)"
                         class="absolute right-4 top-1/2 transform -translate-y-1/2 sm:px-6 px-3 sm:py-4 py-3 bg-custom-gradient text-white rounded-[14px] font-semibold hover:shadow-lg transition-all duration-300 whitespace-nowrap flex items-center justify-center space-x-2">
                         <search-icon />
-                        <span class="sm:block hidden">{{ orderStore.loading ? 'Ýüklenýär...' : 'Gözlemek' }}</span>
+                        <span class="sm:block hidden">{{ orderStore.loading ?  $t('info.loading') : $t('buttons.search') }}</span>
                     </button>
                 </div>
             </div>

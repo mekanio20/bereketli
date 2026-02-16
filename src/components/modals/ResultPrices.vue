@@ -11,7 +11,7 @@
                         aria-label="Close">
                         <close-icon :size="20" />
                     </button>
-                    <h3 class="text-2xl font-bold text-center text-[#002645] mb-4">Jemi Baha</h3>
+                    <h3 class="text-2xl font-bold text-center text-[#002645] mb-4">{{ $t('names.total_price') }}</h3>
 
                     <div v-if="options.length > 0" class="flex flex-col space-y-2 pt-8">
                         <div v-for="(item, index) in options" :key="index" class="bg-[#F3F8FF] px-4 py-3 rounded-[18px] flex items-center justify-between">
@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="flex flex-col space-y-1">
                                     <h4 class="text-[#222222] font-semibold">{{ item.type }}</h4>
-                                    <p class="text-[#868686] text-sm">Eltip bermek: {{ item.delivery_days }} gün</p>
+                                    <p class="text-[#868686] text-sm">{{ $t('names.delivery') }}: {{ item.delivery_days }} {{ $t('names.day') }}</p>
                                 </div>
                             </div>
                             <p class="font-bold text-[#222222] text-lg">{{ item.price.toFixed(2) }} TMT</p>

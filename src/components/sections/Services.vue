@@ -1,7 +1,7 @@
 <template>
     <div class="w-full space-y-10 pb-10">
         <h2 class="font-semibold text-[44px] text-[#222222]">
-            Hyzmatlarymyz
+            {{ $t('menu.services') }}
         </h2>
         <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
             <router-link v-for="(item, index) in services" :key="index" :to="item.link" class="relative h-[290px] py-6 px-8 bg-white border border-[#F5F5F5] hover:bg-[#fafcff] rounded-3xl group cursor-pointer">
@@ -13,19 +13,22 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n';
+const { t, locale } = useI18n({ useScope: 'global' });
+
 const services = ref([
     {
-        name: 'Order Requests',
+        name: t('menu.order_request'),
         image: '/icons/box.webp',
         link: '/order/requests'
     },
     {
-        name: 'Contact us',
+        name: t('menu.contacts'),
         image: '/icons/comment.webp',
         link: '/chat'
     },
     {
-        name: 'Warehouses',
+        name: t('menu.warehouses'),
         image: '/icons/location.webp',
         link: '/warehouses'
     },

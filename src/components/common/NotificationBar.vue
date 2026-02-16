@@ -6,17 +6,19 @@
                     <span class="notification_bar">Bereketli Logistika</span>
                 </div>
                 <div class="flex items-center space-x-2 whitespace-nowrap">
-                    <span class="notification_bar">+99361626364</span>
+                    <span class="notification_bar">+99371984704</span>
                 </div>
                 <div class="flex items-center space-x-2 whitespace-nowrap">
                     <dote border_color="#FFA500" bg_color="#FFC359" />
-                    <span class="notification_bar">Etip bermek hyzmatly 10% arzanşaydal</span>
+                    <span class="notification_bar">{{ $t('info.notification_bar') }}</span>
                 </div>
                 <div class="flex items-center space-x-2 whitespace-nowrap">
                     <dote border_color="#FFA500" bg_color="#FFC359" />
-                    <span class="notification_bar">Etip bermek hyzmatly 10% arzanşaydal</span>
+                    <span class="notification_bar">{{ $t('info.notification_bar') }}</span>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script setup></script>

@@ -56,7 +56,7 @@
                 </div>
                 <div class="flex-1">
                     <p class="font-medium sm:text-base text-sm">
-                        <span class="text-[#838589]">Status:</span>
+                        <span class="text-[#838589]">{{ $t('info.status') }}:</span>
                         <span class="ml-1 text-[#222222]">{{ getStatusLabel(order.status) }}</span>
                     </p>
                 </div>

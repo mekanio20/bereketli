@@ -2,15 +2,13 @@
     <section class="relative w-full h-[370px] mt-10 mb-20 bg-custom-gradient py-6 md:py-10 rounded-3xl lg:py-24">
         <div class="h-full flex items-center justify-between pl-20 max-w-[550px]">
             <div class="h-full flex flex-col space-y-10 justify-center">
-                <h2 class="text-[44px] text-white font-bold leading-[100%]">Mobil Programmamyz</h2>
-                <p class="text-lg text-white font-medium leading-[100%]">Aňsatlyk bilen bukjalaryňyzy yzarlaň,
-                    töläň we habarnama
-                    alyň!</p>
+                <h2 class="text-[44px] text-white font-bold leading-[100%]">{{ $t('names.mobile_app') }}</h2>
+                <p class="text-lg text-white font-medium leading-[100%]">{{ $t('descriptions.mobile_1') }}</p>
                 <a :href="link" target="_blank" class="group relative z-10 flex items-center w-fit">
                     <!-- Text -->
                     <button type="button"
                         class="py-[10px] px-8 rounded-full bg-white text-[#F98900] hover:bg-[#fff7ec] transition-all duration-300 sm:text-lg text-base font-semibold">
-                        Ýüklemek
+                        {{ $t('buttons.download') }}
                     </button>
 
                     <!-- Animated Dot -->

@@ -12,7 +12,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 const app = createApp(App);
 const pinia = createPinia();
 
-i18n.global.locale.value = localStorage.getItem('lang') || 'TK'
+i18n.global.locale.value = localStorage.getItem('lang') || 'tk'
 app.component('VueDatePicker', VueDatePicker);
 
 app.use(i18n);

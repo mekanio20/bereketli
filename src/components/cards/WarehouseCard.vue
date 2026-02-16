@@ -29,7 +29,7 @@
                 <map_pin-icon />
             </div>
             <div>
-                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">Salgy</p>
+                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">{{ $t('info.address') }}</p>
                 <p class="text-base font-medium text-[#222222]">{{ warehouse.address }}</p>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 <clock-icon />
             </div>
             <div>
-                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">Iş wagty</p>
+                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">{{ $t('info.working_time') }}</p>
                 <p class="text-base font-medium text-gray-900">
                     {{ warehouse.work_hours_start }} / {{ warehouse.work_hours_end }}
                 </p>

@@ -29,7 +29,7 @@
 
                             <h2
                                 class="text-2xl lg:text-3xl font-bold text-[#222222] mb-12 text-center animate-slide-down">
-                                Ulgama girmek
+                                {{ $t('buttons.login') }}
                             </h2>
 
                             <!-- Tab Buttons -->
@@ -39,14 +39,14 @@
                                     :class="activeTab === 'phone'
                                         ? 'bg-custom-gradient text-white shadow-lg font-bold'
                                         : 'bg-white text-[#838589]'">
-                                    Telefon belgi
+                                    {{ $t('forms.phone') }}
                                 </button>
                                 <button @click="activeTab = 'email'"
                                     class="flex-1 py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
                                     :class="activeTab === 'email'
                                         ? 'bg-custom-gradient text-white shadow-lg font-bold'
                                         : 'bg-white text-[#838589]'">
-                                    Elektron salgy
+                                   {{ $t('forms.email') }}
                                 </button>
                             </div>
 
@@ -57,7 +57,7 @@
                                         <!-- Phone Number Field -->
                                         <div>
                                             <label for="phone" class="block text-sm text-[#222222] mb-3">
-                                                Telefon belgiňiz
+                                                {{ $t('forms.phone_number') }}
                                             </label>
                                             <div class="relative">
                                                 <input id="phone" v-model="formData.phone" type="tel" placeholder="+993"
@@ -72,11 +72,11 @@
 
                                         <!-- Password Field -->
                                         <div>
-                                            <label id="password" class="inline-block mb-3 text-[#222222]">Açar
-                                                sözi</label>
+                                            <label id="password" class="inline-block mb-3 text-[#222222]">
+                                                {{ $t('forms.password') }}</label>
                                             <div class="relative">
                                                 <form-input :label="'password'" v-model="formData.password"
-                                                    :type="passwordType" placeholder="Açar sözi" />
+                                                    :type="passwordType" :placeholder="$t('forms.password')" />
                                                 <div
                                                     class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                                                     <eye_hide-icon v-if="passwordType === 'password'"
@@ -97,7 +97,7 @@
                                         <!-- Email Field -->
                                         <div>
                                             <label for="email" class="block text-sm text-[#222222] mb-3">
-                                                Elektron salgyňyz
+                                                {{ $t('forms.email_address') }}
                                             </label>
                                             <input id="email" v-model="formData.email" type="email"
                                                 placeholder="example@email.com"
@@ -110,11 +110,11 @@
                                         </div>
 
                                         <div>
-                                            <label id="password" class="inline-block mb-3 text-[#222222]">Açar
-                                                sözi</label>
+                                            <label id="password" class="inline-block mb-3 text-[#222222]">
+                                                {{ $t('forms.password') }}</label>
                                             <div class="relative">
                                                 <form-input :label="'password'" v-model="formData.password"
-                                                    :type="passwordType" placeholder="Açar sözi" />
+                                                    :type="passwordType" :placeholder="$t('forms.password')" />
                                                 <div
                                                     class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                                                     <eye_hide-icon v-if="passwordType === 'password'"
@@ -135,19 +135,19 @@
                                 <!-- Submit Button -->
                                 <button type="submit" :disabled="isSubmitting"
                                     class="w-full light_effect py-4 bg-[#002645] text-white font-semibold rounded-full hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-12">
-                                    <span v-if="!isSubmitting">Dowam etmek</span>
+                                    <span v-if="!isSubmitting">{{ $t('buttons.next') }}</span>
                                     <span v-else class="flex items-center justify-center">
                                         <animate_spin-icon />
-                                        Ýüklenýär...
+                                        {{ $t('info.loading') }}
                                     </span>
                                 </button>
 
                                 <!-- Already Have Account -->
                                 <p class="text-center text-sm text-[#222222] mt-6">
-                                    Hasabyňyz barmy?
+                                    {{ $t('info.already_account') }}
                                     <button type="button" @click="$emit('redirect', 'register')"
                                         class="text-[#F98900] hover:text-orange-500 font-semibold hover:underline transition-colors duration-300 cursor-pointer">
-                                        Hasap döretmek
+                                        {{ $t('buttons.register') }}
                                     </button>
                                 </p>
                             </form>
@@ -160,6 +160,8 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
 import authImage from '@/assets/images/auth.webp'
 import background from '@/assets/images/modal.webp'
 const emit = defineEmits(['close', 'submit', 'redirect'])
@@ -198,24 +200,24 @@ const validateForm = () => {
 
     if (activeTab.value === 'phone') {
         if (!formData.phone || formData.phone === '+993') {
-            errors.phone = 'Telefon belgisini giriziň'
+            errors.phone = t('errors.required')
             isValid = false
         } else if (!/^\+993\d{8}$/.test(formData.phone)) {
-            errors.phone = 'Dogry telefon belgisini giriziň'
+            errors.phone = t('errors.invalid_phone')
             isValid = false
         }
     } else {
         if (!formData.email) {
-            errors.email = 'Elektron salgyňyzy giriziň'
+            errors.email = t('errors.required')
             isValid = false
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            errors.email = 'Dogry elektron salgy giriziň'
+            errors.email = t('errors.invalid_email')
             isValid = false
         }
     }
 
     if (formData.password.length < 6) {
-        errors.password = 'Açar sözi 6 harpdan uly bolmaly!'
+        errors.password = t('warning.password_length')
         isValid = false
     }
 

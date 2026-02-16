@@ -27,11 +27,14 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n';
+const { t, locale } = useI18n({ useScope: 'global' });
+
 const rawStats = [
-  { value: '7+', label: 'Ýyl tejribe' },
-  { value: '98%', label: 'Kargo howpuzlyk derejämiz' },
-  { value: '5K+', label: 'Müşderi' },
-  { value: '100+', label: 'Her günki müşderi sany' }
+  { value: '7+', label: t('names.experience') },
+  { value: '98%', label: t('names.cargo_security') },
+  { value: '5K+', label: t('names.customer') },
+  { value: '100+', label: t('names.per_day_customers') }
 ]
 
 const stats = rawStats.map(item => {

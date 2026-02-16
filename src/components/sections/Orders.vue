@@ -4,7 +4,7 @@
             <!-- Header -->
             <div class="mb-10 animate-fade-in">
                 <h1 class="section_title mb-8">
-                    Sargytlar
+                    {{ $t('menu.orders') }}
                 </h1>
 
                 <!-- Filter Tabs -->
@@ -55,16 +55,18 @@
 
             <div v-if="orderStore.orders.length > 0"
                 class="flex justify-center items-center my-10 transition-all duration-700">
-                <BaseLink :to="'/order/history'" />
+                <Link :to="'/order/history'" />
             </div>
 
             <!-- Empty State -->
-            <NoData v-show="orderStore.orders.length === 0 && !orderStore.loading" :message="'Sargyt tapylmady'" />
+            <NoData v-show="orderStore.orders.length === 0 && !orderStore.loading" :message="$t('info.no_order')" />
         </MainContainer>
     </section>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -79,11 +81,11 @@ const router = useRouter()
 const orderStore = useOrderStore()
 const activeTab = ref('ALL')
 const tabs = ref([
-    { id: 'ALL', label: 'Ählisi', icon: 'box_linear-icon' },
-    { id: 'SEA', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
-    { id: 'AIR', label: 'Uçar', icon: 'plane-icon' },
-    { id: 'LAND', label: 'Ulag', icon: 'truck_delivery-icon' },
-    { id: 'RAIL', label: 'Otly', icon: 'train_2-icon' }
+    { id: 'ALL', label: t('names.all'), icon: 'box_linear-icon' },
+    { id: 'SEA', label: t('names.ship'), icon: 'mingcute_ship_line-icon' },
+    { id: 'AIR', label: t('names.airplane'), icon: 'plane-icon' },
+    { id: 'LAND', label: t('names.truck'), icon: 'truck_delivery-icon' },
+    { id: 'RAIL', label: t('names.train'), icon: 'train_2-icon' }
 ])
 
 const handleOrderClick = (order) => {

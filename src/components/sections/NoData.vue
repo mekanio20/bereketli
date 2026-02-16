@@ -4,7 +4,7 @@
             <div v-if="image" class="w-[350px]">
                 <img :src="image" class="w-full h-full object-cover">
             </div>
-            <p class="text-[36px] text-[#838589] font-medium">{{ message }}</p>
+            <p class="text-[36px] text-[#838589] font-medium">{{ message || $t('info.no_data') }}</p>
         </div>
     </section>
 </template>
@@ -12,8 +12,7 @@
 <script setup>
 defineProps({
     message: {
-        type: String,
-        default: 'No data found'
+        type: String
     },
     image: {
         type: String,

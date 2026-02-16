@@ -9,13 +9,13 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Sargytlar' }
+                    { label: $t('menu.orders') }
                 ]" />
 
                 <!-- Header -->
                 <div class="mb-10 animate-slide-down">
                     <h1 class="section_title mb-8">
-                        Sargytlar
+                        {{ $t('menu.orders_history') }}
                     </h1>
                 </div>
 

@@ -29,7 +29,7 @@
 
                             <h2
                                 class="text-2xl lg:text-3xl font-bold text-[#222222] mb-16 text-center animate-slide-down">
-                                Açar sözi döretmek
+                               {{ $t('names.create_password') }}
                             </h2>
 
                             <!-- Form -->
@@ -37,11 +37,12 @@
                                 <Transition name="fade" mode="out-in">
                                     <div class="flex flex-col space-y-8">
                                         <div>
-                                            <label id="password" class="inline-block mb-3 text-[#222222]">Açar
-                                                sözi</label>
+                                            <label id="password" class="inline-block mb-3 text-[#222222]">
+                                                {{ $t('forms.password') }}
+                                            </label>
                                             <div class="relative">
                                                 <form-input :label="'password'" v-model="formData.password"
-                                                    :type="passwordType" placeholder="Açar sözi" />
+                                                    :type="passwordType" :placeholder="$t('forms.password')" />
                                                 <div
                                                     class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                                                     <eye_hide-icon v-if="passwordType === 'password'"
@@ -57,13 +58,13 @@
                                             </Transition>
                                         </div>
                                         <div>
-                                            <label id="confirm_password" class="inline-block mb-3 text-[#222222]">Açar
-                                                sözi
-                                                tassyklaň</label>
+                                            <label id="confirm_password" class="inline-block mb-3 text-[#222222]">
+                                                {{ $t('forms.confirm_password') }}
+                                            </label>
                                             <div class="relative">
                                                 <form-input :label="'confirm_password'"
                                                     v-model="formData.confirm_password" :type="confirmPasswordType"
-                                                    placeholder="Açar sözi tassyklaň" />
+                                                    :placeholder="$t('forms.confirm_password')" />
                                                 <div
                                                     class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                                                     <eye_hide-icon v-if="confirmPasswordType === 'password'"
@@ -82,10 +83,10 @@
                                 <!-- Submit Button -->
                                 <button type="submit" :disabled="isSubmitting"
                                     class="w-full py-4 bg-[#002645] text-white font-semibold rounded-full hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-12 select-none">
-                                    <span v-if="!isSubmitting">Dowam etmek</span>
+                                    <span v-if="!isSubmitting">{{ $t('buttons.next') }}</span>
                                     <span v-else class="flex items-center justify-center">
                                         <animate_spin-icon />
-                                        Ýüklenýär...
+                                        {{ $t('info.loading') }}
                                     </span>
                                 </button>
                             </form>
@@ -98,6 +99,8 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
 import authImage from '@/assets/images/auth.webp'
 import background from '@/assets/images/modal.webp'
 const emit = defineEmits(['close', 'redirect'])
@@ -125,10 +128,10 @@ const validateForm = () => {
     let isValid = true
 
     if (formData.password.length < 6) {
-        errors.password = 'Açar sözi 6 harpdan uly bolmaly!'
+        errors.password = t('warning.password_length')
         isValid = false
     } else if (formData.password !== formData.confirm_password) {
-        errors.confirm_password = 'Açar sözi nädogry!'
+        errors.confirm_password = t('warning.password_mismatch')
         isValid = false
     }
 

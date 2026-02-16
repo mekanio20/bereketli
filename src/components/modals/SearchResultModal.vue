@@ -69,22 +69,22 @@
                             </div>
                             <div class="flex-1">
                                 <p class="font-medium sm:text-base text-sm">
-                                    <span class="text-[#838589]">Status:</span>
+                                    <span class="text-[#838589]">{{ $t('info.status') }}:</span>
                                     <span class="ml-1 text-[#222222]">{{ getStatusLabel(order.status) }}</span>
                                 </p>
                             </div>
                         </div>
 
                         <div class="flex items-center space-x-4 mt-14">
-                            <router-link :to="{ name: 'OrderDetail', params: { id: order.id } }" class="bg-custom-gradient px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">Doly görmek</router-link>
+                            <router-link :to="{ name: 'OrderDetail', params: { id: order.id } }" class="bg-custom-gradient px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">{{ $t('buttons.detail') }}</router-link>
                             <router-link :to="{ name: 'Chat', query: { code: order.code } }" class="bg-[#002645] px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                                 <comment-icon />
-                                <span>Habarlaşmak</span>
+                                <span>{{ $t('menu.contacts') }}</span>
                             </router-link>
                         </div>
                     </div>
                     <div v-else class="py-10">
-                        <NoData :message="'Sargyt tapylmady'" />
+                        <NoData :message="$t('no_order')" />
                     </div>
                 </div>
             </div>

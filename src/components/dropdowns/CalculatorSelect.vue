@@ -35,11 +35,11 @@
             <!-- Options -->
             <div v-if="activeTab === 1" class="h-72 overflow-y-auto">
                 <div class="p-4">
-                    <SimpleSelect :isSearch="true" v-model="formData.item_type" :options="itemTypeOptions" placeholder="Type" />
+                    <SimpleSelect :isSearch="true" v-model="formData.item_type" :options="itemTypeOptions" :placeholder="$t('forms.type')" />
                 </div>
                 <!-- Search -->
                 <div v-if="isSearch" class="p-3 border-b">
-                    <input v-model="search" type="text" placeholder="Gözle..." class="w-full px-4 py-2 rounded-lg bg-[#F5F7FA]
+                    <input v-model="search" type="text" :placeholder="$t('buttons.search')" class="w-full px-4 py-2 rounded-lg bg-[#F5F7FA]
                  focus:outline-none focus:ring-2 focus:ring-blue-400" />
                 </div>
                 <button v-for="(option, index) in filteredOptions" :key="index" @click="selectTakmynan(option)" class="w-full text-left px-6 py-3
@@ -55,15 +55,15 @@
                 </button>
 
                 <div v-if="!filteredOptions.length" class="px-6 py-4 text-sm text-gray-400">
-                    Netije tapylmady
+                    {{ $t('info.no_results') }}
                 </div>
             </div>
 
             <div v-if="activeTab === 2" class="overflow-y-auto space-y-6 p-4">
-                <SimpleSelect :isSearch="true" v-model="formData.item_type" :options="itemTypeOptions" placeholder="Type" />
+                <SimpleSelect :isSearch="true" v-model="formData.item_type" :options="itemTypeOptions" :placeholder="$t('forms.type')" />
                 <div class="flex items-center space-x-4">
                     <div class="flex-1 flex flex-col space-y-2">
-                        <label for="weight" class="text-sm font-medium text-[#222222]">Agramy</label>
+                        <label for="weight" class="text-sm font-medium text-[#222222]">{{ $t('forms.weight') }}</label>
                         <form-input id="weight" v-model="formData.weight" type="text" />
                     </div>
                     <div class="flex-2 mt-[28px]">
@@ -72,8 +72,8 @@
                 </div>
                 <div class="">
                     <div class="flex flex-col space-y-2">
-                        <span class="text-sm font-medium text-[#222222]">Ölçegi, sm</span>
-                        <p class="text-[12px] text-[#939393]">Giňligi, uzynlygy, beýikligi</p>
+                        <span class="text-sm font-medium text-[#222222]">{{ $t('forms.dimensions') }}, sm</span>
+                        <p class="text-[12px] text-[#939393]">{{ $t('forms.width') }}, {{ $t('forms.length') }}, {{ $t('forms.height') }}</p>
                         <div class="grid grid-cols-3 gap-3">
                             <form-input v-model="formData.width" type="number" />
                             <form-input v-model="formData.length" type="number" />
@@ -84,7 +84,7 @@
                 <!-- Submit button -->
                 <button @click="selectTakyk"
                     class="w-full bg-custom-gradient h-[52px] flex items-center justify-center rounded-full text-white font-bold transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
-                    Saýlamak
+                    {{ $t('buttons.select') }}
                 </button>
             </div>
         </div>
@@ -92,9 +92,11 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { normalizeToIdLabel } from '@/utils/normalizers'
 import { formattedMeasurement } from '@/utils/strings'
 import { findArrayItem } from '@/utils/arrays'
+const { t, locale } = useI18n({ useScope: 'global' })
 const itemCategoryStore = useItemCategoryStore()
 const measurementStore = useMeasurementStore()
 const { icons } = useIcons()
@@ -137,8 +139,8 @@ const formData = ref({
 })
 
 const tabs = [
-    { id: 1, label: 'Takmynan' },
-    { id: 2, label: 'Takyk' }
+    { id: 1, label: t('names.approximately') },
+    { id: 2, label: t('names.individual') },
 ]
 
 /* ---------------- COMPUTED ---------------- */

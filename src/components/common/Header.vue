@@ -41,7 +41,7 @@
                         <div class="relative group">
                             <router-link to="/order/history" class="nav_item flex items-center gap-2">
                                 <box_linear-icon :color="'currentColor'" />
-                                <span>Sargytlar</span>
+                                <span>{{ $t('menu.orders') }}</span>
                                 <chevron_down-icon :size="14" :color="'currentColor'"
                                     class="transition-transform duration-200 group-hover:rotate-180" />
                             </router-link>
@@ -53,11 +53,11 @@
                                     <div class="flex flex-col divide-y divide-gray-50">
                                         <router-link to="/order/history"
                                             class="flex items-center justify-between px-4 py-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] transition-colors">
-                                            <span>Sargyt taryhy</span>
+                                            <span>{{ $t('menu.orders_history') }}</span>
                                         </router-link>
                                         <router-link to="/order/requests"
                                             class="flex items-center justify-between px-4 py-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] transition-colors">
-                                            <span>Tassyklanmadyk sargytlar</span>
+                                            <span>{{ $t('menu.orders_requests') }}</span>
                                         </router-link>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                         <!-- Account -->
                         <router-link to="/account" class="nav_item flex items-center gap-2">
                             <profile_circle-icon :color="'currentColor'" />
-                            <span>Hasap</span>
+                            <span>{{ $t('menu.account') }}</span>
                         </router-link>
                         <!-- Notification -->
                         <button v-if="!isMobile" ref="notifRef" type="button"
@@ -104,7 +104,7 @@
                                                 <img src="/icons/notification.webp" class="w-full h-full sobject-cover">
                                             </div>
                                             <h3 class="text-[20px] text-[#757575]">
-                                                Sizde bildiriş ýok
+                                               {{ $t('info.no_notifications') }}
                                             </h3>
                                         </div>
                                     </div>
@@ -133,12 +133,10 @@
                     </div>
                     <!-- Auth -->
                     <div v-if="!autStore.isAuthenticated" class="flex items-center space-x-4">
-                        <button @click="appStore.toggleModal('login')"
-                            class="px-4 py-2 font-semibold sm:text-base text-sm leading-[100%] tracking-[0%] text-[#002645] hover:text-[#F98900] duration-200">Ulagama
-                            gir</button>
-                        <button @click="appStore.toggleModal('register')"
-                            class="px-6 py-2 bg-custom-gradient text-white rounded-[10px] hover:scale-95 transition-all duration-300 font-medium">Hasap
-                            döretmek</button>
+                        <button type="button" @click="appStore.toggleModal('login')"
+                            class="px-4 py-2 font-semibold sm:text-base text-sm leading-[100%] tracking-[0%] text-[#002645] hover:text-[#F98900] duration-200">{{ $t('buttons.login') }}</button>
+                        <button type="button" @click="appStore.toggleModal('register')"
+                            class="px-6 py-2 bg-custom-gradient text-white rounded-[10px] hover:scale-95 transition-all duration-300 font-medium">{{ $t('buttons.register') }}</button>
                     </div>
                 </div>
 
@@ -180,7 +178,7 @@
                                             <img src="/icons/notification.webp" class="w-full h-full sobject-cover">
                                         </div>
                                         <h3 class="text-[20px] text-[#757575]">
-                                            Sizde bildiriş ýok
+                                            {{ $t('info.no_notifications') }}
                                         </h3>
                                     </div>
                                 </div>
@@ -244,7 +242,7 @@
                                 class="w-full flex items-center justify-between py-3 text-[#222222] hover:text-[#F98900] rounded-lg transition-colors">
                                 <div class="flex items-center gap-2">
                                     <box_linear-icon :color="'currentColor'" />
-                                    <span class="font-medium">Sargytlar</span>
+                                    <span class="font-medium">{{ $t('menu.orders') }}</span>
                                 </div>
                                 <chevron_down-icon :size="16" :color="'currentColor'"
                                     :class="{ 'rotate-180 transition-transform duration-200': toggleOrder }" />
@@ -252,18 +250,18 @@
                             <div v-if="toggleOrder" class="pl-4 flex flex-col space-y-1 pb-2">
                                 <router-link to="/order/history" @click="mobileMenuOpen = false"
                                     class="w-full text-left py-2.5 px-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors">
-                                    Sargyt taryhy
+                                    {{ $t('menu.orders_history') }}
                                 </router-link>
                                 <router-link to="/order/requests" @click="mobileMenuOpen = false"
                                     class="w-full text-left py-2.5 px-3 text-sm text-[#222222] hover:text-[#F98900] hover:bg-[#F3F8FF] rounded-lg transition-colors">
-                                    Tassyklanmadyk sargytlar
+                                    {{ $t('menu.orders_requests') }}
                                 </router-link>
                             </div>
                         </div>
                         <router-link to="/account" @click="mobileMenuOpen = false"
                             class="flex items-center gap-3 py-3 text-[#222222] hover:text-[#F98900] rounded-lg transition-colors">
                             <profile_circle-icon :color="'currentColor'" />
-                            <span class="font-medium">Hasap</span>
+                            <span class="font-medium">{{ $t('menu.account') }}</span>
                         </router-link>
                     </div>
 
@@ -291,11 +289,11 @@
                     <div v-if="!autStore.isAuthenticated" class="pt-4 border-t border-gray-100 space-y-3">
                         <button @click="appStore.toggleModal('login'); mobileMenuOpen = false"
                             class="w-full px-4 py-3 font-semibold text-gold-gradient hover:text-[#F98900] border border-[#ff9e29] rounded-lg transition-colors">
-                            Ulagama gir
+                            {{ $t('buttons.login') }}
                         </button>
                         <button @click="appStore.toggleModal('register'); mobileMenuOpen = false"
                             class="w-full px-6 py-3 bg-custom-gradient text-white rounded-lg hover:opacity-90 transition-opacity font-medium">
-                            Hasap döretmek
+                            {{ $t('buttons.register') }}
                         </button>
                     </div>
                 </div>
@@ -323,32 +321,35 @@ const toggleOrder = ref(false)
 
 const navbar_menu = ref([
     {
-        name: 'Biz barada',
+        name: t('menu.about_us'),
         link: '#',
         children: [
-            { name: 'Ammarlar', link: '/warehouses' },
-            { name: 'Täzelikler', link: '/news' },
-            { name: 'Gadagan edilýän ýükler', link: '/forbidden-cargo' },
-            { name: 'Köp soralýan soraglar', link: '/faq' },
+            { name: t('menu.warehouses'), link: '/warehouses' },
+            { name: t('menu.news'), link: '/news' },
+            { name: t('menu.forbidden_cargos'), link: '/forbidden-cargo' },
+            { name: t('menu.FAQ'), link: '/faq' },
         ]
     },
     {
-        name: 'Sargyt ugratmak',
+        name: t('menu.sending_order'),
         link: '#',
         children: [
-            { name: 'Simple Order', link: '/order/request/simple' },
-            { name: 'Advanced Order', link: '/order/request/advanced' },
+            { name: t('menu.simple_order'), link: '/order/request/simple' },
+            { name: t('menu.advanced_order'), link: '/order/request/advanced' },
         ]
     },
     {
-        name: 'Habarlaşmak',
+        name: t('menu.contacts'),
         link: '/chat'
     },
 ])
 
 const langItems = ref([
     { id: 1, name: 'English', code: 'en' },
-    { id: 2, name: 'Turkmen', code: 'tk' },
+    { id: 2, name: 'Russian', code: 'ru' },
+    { id: 3, name: 'Turkmen', code: 'tk' },
+    { id: 4, name: 'Chinese', code: 'ch' },
+    { id: 5, name: 'Turkish', code: 'tr' },
 ])
 
 const langRef = ref(null)

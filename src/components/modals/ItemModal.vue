@@ -16,7 +16,7 @@
                     <div class="p-8 md:p-10">
                         <!-- Header -->
                         <h2 class="text-[30px] text-[#222222] font-bold mb-8 text-center animate-fade-in">
-                            {{ mode === 'add' ? 'Täze haryt goşmak' : mode === 'view' ? 'Harytlar' : 'Harydy redaktirläň' }}
+                            {{ mode === 'add' ? $t('names.new_product_add') : mode === 'view' ? $t('names.products') : $t('names.update_product') }}
                         </h2>
 
                         <!-- Tab Buttons -->
@@ -25,12 +25,12 @@
                             <button @click="activeTab = 'individual'"
                                 class="flex-1 py-[9px] px-6 font-semibold transition-all duration-300 rounded-lg"
                                 :class="activeTab === 'individual' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
-                                Takyk
+                                {{ $t('names.individual') }}
                             </button>
                             <button @click="activeTab = 'approximate'"
                                 class="flex-1 py-[9px] px-6 font-semibold transition-all duration-300 rounded-lg -ml-px"
                                 :class="activeTab === 'approximate' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
-                                Takmynan
+                                {{ $t('names.approximately') }}
                             </button>
                         </div>
 
@@ -42,11 +42,11 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <!-- size and Quantity -->
                                         <div>
-                                            <label class="block text-sm text-[#939393] mb-2">Quantity</label>
+                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.quantity') }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.quantity" type="number" />
                                         </div>
                                         <div>
-                                            <label class="block text-sm text-[#939393] mb-2">Agramy</label>
+                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.weight') }}</label>
                                             <div class="flex gap-2">
                                                 <form-input :readonly="isReadonly" v-model="formData.weight" type="number" />
                                                 <SimpleSelect :readonly="isReadonly" v-model="formData.weightUnit" :options="measurementItems"
@@ -58,22 +58,22 @@
                                     <!-- Dimensions -->
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="space-y-2">
-                                            <label class="text-sm text-[#939393]">Giňligi</label>
+                                            <label class="text-sm text-[#939393]">{{ $t('forms.width') }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.width" type="number" />
                                         </div>
                                         <div class="space-y-2">
-                                            <label class="text-sm text-[#939393]">Uzynlygy</label>
+                                            <label class="text-sm text-[#939393]">{{ $t('forms.length') }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.length" type="number" />
                                         </div>
                                         <div class="space-y-2">
-                                            <label class="text-sm text-[#939393]">Beýikligi</label>
+                                            <label class="text-sm text-[#939393]">{{ $t('forms.height') }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.height" type="number" />
                                         </div>
                                     </div>
 
                                     <!-- Description -->
                                     <div>
-                                        <label class="block text-sm text-[#939393] mb-2">Description</label>
+                                        <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description') }}</label>
                                         <textarea :readonly="isReadonly" v-model="formData.description" rows="2"
                                             class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
                                     </div>
@@ -82,12 +82,12 @@
                                 <div v-else key="approximate" class="space-y-3 max-h-96 overflow-y-auto pb-2">
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="px-1">
-                                            <label class="block text-sm text-[#939393] mb-2">Quantity</label>
+                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.quantity') }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.quantity" type="number" />
                                         </div>
                                         <!-- Description -->
                                         <div class="px-1 col-span-2">
-                                            <label class="block text-sm text-[#939393] mb-2">Description</label>
+                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description') }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.description" type="text" />
                                         </div>
                                     </div>
@@ -110,10 +110,10 @@
                                 <!-- Submit Button -->
                                 <button type="submit" :disabled="isSubmitting || isReadonly"
                                     class="w-fit px-28 py-4 bg-custom-gradient text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
-                                    <span v-if="!isSubmitting">Ýatda saklamak</span>
+                                    <span v-if="!isSubmitting">{{ $t('buttons.save') }}</span>
                                     <span v-else class="flex items-center justify-center">
                                         <animate_spin-icon />
-                                        Ýüklenýär...
+                                        {{ $t('info.loading') }}
                                     </span>
                                 </button>
                             </div>

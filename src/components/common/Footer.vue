@@ -38,17 +38,17 @@
                         <div>
                             <router-link to="/"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                Baş sahypa</router-link>
+                                {{ $t('menu.home_page') }}</router-link>
                         </div>
                         <div>
                             <router-link to="/chat"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                Habarlaşmak</router-link>
+                                {{ $t('menu.contacts') }}</router-link>
                         </div>
                         <div>
                             <router-link to="/#services"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                Hyzmatlarymyz</router-link>
+                                {{ $t('menu.services') }}</router-link>
                         </div>
                     </nav>
 
@@ -57,24 +57,24 @@
                         <div>
                             <router-link to="/warehouses"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                Ammarlar</router-link>
+                                {{ $t('menu.warehouses') }}</router-link>
                         </div>
                         <div>
                             <router-link to="/faq"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                FAQ</router-link>
+                                {{ $t('menu.FAQ') }}</router-link>
                         </div>
                         <div>
                             <router-link to="/privacy"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                                Howpsuzlyk</router-link>
+                                {{ $t('menu.privacy') }}</router-link>
                         </div>
                     </nav>
 
                     <!-- Contact Information Column -->
                     <div class="space-y-8" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.4s">
                         <div>
-                            <h3 class="text-sm font-medium text-gray-300 mb-3">Salgy</h3>
+                            <h3 class="text-sm font-medium text-gray-300 mb-3">{{ $t('info.address') }}</h3>
                             <p class="text-base leading-relaxed hover:text-orange-400 transition-colors duration-300">
                                 Jebel Free Zone, BCW, Office No.<br />
                                 104-03, Dubai, UAE
@@ -82,7 +82,7 @@
                         </div>
 
                         <div>
-                            <h3 class="text-sm font-medium text-gray-300 mb-3">Contact us</h3>
+                            <h3 class="text-sm font-medium text-gray-300 mb-3">{{ $t('menu.contacts') }}</h3>
                             <a href="tel:+99371984704"
                                 class="block text-base mb-2 hover:text-orange-400 transition-colors duration-300 hover:underline">
                                 +99371984704
@@ -104,7 +104,7 @@
                     <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                         <!-- Copyright -->
                         <p class="text-sm text-gray-300">
-                            Copyright © 2025 Bereketli Logistika - Ähli hukuklar goralandyr.
+                            {{ $t('info.copyright') }}
                         </p>
     
                         <!-- Social Media Icons -->
