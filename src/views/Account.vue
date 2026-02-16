@@ -10,7 +10,7 @@
                     <!-- Sidebar -->
                     <aside class="lg:col-span-1">
                         <div class="bg-white rounded-2xl shadow-md p-6 sticky top-6 animate-fade-in">
-                            <h1 class="text-2xl font-bold text-[#222222] mb-6">Hasabym</h1>
+                            <h1 class="text-2xl font-bold text-[#222222] mb-6">{{ $t('menu.account') }}</h1>
 
                             <nav class="space-y-2">
                                 <!-- Account Information -->
@@ -22,7 +22,7 @@
                                         <edit-icon
                                             :class="activeSection === 'info' ? 'text-white' : 'text-[#838589]'" />
                                     </div>
-                                    <span class="font-semibold">Hasap maglumatlary</span>
+                                    <span class="font-semibold">{{ $t('names.account_info') }}</span>
                                 </button>
 
                                 <!-- Change Password -->
@@ -38,7 +38,7 @@
                                         <key-icon
                                             :class="activeSection === 'password' ? 'text-white' : 'text-[#838589]'" />
                                     </div>
-                                    <span class="font-semibold">Açar sözüni täzelemek</span>
+                                    <span class="font-semibold">{{ $t('buttons.reset_password') }}</span>
                                 </button>
 
                                 <div class="pt-4 mt-4 border-t border-gray-200">
@@ -49,7 +49,7 @@
                                             class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center group-hover:bg-red-200 transition-all duration-300">
                                             <logout-icon class="text-red-600" />
                                         </div>
-                                        <span class="font-semibold">Ulgamdan çykmak</span>
+                                        <span class="font-semibold">{{ $t('buttons.logout') }}</span>
                                     </button>
 
                                     <!-- Delete Account -->
@@ -59,7 +59,7 @@
                                             class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center group-hover:bg-red-200 transition-all duration-300">
                                             <delete-icon class="text-red-600" />
                                         </div>
-                                        <span class="font-semibold">Delete account</span>
+                                        <span class="font-semibold">{{ $t('buttons.delete_account') }}</span>
                                     </button>
                                 </div>
                             </nav>
@@ -76,19 +76,19 @@
                                     <div class="w-12 h-12 bg-[#EBF3FD] rounded-xl flex items-center justify-center">
                                         <edit-icon class="text-blue-600" />
                                     </div>
-                                    <h2 class="text-2xl font-bold text-[#222222]">Hasap maglumatlary</h2>
+                                    <h2 class="text-2xl font-bold text-[#222222]">{{ $t('names.account_info') }}</h2>
                                 </div>
 
                                 <form @submit.prevent="handleSaveProfile" class="space-y-6">
                                     <!-- First Name and Last Name -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-medium text-[#838589] mb-2">Adyňyz</label>
+                                            <label class="block text-sm font-medium text-[#838589] mb-2">{{ $t('forms.name') }}</label>
                                             <form-input v-model="profileData.first_name" type="text" />
                                         </div>
                                         <div>
                                             <label
-                                                class="block text-sm font-medium text-[#838589] mb-2">Familiýaňyz</label>
+                                                class="block text-sm font-medium text-[#838589] mb-2">{{ $t('forms.surname') }}</label>
                                             <form-input v-model="profileData.last_name" type="text" />
                                         </div>
                                     </div>
@@ -96,24 +96,25 @@
                                     <!-- Company Name -->
                                     <div>
                                         <label
-                                            class="block text-sm font-medium text-[#838589] mb-2">Kompaniýaňyz</label>
+                                            class="block text-sm font-medium text-[#838589] mb-2">{{ $t('forms.company') }}</label>
                                         <form-input v-model="profileData.company" type="text" />
                                     </div>
 
                                     <!-- phone_number Number -->
                                     <div>
-                                        <label class="block text-sm font-medium text-[#838589] mb-2">Telefon
-                                            belgiňiz</label>
+                                        <label class="block text-sm font-medium text-[#838589] mb-2">
+                                            {{ $t('forms.phone_number') }}
+                                        </label>
                                         <form-input v-model="profileData.phone_number" type="tel" />
                                     </div>
 
                                     <!-- Save Button -->
                                     <button type="submit" :disabled="isSaving"
                                         class="w-full py-4 bg-[#002645] text-white font-semibold rounded-xl hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
-                                        <span v-if="!isSaving">Ýatda sakla</span>
+                                        <span v-if="!isSaving">{{ $t('buttons.save') }}</span>
                                         <span v-else class="flex items-center justify-center">
                                             <animate_spin-icon />
-                                            Ýüklenýär...
+                                            {{ $t('info.loading') }}
                                         </span>
                                     </button>
                                 </form>
@@ -126,14 +127,15 @@
                                     <div class="w-12 h-12 bg-[#EBF3FD] rounded-xl flex items-center justify-center">
                                         <key-icon />
                                     </div>
-                                    <h2 class="text-2xl font-bold text-[#222222]">Açar sözüni täzelemek</h2>
+                                    <h2 class="text-2xl font-bold text-[#222222]">{{ $t('buttons.reset_password') }}</h2>
                                 </div>
 
                                 <form @submit.prevent="handleChangePassword" class="space-y-6">
                                     <!-- New Password -->
                                     <div>
-                                        <label class="block text-sm font-medium text-[#838589] mb-2">Täze açar
-                                            sözi</label>
+                                        <label class="block text-sm font-medium text-[#838589] mb-2">
+                                            {{ $t('forms.new_password') }}
+                                        </label>
                                         <div class="relative">
                                             <form-input :label="'password'" v-model="passwordData.new"
                                                 :type="passwordType" placeholder="" />
@@ -149,8 +151,9 @@
 
                                     <!-- Confirm Password -->
                                     <div>
-                                        <label class="block text-sm font-medium text-[#838589] mb-2">Täze açar sözüni
-                                            tassyklaň</label>
+                                        <label class="block text-sm font-medium text-[#838589] mb-2">
+                                            {{ $t('forms.confirm_password') }}
+                                        </label>
                                         <div class="relative">
                                             <form-input v-model="passwordData.confirm" :type="confirmPasswordType" placeholder="" />
                                             <div
@@ -166,10 +169,10 @@
                                     <!-- Change Password Button -->
                                     <button type="submit" :disabled="isChangingPassword"
                                         class="w-full py-4 bg-[#002645] text-white font-semibold rounded-xl hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
-                                        <span v-if="!isChangingPassword">Üýtgetmek</span>
+                                        <span v-if="!isChangingPassword">{{ $t('buttons.update') }}</span>
                                         <span v-else class="flex items-center justify-center">
                                             <animate_spin-icon />
-                                            Ýüklenýär...
+                                            {{ $t('info.loading') }}
                                         </span>
                                     </button>
                                 </form>
@@ -181,13 +184,13 @@
         </MainContainer>
 
         <!-- Confirmation Modals -->
-        <ConfirmModal :is-open="showLogoutModal" title="Ulgamdan çykmak" message="Ulgamdan çykmak isleýärsiňizmi?"
-            confirm-text="Hawa, çyk" type="danger" cancel-text="Ýok" @confirm="confirmLogout"
+        <ConfirmModal :is-open="showLogoutModal" :title="$t('buttons.logout')" :message="$t('descriptions.logout')"
+            type="danger" @confirm="confirmLogout"
             @cancel="showLogoutModal = false" />
 
-        <ConfirmModal :is-open="showDeleteModal" title="Hasaby pozmak"
-            message="Hasabyňyzy pozmak isleýärsiňizmi? Bu hereketi yzyna gaýtaryp bolmaýar." confirm-text="Hawa, poz"
-            cancel-text="Ýok" type="danger" @confirm="confirmDelete" @cancel="showDeleteModal = false" />
+        <ConfirmModal :is-open="showDeleteModal" :title="$t('buttons.delete_account')"
+            :message="$t('descriptions.delete_account')"
+            type="danger" @confirm="confirmDelete" @cancel="showDeleteModal = false" />
     </section>
 </template>
 

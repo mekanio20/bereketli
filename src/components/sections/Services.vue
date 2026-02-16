@@ -18,7 +18,7 @@ const { t, locale } = useI18n({ useScope: 'global' });
 
 const services = ref([
     {
-        name: t('menu.order_request'),
+        name: t('menu.order_requests'),
         image: '/icons/box.webp',
         link: '/order/requests'
     },

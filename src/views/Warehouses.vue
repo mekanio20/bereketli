@@ -9,7 +9,7 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Biz barada', to: '#' },
+                    { label: 'Biz barada', to: '/about' },
                     { label: 'Ammarlar' }
                 ]" />
 

@@ -16,7 +16,7 @@
                     <aside class="w-1/3 bg-white flex flex-col rounded-[26px] h-[600px] overflow-y-auto">
                         <!-- Sidebar Header -->
                         <div class="p-6">
-                            <h1 class="text-[22px] font-semibold text-[#222222]">Habarlaşmak</h1>
+                            <h1 class="text-[22px] font-semibold text-[#222222]">{{ $t('menu.contacts') }}</h1>
 
                             <!-- Search Input -->
                             <!-- <div class="mt-4">
@@ -91,7 +91,7 @@
                                     <div v-if="loadingMoreMessages"
                                         class="w-4 h-4 border-2 border-[#002645] border-t-transparent rounded-full animate-spin">
                                     </div>
-                                    <span>{{ loadingMoreMessages ? 'Ýükleniýär...' : 'Öňki habarlary ýükle' }}</span>
+                                    <span>{{ loadingMoreMessages ? $t('info.loading') : $t('buttons.load_messages') }}</span>
                                 </button>
                             </div>
 
@@ -105,7 +105,7 @@
                             <!-- Empty State -->
                             <div v-else-if="messageStore.messages.length === 0"
                                 class="flex items-center justify-center p-8">
-                                <p class="text-[#838589]">Heniz sms ýok</p>
+                                <p class="text-[#838589]">{{ $t('info.no_sms') }}</p>
                             </div>
 
                             <!-- Messages -->
@@ -189,11 +189,11 @@
                             <div v-if="selectedFiles.length > 0" class="border-t border-[#EDEDED] p-4">
                                 <div class="flex items-center gap-2 mb-2">
                                     <span class="text-sm font-semibold text-[#222222]">
-                                        Saýlanan faýllar ({{ selectedFiles.length }})
+                                       {{ $t('info.selected_files') }} ({{ selectedFiles.length }})
                                     </span>
                                     <button type="button" @click="selectedFiles = []"
                                         class="ml-auto text-sm text-red-600 hover:text-red-700 font-medium">
-                                        Hemmesini aýyr
+                                        {{ $t('buttons.delete_all') }}
                                     </button>
                                 </div>
                                 <div class="flex gap-3 overflow-x-auto py-2">
@@ -240,7 +240,7 @@
                                     <attachment-icon />
                                 </button>
 
-                                <form-input v-model="newMessage" type="text" placeholder="SMS ýazyň..."
+                                <form-input v-model="newMessage" type="text" :placeholder="$t('forms.write_sms')"
                                     class="rounded-full placeholder:text-[#838589] font-normal text-[#222222] mx-2" />
 
                                 <button type="submit"
@@ -250,7 +250,7 @@
                                     <div v-else
                                         class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin">
                                     </div>
-                                    <span class="hidden sm:inline text-white font-semibold text-sm">Ugrat</span>
+                                    <span class="hidden sm:inline text-white font-semibold text-sm">{{ $t('buttons.send') }}</span>
                                 </button>
                             </form>
                         </footer>
@@ -263,7 +263,7 @@
                                 class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <message-icon color="#838589" :size="50" />
                             </div>
-                            <p class="text-xl text-[#838589]">Söhbetdeşligi saýlaň</p>
+                            <p class="text-xl text-[#838589]">{{ $t('info.select_room') }}</p>
                         </div>
                     </div>
                 </div>

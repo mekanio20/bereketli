@@ -9,15 +9,15 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Order Requests', to: '/order/requests' },
-                    { label: 'Order Request Detail' }
+                    { label: $t('menu.order_requests'), to: '/order/requests' },
+                    { label: `#${order_request?.id}` }
                 ]" />
 
                 <div class="flex items-center justify-between mb-10">
                     <div class="flex items-center space-x-10">
                         <!-- Title -->
                         <h1 class="section_title">
-                            Order Request Detail
+                            ID #{{ order_request?.id }}
                         </h1>
                         <div class="text-sm font-medium px-7 py-2 rounded-full w-fit"
                             :class="statusBadgeClass(order_request?.status)">
@@ -27,7 +27,7 @@
                     <div v-if="order_request?.status === 'PENDING'">
                         <button @click="showCancelModal = true"
                             class="px-8 py-[6px] rounded-xl bg-[#E62927] text-white text-lg font-sembold hover:bg-red-600 hover:scale-105 transition duration-200 text-nowrap">
-                            Cancel Order
+                            {{ $t('buttons.cancel_request') }}
                         </button>
                     </div>
                 </div>
@@ -37,14 +37,14 @@
                     <div class="flex-1 space-y-6">
                         <!-- Delivery Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek</h2>
+                            <h2 class="form_title mb-8">{{ $t('info.delivery') }}</h2>
                             <div class="flex items-center space-x-6 mb-4">
                                 <div class="flex-1 flex flex-col space-y-8">
                                     <SimpleSelect v-if="isAdvanced" v-model="formData.from_incoterm" :options="incoTerms"
-                                        placeholder="From Incoterm" :isSearch="true" :icon="'map_pin-icon'" />
+                                        :placeholder="$t('forms.from_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
                                     <!-- From Location -->
                                     <SimpleSelect :readonly="true" v-model="formData.from_country"
-                                        :options="nirdenOptions" placeholder="Nirden" :icon="'map_pin-icon'" />
+                                        :options="nirdenOptions" :placeholder="$t('forms.from')" :icon="'map_pin-icon'" />
                                 </div>
                                 <!-- Swap Button -->
                                 <div class="flex-shrink-0">
@@ -55,25 +55,25 @@
                                 </div>
                                 <div class="flex-1 flex flex-col space-y-8">
                                     <SimpleSelect v-if="isAdvanced" v-model="formData.to_incoterm" :options="incoTerms"
-                                        placeholder="To Incoterm" :isSearch="true" :icon="'map_pin-icon'" />
+                                        :placeholder="$t('forms.to_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
                                     <!-- To Location -->
                                     <SimpleSelect :readonly="true" v-model="formData.to_country" :options="niraOptions"
-                                        placeholder="Nirä" :icon="'map_pin-icon'" />
+                                        :placeholder="$t('forms.to')" :icon="'map_pin-icon'" />
                                 </div>
                             </div>
                         </FormContainer>
 
                         <!-- Information Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Maglumatlar</h2>
-                            <textarea v-model="formData.description" disabled placeholder="Write description..."
+                            <h2 class="form_title mb-8">{{ $t('info.name') }}</h2>
+                            <textarea v-model="formData.description" disabled :placeholder="$t('forms.write_description')"
                                 rows="2"
                                 class="bg-[#EBF3FD] w-full px-[30px] py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
                         </FormContainer>
 
                         <!-- Categories Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Ýüküň görnüşi</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.cargo_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <button v-for="(item, index) in itemCategoryStore.item_categories" :key="index"
                                     v-show="formData.categories.includes(item.id)"
@@ -88,14 +88,14 @@
 
                         <!-- Shipping Type Section -->
                         <FormContainer v-if="isAdvanced">
-                            <h2 class="form_title mb-8">Ugur</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.route_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <!-- Direct -->
                                 <div v-if="formData.route_type === 'direct'" :class="cardClass('direct')">
                                     <div class="flex items-start justify-between">
                                         <div>
-                                            <p :class="titleClass('direct')">Direct</p>
-                                            <p :class="descClass('direct')">1 hepde</p>
+                                            <p :class="titleClass('direct')">{{ $t('forms.direct') }}</p>
+                                            <p :class="descClass('direct')">{{ $t('forms.direct_time') }}</p>
                                         </div>
 
                                         <div class="w-6 h-6 border flex items-center justify-center rounded-full"
@@ -110,8 +110,8 @@
                                 <div v-if="formData.route_type === 'transit'" :class="cardClass('transit')">
                                     <div class="flex items-start justify-between">
                                         <div>
-                                            <p :class="titleClass('transit')">Transit</p>
-                                            <p :class="descClass('transit')">30 gün</p>
+                                            <p :class="titleClass('transit')">{{ $t('forms.transit') }}</p>
+                                            <p :class="descClass('transit')">{{ $t('forms.transit_time') }}</p>
                                         </div>
                                         <div class="w-6 h-6 border flex items-center justify-center rounded-full"
                                             :class="[formData.route_type === 'transit' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
@@ -125,7 +125,7 @@
 
                         <!-- Transport Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek görnüşi</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.transport_type') }}</h2>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <button v-for="transport in transportTypes" :key="transport.id"
                                     v-show="formData.transportation_type === transport.id"
@@ -142,10 +142,10 @@
 
                         <!-- Containers -->
                         <FormContainer v-if="isAdvanced">
-                            <h2 class="form_title mb-8">Konteýnerlar</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.containers') }}</h2>
                             <div v-for="(item, index) in formData.containers" :key="index" class="my-6">
                                 <div class="flex items-center space-x-6">
-                                    <SimpleSelect :readonly="true" v-model="item.type" :options="containerTypeOptions" placeholder="Type" />
+                                    <SimpleSelect :readonly="true" v-model="item.type" :options="containerTypeOptions" :placeholder="$t('forms.type')" />
                                     <form-input :readonly="true" v-model="item.quantity" type="number" />
                                 </div>
                                 <div v-if="item.type" class="py-20 flex items-center space-x-20">
@@ -154,19 +154,19 @@
                                     </div>
                                     <div class="grid grid-cols-2 gap-x-24 gap-y-14">
                                         <div>
-                                            <h5 class="text-[#939393]">Uzynlygy:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.length') }}:</h5>
                                             <p class="text-[#222222]">{{ item.length_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">Umumy agramy:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.weight') }}:</h5>
                                             <p class="text-[#222222]">{{ item.max_weight_kg }} kg</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">Giňligi:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.width') }}:</h5>
                                             <p class="text-[#222222]">{{ item.width_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">Beýikligi:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.height') }}:</h5>
                                             <p class="text-[#222222]">{{ item.height_m }} m</p>
                                         </div>
                                     </div>
@@ -176,13 +176,13 @@
 
                         <!-- Items Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Items</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.cargos') }}</h2>
                             <div class="space-y-3 mb-4">
                                 <div v-for="(item, index) in formData.items" :key="index"
                                     class="flex items-center justify-between p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
                                     @click="viewItem(index)">
                                     <div>
-                                        <p class="font-semibold text-gray-900">{{ `${item.name || 'Item'}` }}</p>
+                                        <p class="font-semibold text-gray-900">{{ `${item.name}` }}</p>
                                         <p class="text-sm text-[#EBF3FD]0">{{ formattedMeasurement(item) }}</p>
                                     </div>
                                     <div class="flex items-center gap-3">
@@ -198,19 +198,19 @@
                     <div class="w-[35%] space-y-6 self-start sticky top-32">
                         <!-- Date Section -->
                         <FormContainer>
-                            <h2 class="text-xl font-bold text-gray-900 mb-8">Eltip bermek möhleti</h2>
+                            <h2 class="text-xl font-bold text-gray-900 mb-8">{{ $t('forms.transport_time') }}</h2>
 
                             <div class="space-y-6">
                                 <!-- Pickup Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Ugradylmaly senesi</label>
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
                                     <VueDatePicker readonly v-model="formData.date_shipment_expected"
                                         :enable-time-picker="false" />
                                 </div>
 
                                 <!-- Delivery Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Barmaly senesi</label>
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
                                     <VueDatePicker readonly v-model="formData.date_arrival_expected"
                                         :enable-time-picker="false" />
                                 </div>
@@ -221,7 +221,7 @@
                                 class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300">
                                 <div class="flex items-center justify-center gap-3">
                                     <message_circle-icon />
-                                    <span>Habarlasmak</span>
+                                    <span>{{ $t('menu.contacts') }}</span>
                                 </div>
                             </button>
                         </FormContainer>
@@ -233,13 +233,16 @@
         <ItemModal :mode="itemMode" :is-open="showModal" :edit-data="viewData" :approximateItems="approximateItems"
             :measurementItems="measurementItems" @close="showModal = false" />
         <!-- Cancel Modal -->
-        <ConfirmModal :is-open="showCancelModal" :loading="orderRequestStore.loading" title="Goýbolsun etmek"
-            message="Sargydy goýbolsun etmek isleýärsiňizmi?" confirm-text="Hawa" cancel-text="Ýok" type="danger"
+        <ConfirmModal :is-open="showCancelModal" :loading="orderRequestStore.loading" :title="$t('buttons.cancel_request')"
+            :message="$t('descriptions.cancel_request')" type="danger"
             @confirm="confirmCancel" @cancel="showCancelModal = false" />
     </section>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
+
 import background from '@/assets/images/background.webp'
 import { statusBadgeClass, getStatusLabel } from '@/utils/switch'
 import { normalizeToIdLabel } from '@/utils/normalizers'
@@ -269,10 +272,10 @@ const viewIndex = ref(null)
 const showCancelModal = ref(false)
 
 const transportTypes = ref([
-    { id: 'AIR', label: 'Uçar', icon: 'plane-icon' },
-    { id: 'SEA', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
-    { id: 'LAND', label: 'Ulag', icon: 'truck_delivery-icon' },
-    { id: 'RAIL', label: 'Otly', icon: 'train_2-icon' }
+    { id: 'AIR', label: t('names.airplane'), icon: 'plane-icon' },
+    { id: 'SEA', label: t('names.ship'), icon: 'mingcute_ship_line-icon' },
+    { id: 'LAND', label: t('names.truck'), icon: 'truck_delivery-icon' },
+    { id: 'RAIL', label: t('names.train'), icon: 'train_2-icon' }
 ])
 
 const isAdvanced = computed(() => formData.value.type === "ADVANCED")

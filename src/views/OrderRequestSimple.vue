@@ -9,13 +9,13 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Order Requests', to: '/order/requests' },
-                    { label: 'Request New Simple Order' }
+                    { label: $t('menu.order_requests'), to: '/order/requests' },
+                    { label: $t('menu.simple_order') }
                 ]" />
 
                 <!-- Title -->
                 <h1 class="section_title mb-10">
-                    Simple Order
+                    {{ $t('menu.simple_order') }}
                 </h1>
 
                 <div class="flex items-start space-x-6">
@@ -23,11 +23,11 @@
                     <div class="flex-1 space-y-6">
                         <!-- Delivery Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek</h2>
+                            <h2 class="form_title mb-8">{{ $t('info.delivery') }}</h2>
                             <div class="flex items-end space-x-6 mb-4">
                                 <!-- From Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions" placeholder="Nirden"
+                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions" :placeholder="$t('forms.from')"
                                         :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                                 <!-- Swap Button -->
@@ -40,7 +40,7 @@
                                 </div>
                                 <!-- To Location -->
                                 <div class="flex-1">
-                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions" placeholder="Nirä" :isSearch="true"
+                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions" :placeholder="$t('forms.to')" :isSearch="true"
                                         :icon="'map_pin-icon'" />
                                 </div>
                             </div>
@@ -48,14 +48,14 @@
 
                         <!-- Information Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Maglumatlar</h2>
-                            <textarea v-model="formData.description" placeholder="Write description..." rows="2"
+                            <h2 class="form_title mb-8">{{ $t('info.name') }}</h2>
+                            <textarea v-model="formData.description" :placeholder="$t('forms.write_description')" rows="2"
                                 class="bg-[#EBF3FD] w-full px-[30px] py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
                         </FormContainer>
 
                         <!-- Categories Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Ýüküň görnüşi</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.cargo_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <button v-for="(item, index) in itemCategoryStore.item_categories" :key="index"
                                     @click="toggleCargoType(item.id)"
@@ -70,7 +70,7 @@
 
                         <!-- Transport Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek görnüşi</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.transport_type') }}</h2>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <button v-for="transport in transportTypes" :key="transport.id"
                                     @click="formData.transportation_type = transport.id"
@@ -87,7 +87,7 @@
 
                         <!-- Items Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Items</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.cargos') }}</h2>
                             <div class="space-y-3 mb-4">
                                 <div v-for="(item, index) in formData.items" :key="index"
                                     class="flex items-center justify-between p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
@@ -115,7 +115,7 @@
                                     class="w-6 h-6 rounded-full text-white bg-[#002244] flex items-center justify-center">
                                     <plus-icon :size="20" />
                                 </div>
-                                Add Item
+                                {{ $t('buttons.add_cargo') }}
                             </button>
                         </FormContainer>
                     </div>
@@ -124,22 +124,20 @@
                     <div class="w-[35%] space-y-6 self-start sticky top-32">
                         <!-- Date Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek möhleti</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.transport_time') }}</h2>
 
                             <div class="space-y-6">
                                 <!-- Pickup Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Ugradylmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false"
-                                        placeholder="Sene saýlaň">
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
+                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false">
                                     </VueDatePicker>
                                 </div>
 
                                 <!-- Delivery Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Barmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false"
-                                        placeholder="Sene saýlaň" />
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
+                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false" />
                                 </div>
                             </div>
 
@@ -147,10 +145,10 @@
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
-                                <span v-if="!orderRequestStore.loading">Tassyklamak</span>
+                                <span v-if="!orderRequestStore.loading">{{ $t('buttons.confirmation') }}</span>
                                 <span v-else class="flex items-center justify-center">
                                     <animate_spin-icon />
-                                    Ýüklenýär...
+                                    {{ $t('info.loading') }}
                                 </span>
                             </button>
                         </FormContainer>
@@ -188,10 +186,10 @@ const showModal = ref(false)
 const editingIndex = ref(null)
 
 const transportTypes = ref([
-    { id: 'SEA', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
-    { id: 'AIR', label: 'Uçar', icon: 'plane-icon' },
-    { id: 'LAND', label: 'Ulag', icon: 'truck_delivery-icon' },
-    { id: 'RAIL', label: 'Otly', icon: 'train_2-icon' }
+    { id: 'AIR', label: t('names.airplane'), icon: 'plane-icon' },
+    { id: 'SEA', label: t('names.ship'), icon: 'mingcute_ship_line-icon' },
+    { id: 'LAND', label: t('names.truck'), icon: 'truck_delivery-icon' },
+    { id: 'RAIL', label: t('names.train'), icon: 'train_2-icon' }
 ])
 
 const editData = ref({})

@@ -9,14 +9,14 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Sargytlar', to: '/order/history' },
-                    { label: '#RW3E-74ESW4' }
+                    { label: $t('menu.orders'), to: '/order/history' },
+                    { label: order?.code },
                 ]" />
 
                 <!-- Header -->
                 <div class="mb-10 animate-slide-down flex items-center justify-between">
                     <h1 class="section_title">
-                        Sargyt maglumatlary
+                        {{ $t('names.order_info') }}
                     </h1>
                     <!-- Action Buttons -->
                     <div class="grid grid-cols-1 gap-3">
@@ -26,7 +26,7 @@
                         </button> -->
                         <router-link :to="{ name: 'Chat', query: { code: order.code } }" class="py-3 px-10 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
                             <message_circle-icon />
-                            <span>Habarlaşmak</span>
+                            <span>{{ $t('menu.contacts') }}</span>
                         </router-link>
                     </div>
 
@@ -64,7 +64,7 @@
                             <div v-if="order?.notes" class="flex items-center gap-3 py-4">
                                 <dote border_width="24px" border_height="24px" bg_width="12px" bg_height="12px"
                                     border_color="#FFA500" bg_color="#FFC359" />
-                                <span class="font-medium text-[#838589]">Status:</span>
+                                <span class="font-medium text-[#838589]">{{ $t('info.status') }}:</span>
                                 <span class="font-medium text-[#222222]">{{ order?.notes }}</span>
                             </div>
 
@@ -75,13 +75,13 @@
                                     class="w-10 h-10 absolute left-3 bg-white rounded-full flex items-center justify-center group-hover:scale-105 transform transition-all duration-300">
                                     <route-icon />
                                 </div>
-                                <span class="font-semibold pl-4 pr-6">Kartada görmek</span>
+                                <span class="font-semibold pl-4 pr-6">{{ $t('buttons.view_map') }}</span>
                             </a>
                         </FormContainer>
 
                         <!-- Timeline Card -->
                         <FormContainer class="animate-slide-up" style="animation-delay: 0.2s">
-                            <h3 class="text-[22px] font-semibold text-[#222222] mb-6">Sargydyň ýagdaýlary</h3>
+                            <h3 class="text-[22px] font-semibold text-[#222222] mb-6">{{ $t('names.order_statuses') }}</h3>
 
                             <div class="pt-6">
                                 <!-- Timeline Item -->
@@ -107,11 +107,11 @@
                     <div class="space-y-6">
                         <!-- Delivery Details Card -->
                         <FormContainer class="animate-slide-up" style="animation-delay: 0.3s">
-                            <h3 class="text-[22px] font-bold text-[#222222] mb-6">Eltip bermek</h3>
+                            <h3 class="text-[22px] font-bold text-[#222222] mb-6">{{ $t('info.delivery') }}</h3>
                             <div class="space-y-6">
                                 <!-- From Incoterm -->
                                 <div>
-                                    <label class="block text-[#939393] mb-3">From incoterm</label>
+                                    <label class="block text-[#939393] mb-3">{{ $t('forms.from_incoterm') }}</label>
                                     <div class="p-4 bg-[#EBF3FD] rounded-[14px]">
                                         <p class="font-medium text-[#222222]">{{ order?.from_incoterm }}</p>
                                     </div>
@@ -119,7 +119,7 @@
 
                                 <!-- To Incoterm -->
                                 <div>
-                                    <label class="block text-[#939393] mb-3">To incoterm</label>
+                                    <label class="block text-[#939393] mb-3">{{ $t('forms.to_incoterm') }}</label>
                                     <div class="p-4 bg-[#EBF3FD] rounded-[14px]">
                                         <p class="font-medium text-[#222222]">{{ order?.to_incoterm }}</p>
                                     </div>
@@ -127,7 +127,7 @@
 
                                 <!-- To Incoterm -->
                                 <div>
-                                    <label class="block text-[#939393] mb-3">Eltip bermek görnüşi</label>
+                                    <label class="block text-[#939393] mb-3">{{ $t('forms.transport_type') }}</label>
                                     <div class="flex items-center gap-3 p-4 bg-[#EBF3FD] rounded-[14px]">
                                         <component :is="icons[getTransportTypeIcon(order?.transportation_type)]"
                                             color="#222222" />
@@ -145,19 +145,22 @@
 </template>
 
 <script setup>
-import { statusBadgeClass, getStatusLabel, getTransportTypeLabel, getTransportTypeIcon } from '@/utils/switch'
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
+
 import background from '@/assets/images/background.webp'
-import router from '../router'
+import { statusBadgeClass, getStatusLabel, getTransportTypeLabel, getTransportTypeIcon } from '@/utils/switch'
+
 const { icons } = useIcons()
 const route = useRoute()
 const orderStore = useOrderStore()
 const { order } = storeToRefs(orderStore)
 
 const timeline = ref([
-    { title: 'Ýük ölçelýär we bellikler goýulýar', status: 'pending' },
-    { title: 'Ýük transitda', status: 'in_transit' },
-    { title: 'Ýük barlag nokadynda barlanylýar', status: 'customs' },
-    { title: 'Ýük müşderä gowşuryldy', status: 'delivered' },
+    { title: t('data.timeline.title_1'), status: 'pending' },
+    { title: t('data.timeline.title_2'), status: 'in_transit' },
+    { title: t('data.timeline.title_3'), status: 'customs' },
+    { title: t('data.timeline.title_4'), status: 'delivered' },
 ])
 
 watch(() => route.params.id, async (newId) => {

@@ -5,14 +5,14 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Biz barada', to: '#' },
-                    { label: 'Täzelikler' }
+                    { label: $t('menu.about_us'), to: '/about' },
+                    { label: $t('menu.news') }
                 ]" />
 
                 <!-- Header -->
                 <div class="mb-10 animate-slide-down">
                     <h1 class="section_title mb-8">
-                        Täzelikler
+                        {{ $t('menu.news') }}
                     </h1>
                 </div>
 
@@ -28,7 +28,7 @@
                 <!-- Loading -->
                 <Loading v-if="newsStore.loading" />
 
-                <NoData v-show="news.length === 0 && !newsStore.loading" :message="'Täzelik tapylmady'"
+                <NoData v-show="news.length === 0 && !newsStore.loading" :message="$t('info.no_news')"
                     :image="''" />
             </SectionContainer>
         </MainContainer>

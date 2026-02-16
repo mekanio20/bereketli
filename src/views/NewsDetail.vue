@@ -5,8 +5,9 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Biz barada', to: '#' },
-                    { label: 'Täzelikler', to: '/news' }
+                    { label: $t('menu.about_us'), to: '/about' },
+                    { label: $t('menu.news'), to: '/news' },
+                    { label: newsStore.news_detail.title }
                 ]" />
 
                 <!-- Header -->
@@ -32,7 +33,7 @@
                 <Loading v-if="newsStore.loading" />
             </SectionContainer>
         </MainContainer>
-        <Slider v-if="related_news?.length > 0" title="Meňzeş täzelikler" :data="related_news" />
+        <Slider v-if="related_news?.length > 0" :title="$t('names.related_news')" :data="related_news" />
     </section>
 </template>
 

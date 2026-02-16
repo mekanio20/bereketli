@@ -5,11 +5,11 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Biz barada', to: '#' },
-                    { label: 'Köp soralýan soraglar' }
+                    { label: $t('menu.about_us'), to: '/about' },
+                    { label: $t('menu.FAQ') }
                 ]" />
 
-               <Accordion :isCenter="true" :title="'Köp soralýan soraglar'" :data="faqStore.faqs" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
+               <Accordion :isCenter="true" :title="$t('menu.FAQ')" :data="faqStore.faqs" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
             </SectionContainer>
         </MainContainer>
     </section>

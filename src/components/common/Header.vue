@@ -322,7 +322,7 @@ const toggleOrder = ref(false)
 const navbar_menu = ref([
     {
         name: t('menu.about_us'),
-        link: '#',
+        link: '/about',
         children: [
             { name: t('menu.warehouses'), link: '/warehouses' },
             { name: t('menu.news'), link: '/news' },

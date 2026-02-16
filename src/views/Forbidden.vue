@@ -5,11 +5,11 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Biz barada', to: '#' },
-                    { label: 'Gadagan edilýän ýükler' }
+                    { label: $t('menu.about_us'), to: '/about' },
+                    { label: $t('menu.forbidden_cargos') }
                 ]" />
 
-               <Accordion :isCenter="true" :title="'Gadagan edilýän ýükler'" :data="forbiddenStore.forbidden_cargos" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
+               <Accordion :isCenter="true" :title="$t('menu.forbidden_cargos')" :data="forbiddenStore.forbidden_cargos" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
             </SectionContainer>
         </MainContainer>
     </section>

@@ -24,16 +24,14 @@
             <!-- Loading -->
             <Loading v-if="orderStore.loading" />
 
-            <!-- Orders Grid -->
-            <TransitionGroup v-else name="card-list" tag="div">
-                <!-- Swiper Container -->
-                <swiper :modules="modules" :slides-per-view="1" :space-between="20" :loop="true" :autoplay="{
-                    delay: 5000,
-                    disableOnInteraction: false,
-                }" :pagination="{
-                clickable: true,
-                dynamicBullets: false,
-            }" :breakpoints="{
+            <!-- Swiper Container -->
+            <swiper :modules="modules" :slides-per-view="1" :space-between="20" :loop="true" :autoplay="{
+                delay: 5000,
+                disableOnInteraction: false,
+            }" :pagination="{
+                    clickable: true,
+                    dynamicBullets: false,
+                }" :breakpoints="{
                 640: {
                     slidesPerView: 1,
                     spaceBetween: 20,
@@ -47,11 +45,10 @@
                     spaceBetween: 24,
                 },
             }" @swiper="onSwiper" class="transport-swiper">
-                    <swiper-slide v-for="order in orderStore.orders" :key="order.id">
-                        <OrderCard :order="order" @click="handleOrderClick(order)" />
-                    </swiper-slide>
-                </swiper>
-            </TransitionGroup>
+                <swiper-slide v-for="order in orderStore.orders" :key="order.id">
+                    <OrderCard :order="order" @click="handleOrderClick(order)" />
+                </swiper-slide>
+            </swiper>
 
             <div v-if="orderStore.orders.length > 0"
                 class="flex justify-center items-center my-10 transition-all duration-700">
@@ -67,6 +64,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 const { t, locale } = useI18n({ useScope: 'global' })
+
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -120,26 +118,6 @@ const onSwiper = (swiper) => {
 
 .animate-fade-in {
     animation: fadeIn 0.6s ease-out;
-}
-
-/* Card List Transitions */
-.card-list-enter-active,
-.card-list-leave-active {
-    transition: all 0.4s ease;
-}
-
-.card-list-enter-from {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.card-list-leave-to {
-    opacity: 0;
-    transform: scale(0.9);
-}
-
-.card-list-move {
-    transition: transform 0.4s ease;
 }
 
 /* Fade Transition */

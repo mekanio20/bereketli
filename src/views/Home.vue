@@ -21,15 +21,21 @@
             <MainContainer>
                 <div class="relative">
                     <Mobile />
-                    <div class="font-medium text-[52px] text-[#222222] leading-[62px] py-5">
-                        Biz ygtybarly, netijeli we <img src="/images/img_1.webp"
-                            class="w-[115px] h-[45px] inline-block" />
-                        döwrebap logistika çözgütlerini hödürleýäris. <span class="text-gold-gradient">Transport,
-                            ammarçylyk
-                            we <img src="/images/img_2.webp" class="w-[115px] h-[45px] inline-block" />
-                            üpjünçilik zynjyrynda baý</span> tejribämiz bilen iberişleri takyk we wagtynda ýetirilmegini
-                        üpjün edýäris <img src="/images/img_3.webp" class="w-[115px] h-[45px] inline-block" />
-                    </div>
+                    <i18n-t keypath="descriptions.home_1" tag="div"
+                        class="font-medium text-[52px] text-[#222222] leading-[62px] py-5">
+                        <template #img1>
+                            <img src="/images/img_1.webp" class="w-[115px] h-[45px] inline-block" />
+                        </template>
+
+                        <template #img2>
+                            <img src="/images/img_2.webp" class="w-[115px] h-[45px] inline-block" />
+                        </template>
+
+                        <template #img3>
+                            <img src="/images/img_3.webp" class="w-[115px] h-[45px] inline-block" />
+                        </template>
+                    </i18n-t>
+
                     <!-- Absolute Background -->
                     <div class="absolute top-[300px] -z-10 w-full h-full">
                         <img :src="background" class="w-full h-full object-cover" />
@@ -41,7 +47,8 @@
                 <div class="space-y-8 pb-20">
                     <News :news="newsStore.news" />
                     <Comments />
-                    <Accordion :title="'Köp soralýan soraglar'" :data="faqStore.faqs" @toggle="toggleAccordion" @setContentHeight="setContentHeight" />
+                    <Accordion :title="$t('menu.FAQ')" :data="faqStore.faqs" @toggle="toggleAccordion"
+                        @setContentHeight="setContentHeight" />
                 </div>
             </MainContainer>
 
@@ -93,10 +100,10 @@ const showResult = async (results) => {
 }
 
 const scrollDown = () => {
-  window.scrollBy({
-    top: window.innerHeight - 120,
-    behavior: 'smooth'
-  })
+    window.scrollBy({
+        top: window.innerHeight - 120,
+        behavior: 'smooth'
+    })
 }
 
 onMounted(async () => {

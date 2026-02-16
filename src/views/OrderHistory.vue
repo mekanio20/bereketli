@@ -25,12 +25,12 @@
                     <button @click="activeTab = 'pending'"
                         class="py-[9px] px-10 mr-2 font-semibold transition-all duration-300 rounded-xl"
                         :class="activeTab === 'pending' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
-                        Garaşylýanlar
+                        {{ $t('names.pending') }}
                     </button>
                     <button @click="activeTab = 'delivered'"
                         class="py-[9px] px-10 font-semibold transition-all duration-300 rounded-xl -ml-px"
                         :class="activeTab === 'delivered' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
-                        Tamamlananlar
+                        {{ $t('names.delivered') }}
                     </button>
                 </div>
 
@@ -47,7 +47,7 @@
                 <Loading v-if="orderStore.loading" />
 
                 <!-- Empty State -->
-                <NoData v-show="filteredOrders.length === 0 && !orderStore.loading" :message="'Sargyt tapylmady'" />
+                <NoData v-show="filteredOrders.length === 0 && !orderStore.loading" :message="$t('info.no_order')" />
             </SectionContainer>
         </MainContainer>
         <!-- Modal -->

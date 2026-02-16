@@ -9,13 +9,13 @@
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
-                    { label: 'Order Requests', to: '/order/requests' },
-                    { label: 'Request New Advanced Order' }
+                    { label: $t('menu.order_requests'), to: '/order/requests' },
+                    { label: $t('menu.advanced_order') }
                 ]" />
 
                 <!-- Title -->
                 <h1 class="section_title mb-10">
-                    Advanced Order
+                    {{ $t('menu.advanced_order') }}
                 </h1>
 
                 <div class="flex items-start space-x-6">
@@ -23,14 +23,14 @@
                     <div class="flex-1 space-y-6">
                         <!-- Delivery Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek</h2>
+                            <h2 class="form_title mb-8">{{ $t('info.delivery') }}</h2>
                             <div class="flex items-center space-x-6 mb-4">
                                 <div class="flex-1 flex flex-col space-y-8">
                                     <SimpleSelect v-model="formData.from_incoterm" :options="incoTerms"
-                                        placeholder="From Incoterm" :isSearch="true" :icon="'map_pin-icon'" />
+                                        :placeholder="$t('forms.from_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
                                     <!-- From Location -->
                                     <SimpleSelect v-model="formData.from_country" :options="nirdenOptions"
-                                        placeholder="Nirden" :isSearch="true" :icon="'map_pin-icon'" />
+                                        :placeholder="$t('forms.from')" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                                 <!-- Swap Button -->
                                 <div class="flex-shrink-0">
@@ -42,24 +42,24 @@
                                 </div>
                                 <div class="flex-1 flex flex-col space-y-8">
                                     <SimpleSelect v-model="formData.to_incoterm" :options="incoTerms"
-                                        placeholder="To Incoterm" :isSearch="true" :icon="'map_pin-icon'" />
+                                        :placeholder="$t('forms.to_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
                                     <!-- To Location -->
                                     <SimpleSelect v-model="formData.to_country" :options="niraOptions"
-                                        placeholder="Nirä" :isSearch="true" :icon="'map_pin-icon'" />
+                                        :placeholder="$t('forms.to')" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                             </div>
                         </FormContainer>
 
                         <!-- Information Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Maglumatlar</h2>
-                            <textarea v-model="formData.description" placeholder="Write description..." rows="2"
+                            <h2 class="form_title mb-8">{{ $t('info.name') }}</h2>
+                            <textarea v-model="formData.description" :placeholder="$t('forms.write_description')" rows="2"
                                 class="bg-[#EBF3FD] w-full px-[30px] py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
                         </FormContainer>
 
                         <!-- Cargo Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Ýüküň görnüşi</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.cargo_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <button type="button" v-for="(item, index) in itemCategoryStore.item_categories"
                                     :key="index" @click="toggleCargoType(item.id)"
@@ -74,14 +74,14 @@
 
                         <!-- Shipping Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Ugur</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.route_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <!-- Direct -->
                                 <div @click="formData.route_type = 'direct'" :class="cardClass('direct')">
                                     <div class="flex items-start justify-between">
                                         <div>
-                                            <p :class="titleClass('direct')">Direct</p>
-                                            <p :class="descClass('direct')">1 hepde</p>
+                                            <p :class="titleClass('direct')">{{ $t('forms.direct') }}</p>
+                                            <p :class="descClass('direct')">{{ $t('forms.direct_time') }}</p>
                                         </div>
 
                                         <div class="w-6 h-6 border flex items-center justify-center rounded-full"
@@ -96,8 +96,8 @@
                                 <div @click="formData.route_type = 'transit'" :class="cardClass('transit')">
                                     <div class="flex items-start justify-between">
                                         <div>
-                                            <p :class="titleClass('transit')">Transit</p>
-                                            <p :class="descClass('transit')">30 gün</p>
+                                            <p :class="titleClass('transit')">{{ $t('forms.transit') }}</p>
+                                            <p :class="descClass('transit')">{{ $t('forms.transit_time') }}</p>
                                         </div>
                                         <div class="w-6 h-6 border flex items-center justify-center rounded-full"
                                             :class="[formData.route_type === 'transit' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
@@ -111,7 +111,7 @@
 
                         <!-- Transport Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek görnüşi</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.transport_type') }}</h2>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <button v-for="transport in transportTypes" :key="transport.id"
                                     @click="formData.transportation_type = transport.id"
@@ -128,14 +128,14 @@
 
                         <!-- Container -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Konteýnerlar</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.containers') }}</h2>
                             <div v-for="(item, index) in formData.containers" :key="index" class="my-6">
                                 <div class="flex items-center space-x-6">
                                     <SimpleSelect v-model="item.type" :options="containerTypeOptions"
-                                        placeholder="Container type" :isSearch="true"
+                                        :placeholder="$t('forms.container_type')" :isSearch="true"
                                         @change="selectedContainer($event, index)" />
                                     <form-input v-model="item.quantity" type="number"
-                                        :placeholder="'Container count'" />
+                                        :placeholder="$t('forms.container_quantity')" />
                                     <div class="flex items-center space-x-2 !ml-2">
                                         <button @click="item.quantity--"
                                             class="w-[50px] h-[50px] text-[#222222] text-[20px] font-medium bg-[#EBF3FD] hover:bg-blue-100 duration-300 rounded-[14px] flex items-center justify-center">
@@ -158,19 +158,19 @@
                                     </div>
                                     <div class="grid grid-cols-2 gap-x-24 gap-y-14">
                                         <div>
-                                            <h5 class="text-[#939393]">Uzynlygy:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.length') }}:</h5>
                                             <p class="text-[#222222]">{{ item.length_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">Umumy agramy:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.weight') }}:</h5>
                                             <p class="text-[#222222]">{{ item.max_weight_kg }} kg</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">Giňligi:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.width') }}:</h5>
                                             <p class="text-[#222222]">{{ item.width_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">Beýikligi:</h5>
+                                            <h5 class="text-[#939393]">{{ $t('forms.height') }}:</h5>
                                             <p class="text-[#222222]">{{ item.height_m }} m</p>
                                         </div>
                                     </div>
@@ -181,13 +181,13 @@
                                 <div class="w-6 h-6 bg-[#002244] rounded-full flex items-center justify-center">
                                     <plus-icon class="text-white" :size="14" />
                                 </div>
-                                Täze konteýner goşmak
+                                {{ $t('buttons.add_container') }}
                             </button>
                         </FormContainer>
 
                         <!-- Items Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Items</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.cargos') }}</h2>
                             <div class="space-y-3 mb-4">
                                 <div v-for="(item, index) in formData.items" :key="index"
                                     class="flex items-center justify-between p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
@@ -215,7 +215,7 @@
                                     class="w-6 h-6 rounded-full text-white bg-[#002244] flex items-center justify-center">
                                     <plus-icon :size="20" />
                                 </div>
-                                Add Item
+                                {{ $t('buttons.add_cargo') }}
                             </button>
                         </FormContainer>
                     </div>
@@ -224,22 +224,20 @@
                     <div class="w-[35%] space-y-6 self-start sticky top-32">
                         <!-- Date Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">Eltip bermek möhleti</h2>
+                            <h2 class="form_title mb-8">{{ $t('forms.transport_time') }}</h2>
 
                             <div class="space-y-6">
                                 <!-- Pickup Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Ugradylmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false"
-                                        placeholder="Sene saýlaň">
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
+                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false" >
                                     </VueDatePicker>
                                 </div>
 
                                 <!-- Delivery Date -->
                                 <div>
-                                    <label class="block text-sm text-[#939393] mb-2">Barmaly senesi</label>
-                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false"
-                                        placeholder="Sene saýlaň" />
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
+                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false"  />
                                 </div>
                             </div>
 
@@ -247,10 +245,10 @@
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
-                                <span v-if="!orderRequestStore.loading">Tassyklamak</span>
+                                <span v-if="!orderRequestStore.loading">{{ $t('buttons.confirmation') }}</span>
                                 <span v-else class="flex items-center justify-center">
                                     <animate_spin-icon />
-                                    Ýüklenýär...
+                                    {{ $t('info.loading') }}
                                 </span>
                             </button>
                         </FormContainer>
@@ -265,6 +263,9 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
+
 import background from '@/assets/images/background.webp'
 import { normalizeToIdLabel } from '@/utils/normalizers'
 import { formattedMeasurement } from '@/utils/strings'
@@ -279,10 +280,10 @@ const measurementStore = useMeasurementStore()
 const containerTypeStore = useContainerTypeStore()
 
 const transportTypes = ref([
-    { id: 'AIR', label: 'Uçar', icon: 'plane-icon' },
-    { id: 'SEA', label: 'Gämi', icon: 'mingcute_ship_line-icon' },
-    { id: 'LAND', label: 'Ulag', icon: 'truck_delivery-icon' },
-    { id: 'RAIL', label: 'Otly', icon: 'train_2-icon' }
+    { id: 'AIR', label: t('names.airplane'), icon: 'plane-icon' },
+    { id: 'SEA', label: t('names.ship'), icon: 'mingcute_ship_line-icon' },
+    { id: 'LAND', label: t('names.truck'), icon: 'truck_delivery-icon' },
+    { id: 'RAIL', label: t('names.train'), icon: 'train_2-icon' }
 ])
 
 const incoTerms = ref([
