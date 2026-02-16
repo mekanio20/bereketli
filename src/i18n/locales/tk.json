@@ -100,7 +100,6 @@
     "container_type": "Konteýner görnüşi",
     "container_quantity": "Konteýner sany",
     "cargos": "Ýükler",
-    "add_cargo": "Ýük goşmak",
     "pickup_date": "Ugradylmaly senesi",
     "delivery_date": "Barmaly senesi"
   },
@@ -129,7 +128,8 @@
     "send": "Ugrat",
     "add_container": "Täze konteýner goşmak",
     "confirmation": "Tassyklamak",
-    "cancel_request": "Goýbolsun etmek"
+    "cancel_request": "Goýbolsun etmek",
+    "add_cargo": "Ýük goşmak"
   },
   "info": {
     "name": "Maglumatlar",

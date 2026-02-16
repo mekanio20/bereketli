@@ -163,6 +163,9 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
+
 import background from '@/assets/images/background.webp'
 import { normalizeToIdLabel } from '@/utils/normalizers'
 import { formattedMeasurement } from '@/utils/strings'
