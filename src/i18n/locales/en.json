@@ -168,6 +168,20 @@
       "title_2": "Sea cargo transportation",
       "title_3": "Air cargo transportation",
       "category": "Transport"
+    },
+    "about": {
+      "title_1": "Real time tracking",
+      "title_2": "Pickup delivery",
+      "title_3": "Insurance Service",
+      "title_4": "24/7 Customer Support",
+      "title_5": "Professional Packaging",
+      "title_6": "Mobile App Tracker",
+      "desc_1": "Stay updated on your shipment’s journey with our accurate real-time tracking system.",
+      "desc_2": "Enjoy a seamless shipping experience with our convenient pickup and delivery service.",
+      "desc_3": "Protect your valuable shipments with our reliable insurance options.",
+      "desc_4": "Our dedicated support team is available around the clock to assist with any questions or concerns.",
+      "desc_5": "Our dedicated support team is available around the clock to assist with any questions or concerns.",
+      "desc_6": "Manage and track your shipments directly from your smartphone with our user-friendly mobile app."
     }
   },
   "privacy": {

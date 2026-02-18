@@ -1,6 +1,6 @@
 - [x] BaseLink component
 - [x] Paginations
-- [] Languages (en, ru, tr, ch, tm) - (sections)
-- [] About us page
-- [] Form validations
+- [x] Languages (en, ru, tr, ch, tm) - (sections)
+- [x] About us page
 - [] Responsive mobile
+- [] Form validations
