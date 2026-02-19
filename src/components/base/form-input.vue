@@ -1,7 +1,7 @@
 <template>
     <input :id="label" :type="type" :placeholder="placeholder" :value="modelValue" :required="required" :min="min"
         :max="max" @input="$emit('update:modelValue', $event.target.value)"
-        class="bg-[#EBF3FD] text-[#222222] h-[50px] font-medium outline-none w-full px-[30px] py-[9px] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300" />
+        class="bg-[#EBF3FD] text-[#222222] sm:text-base text-sm h-[50px] font-medium outline-none w-full px-[30px] py-[9px] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300" />
 </template>
 
 <script setup>

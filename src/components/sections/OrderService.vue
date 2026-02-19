@@ -4,7 +4,7 @@
             <!-- Header -->
             <div class="flex justify-between items-center mb-12 transition-all duration-700"
                 :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'">
-                <h1 class="text-[44px] font-semibold text-[#222222]">
+                <h1 class="section_title">
                     {{ $t('names.order_service') }}
                 </h1>
             </div>
@@ -48,11 +48,11 @@
                             <!-- Top Icons -->
                             <div class="flex justify-between items-start">
                                 <div
-                                    class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-hover:bg-white/30 group-hover:scale-110">
+                                    class="sm:w-12 sm:h-12 w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center transition-all duration-300 group-hover:bg-white/30 group-hover:scale-110">
                                     <component :is="icons[service.icon]" :color="'#fff'" />
                                 </div>
                                 <span
-                                    class="px-5 py-2 rounded-full bg-white/20 backdrop-blur-md text-white text-sm font-medium transition-all duration-300 group-hover:bg-white/30">
+                                    class="px-5 py-2 rounded-full bg-white/20 backdrop-blur-md text-white sm:text-sm text-xs sm:font-medium transition-all duration-300 group-hover:bg-white/30">
                                     {{ service.category }}
                                 </span>
                             </div>
@@ -60,12 +60,12 @@
                             <!-- Bottom Content -->
                             <div class="space-y-2">
                                 <h3
-                                    class="text-3xl font-bold text-white transition-all duration-300 group-hover:translate-x-2">
+                                    class="sm:text-3xl text-2xl sm:font-bold font-semibold text-white transition-all duration-300 group-hover:translate-x-2">
                                     {{ service.title }}
                                 </h3>
                                 <div class="flex justify-end">
                                     <span
-                                        class="text-6xl font-bold text-white/30 transition-all duration-300 group-hover:text-white/50">
+                                        class="sm:text-6xl text-5xl sm:font-bold font-semibold text-white/30 transition-all duration-300 group-hover:text-white/50">
                                         {{ service.number }}
                                     </span>
                                 </div>

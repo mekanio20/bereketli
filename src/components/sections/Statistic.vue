@@ -7,17 +7,17 @@
     <div class="absolute inset-0 bg-black/30"></div>
 
     <!-- Stats -->
-    <div class="relative z-10 h-full flex items-end justify-center pb-10">
-      <div class="flex gap-32">
+    <div class="relative z-10 h-full flex md:items-end items-center justify-center md:pb-10">
+      <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-28 md:gap-16 sm:gap-12 gap-10">
         <div v-for="(stat, index) in stats" :key="index" ref="items" class="text-white">
           <!-- Number -->
           <div class="flex items-end font-semibold">
-            <span class="text-[100px] leading-[100px]" :ref="el => numberEls[index] = el">0</span>
-            <span class="text-[100px] leading-[100px] ml-1">{{ stat.suffix }}</span>
+            <span class="lg:text-[80px] md:text-[80px] sm:text-[60px] text-4xl md:leading-[80px] leading-[50px]" :ref="el => numberEls[index] = el">0</span>
+            <span class="lg:text-[80px] md:text-[80px] sm:text-[60px] text-4xl md:leading-[80px] leading-[50px] ml-1">{{ stat.suffix }}</span>
           </div>
 
           <!-- Label -->
-          <p class="mt-2 text-[22px] tracking-[-5%]">
+          <p class="sm:mt-2 lg:text-[22px] md:text-[20px] sm:text-lg text-sm tracking-[-5%]">
             {{ stat.label }}
           </p>
         </div>

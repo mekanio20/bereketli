@@ -10,7 +10,7 @@
                     <!-- Sidebar -->
                     <aside class="lg:col-span-1">
                         <div class="bg-white rounded-2xl shadow-md p-6 sticky top-6 animate-fade-in">
-                            <h1 class="text-2xl font-bold text-[#222222] mb-6">{{ $t('menu.account') }}</h1>
+                            <h1 class="sm:text-2xl text-xl font-bold text-[#222222] mb-6">{{ $t('menu.account') }}</h1>
 
                             <nav class="space-y-2">
                                 <!-- Account Information -->
@@ -76,7 +76,7 @@
                                     <div class="w-12 h-12 bg-[#EBF3FD] rounded-xl flex items-center justify-center">
                                         <edit-icon class="text-blue-600" />
                                     </div>
-                                    <h2 class="text-2xl font-bold text-[#222222]">{{ $t('names.account_info') }}</h2>
+                                    <h2 class="sm:text-2xl text-xl font-bold text-[#222222]">{{ $t('names.account_info') }}</h2>
                                 </div>
 
                                 <form @submit.prevent="handleSaveProfile" class="space-y-6">
@@ -127,7 +127,7 @@
                                     <div class="w-12 h-12 bg-[#EBF3FD] rounded-xl flex items-center justify-center">
                                         <key-icon />
                                     </div>
-                                    <h2 class="text-2xl font-bold text-[#222222]">{{ $t('buttons.reset_password') }}</h2>
+                                    <h2 class="sm:text-2xl text-xl font-bold text-[#222222]">{{ $t('buttons.reset_password') }}</h2>
                                 </div>
 
                                 <form @submit.prevent="handleChangePassword" class="space-y-6">

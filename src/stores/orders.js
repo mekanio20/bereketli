@@ -4,7 +4,17 @@ import { useToastStore } from "@/stores/toast";
 
 export const useOrderStore = defineStore("orders", {
   state: () => ({
-    orders: [],
+    orders: [
+      {
+        id: 1,
+        code: "ORD-1232",
+        date_shipment_expected: "2025.12.24",
+        from_country: { name: "NewYork" },
+        date_arrival_expected: "2024.24.11",
+        to_country: { name: "Men" },
+        status: "PENDING",
+      },
+    ],
     order: {},
     error: null,
     loading: false,

@@ -27,7 +27,7 @@
                     class="w-full px-8 py-3 rounded-[10px] transition-all duration-300 transform hover:scale-105"
                     :class="activeTab === tab.id
                         ? 'bg-[#002645] text-white font-semibold'
-                        : 'bg-white text-[#222222] hover:bg-gray-50 font-medium'">
+                        : 'bg-white text-[#222222] sm:text-base text-sm hover:bg-gray-50 font-medium'">
                     <span>{{ tab.label }}</span>
                 </button>
             </div>
@@ -54,7 +54,7 @@
                     </div>
                 </button>
 
-                <div v-if="!filteredOptions.length" class="px-6 py-4 text-sm text-gray-400">
+                <div v-if="!filteredOptions.length" class="px-6 py-4 sm:text-sm text-xs text-gray-400">
                     {{ $t('info.no_results') }}
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 </div>
                 <!-- Submit button -->
                 <button @click="selectTakyk"
-                    class="w-full bg-custom-gradient h-[52px] flex items-center justify-center rounded-full text-white font-bold transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                    class="w-full bg-custom-gradient h-[52px] flex items-center justify-center rounded-full sm:text-base text-sm text-white font-bold transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                     {{ $t('buttons.select') }}
                 </button>
             </div>

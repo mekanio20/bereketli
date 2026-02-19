@@ -1,6 +1,6 @@
 <template>
     <section class="container mx-auto px-4 sm:px-0">
-        <h2 class="text-[44px] text-[#222222] font-semibold pb-10" :class="{'text-center' : isCenter}">{{ title }}</h2>
+        <h2 class="section_title pb-10" :class="{'text-center' : isCenter}">{{ title }}</h2>
         <slot></slot>
         <!-- Accordion Container -->
         <div class="space-y-4">
@@ -19,7 +19,7 @@
 
                     <!-- Plus/Minus Icon -->
                     <div class="flex-shrink-0 ml-4">
-                        <div class="w-[50px] h-[50px] flex items-center justify-center transition-all duration-300 ease-in-out bg-custom-gradient rounded-full"
+                        <div class="sm:w-[50px] sm:h-[50px] w-[40px] h-[40px] flex items-center justify-center transition-all duration-300 ease-in-out bg-custom-gradient rounded-full"
                             :class="{ 'rotate-45': item.isOpen }">
                             <!-- Plus Icon -->
                             <plus-icon class="text-white transition-all duration-300"

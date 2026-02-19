@@ -4,7 +4,7 @@
             <!-- Breadcrumb Item -->
             <div class="flex items-center gap-1">
                 <!-- If item has a link -->
-                <router-link v-if="item.to" :to="item.to" @click.stop class="flex items-center gap-1">
+                <router-link v-if="item.to" :to="item.to" @click.stop class="flex items-center sm:gap-1">
                     <component v-if="item?.icon" :is="icons[item?.icon]" />
                     <span v-if="item?.label" class="text-[13px] text-[#838589]">
                         {{ item?.label }}

@@ -10,7 +10,7 @@
                 <!-- Filter Tabs -->
                 <div class="flex flex-wrap gap-3">
                     <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id"
-                        class="flex items-center gap-2 px-8 py-3 border border-[#EDEDED] rounded-full transition-all duration-300 transform hover:scale-105"
+                        class="flex items-center sm:gap-2 gap-1 sm:px-8 px-6 py-3 border border-[#EDEDED] rounded-full sm:text-base text-sm transition-all duration-300 transform hover:scale-105"
                         :class="activeTab === tab.id
                             ? 'bg-[#002645] text-white font-semibold'
                             : 'bg-white text-[#222222] hover:bg-gray-50 font-medium'">
@@ -25,34 +25,36 @@
             <Loading v-if="orderStore.loading" />
 
             <!-- Swiper Container -->
-            <swiper :modules="modules" :slides-per-view="1" :space-between="20" :loop="true" :autoplay="{
-                delay: 5000,
-                disableOnInteraction: false,
-            }" :pagination="{
-                    clickable: true,
-                    dynamicBullets: false,
-                }" :breakpoints="{
-                640: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                },
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 24,
-                },
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 24,
-                },
-            }" @swiper="onSwiper" class="transport-swiper">
-                <swiper-slide v-for="order in orderStore.orders" :key="order.id">
-                    <OrderCard :order="order" @click="handleOrderClick(order)" />
-                </swiper-slide>
-            </swiper>
-
-            <div v-if="orderStore.orders.length > 0"
-                class="flex justify-center items-center my-10 transition-all duration-700">
-                <Link :to="'/order/history'" />
+            <div v-if="orderStore.orders?.length > 0">
+                <swiper :modules="modules" :slides-per-view="1" :space-between="20" :loop="true" :autoplay="{
+                    delay: 5000,
+                    disableOnInteraction: false,
+                }" :pagination="{
+                        clickable: true,
+                        dynamicBullets: false,
+                    }" :breakpoints="{
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 24,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 24,
+                    },
+                }" @swiper="onSwiper">
+                    <swiper-slide v-for="order in orderStore.orders" :key="order.id">
+                        <OrderCard :order="order" @click="handleOrderClick(order)" />
+                    </swiper-slide>
+                </swiper>
+    
+                <div
+                    class="flex justify-center items-center my-10 transition-all duration-700">
+                    <Link :to="'/order/history'" />
+                </div>
             </div>
 
             <!-- Empty State -->

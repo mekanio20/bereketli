@@ -3,7 +3,7 @@
         <Hero @search="handleSearch" @scroll="scrollDown" />
         <div class="relative pb-10">
             <MainContainer>
-                <div class="space-y-16 pt-20">
+                <div class="sm:space-y-16 space-y-14 sm:pt-20 pt-10">
                     <Calculator @showResult="showResult" />
                     <Services id="services" />
                     <Orders v-if="authStore.isAuthenticated" />

@@ -5,10 +5,10 @@
         <div class="p-6">
             <!-- Header -->
             <div class="flex items-center justify-between mb-8">
-                <h3 class="text-[20px] font-bold text-[#222222] group-hover:text-[#002244] transition-colors">
+                <h3 class="sm:text-[20px] text-sm font-bold text-[#222222] group-hover:text-[#002244] transition-colors">
                     {{ order.code }}
                 </h3>
-                <span class="px-5 py-[7px] rounded-full text-sm font-medium" :class="statusBadgeClass(order.status)">
+                <span class="px-5 py-[7px] rounded-full sm:text-sm text-xs font-medium" :class="statusBadgeClass(order.status)">
                     {{ getStatusLabel(order.status) }}
                 </span>
             </div>
@@ -16,8 +16,8 @@
             <!-- Route Information -->
             <div class="flex items-center justify-between mb-6">
                 <div class="flex-1">
-                    <p class="text-sm text-[#838589] mb-1">{{ order.date_shipment_expected }}</p>
-                    <p class="text-lg font-medium text-[#222222]">{{ order.from_country?.name }}</p>
+                    <p class="sm:text-sm text-xs text-[#838589] mb-1">{{ order.date_shipment_expected }}</p>
+                    <p class="sm:text-lg text-base font-medium text-[#222222]">{{ order.from_country?.name }}</p>
                 </div>
 
                 <div class="flex-shrink-0 mx-4">
@@ -25,8 +25,8 @@
                 </div>
 
                 <div class="flex-1 text-right">
-                    <p class="text-sm text-[#838589] mb-1">{{ order.date_arrival_expected }}</p>
-                    <p class="text-lg font-medium text-[#222222]">{{ order.to_country?.name }}</p>
+                    <p class="sm:text-sm text-xs text-[#838589] mb-1">{{ order.date_arrival_expected }}</p>
+                    <p class="sm:text-lg text-base font-medium text-[#222222]">{{ order.to_country?.name }}</p>
                 </div>
             </div>
 
@@ -52,12 +52,12 @@
             <!-- Status Message -->
             <div class="flex items-center gap-3">
                 <div class="flex-shrink-0">
-                    <dote_2-icon />
+                    <dote_2-icon :size="20" />
                 </div>
                 <div class="flex-1">
                     <p class="font-medium sm:text-base text-sm">
                         <span class="text-[#838589]">{{ $t('info.status') }}:</span>
-                        <span class="ml-1 text-[#222222]">{{ getStatusLabel(order.status) }}</span>
+                        <span class="ml-1 sm:text-base text-sm text-[#222222]">{{ getStatusLabel(order.status) }}</span>
                     </p>
                 </div>
             </div>

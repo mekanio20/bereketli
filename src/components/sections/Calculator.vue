@@ -21,15 +21,15 @@
             </div>
         </div>
 
-        <div class="flex justify-center space-x-5">
+        <div class="flex sm:flex-row items-center flex-col justify-center sm:space-x-5 sm:space-y-0 space-y-5">
             <button type="button" :disabled="calculatorStore.loading" @click="handleCalculate"
-                class="bg-[#002645] text-white font-bold text-lg md:text-[20px] w-[380px] px-16 py-4 rounded-[100px] shadow-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none flex items-center justify-center"
+                class="bg-[#002645] text-white sm:font-bold font-semibold text-lg md:text-[20px] sm:w-[380px] w-full px-16 py-4 rounded-[100px] shadow-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none flex items-center justify-center"
                 :class="[calculatorStore.loading ? 'opacity-50 cursor-not-allowed' : '']">
                 <animate_spin-icon v-if="calculatorStore.loading" />
                 <span>{{ $t('buttons.calculate') }}</span>
             </button>
             <!-- Clear button -->
-            <button type="button" @click="handleClear" class="text-[#002645] font-semibold hover:underline text-lg md:text-[20px]">
+            <button type="button" @click="handleClear" class="text-[#002645] sm:font-semibold font-medium hover:underline text-lg md:text-[20px]">
                 {{ $t('buttons.clear') }}
             </button>
         </div>
