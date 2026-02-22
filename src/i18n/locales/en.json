@@ -30,7 +30,8 @@
     "order_info": "Order Information",
     "order_statuses": "Order Statuses",
     "pending": "Pending",
-    "delivered": "Completed"
+    "delivered": "Completed",
+    "about": "Why Choose Us"
   },
   "menu": {
     "home_page": "Home",
@@ -60,7 +61,8 @@
     "logout": "Do you want to log out?",
     "delete_account": "Do you want to delete your account? This action cannot be undone.",
     "home_1": "We provide reliable, efficient, and {img1} modern logistics solutions. With our extensive {img2} experience in transportation, warehousing, and supply chain, we ensure shipments are delivered accurately and on time {img3}",
-    "cancel_request": "Do you want to cancel the order?"
+    "cancel_request": "Do you want to cancel the order?",
+    "about_1": "Delivering <span class=\"text-gold-gradient italic\">efficiency</span> at every mile"
   },
   "forms": {
     "name": "Name",

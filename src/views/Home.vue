@@ -22,17 +22,17 @@
                 <div class="relative">
                     <Mobile />
                     <i18n-t keypath="descriptions.home_1" tag="div"
-                        class="font-medium text-[52px] text-[#222222] leading-[62px] py-5">
+                        class="font-medium lg:text-[52px] md:text-[44px] text-3xl text-[#222222] lg:leading-[62px] md:leading-[54px] leading-[40px] py-5">
                         <template #img1>
-                            <img src="/images/img_1.webp" class="w-[115px] h-[45px] inline-block" />
+                            <img src="/images/img_1.webp" class="lg:w-[115px] w-[90px] md:h-[45px] h-[35px] inline-block" />
                         </template>
 
                         <template #img2>
-                            <img src="/images/img_2.webp" class="w-[115px] h-[45px] inline-block" />
+                            <img src="/images/img_2.webp" class="lg:w-[115px] w-[90px] md:h-[45px] h-[35px] inline-block" />
                         </template>
 
                         <template #img3>
-                            <img src="/images/img_3.webp" class="w-[115px] h-[45px] inline-block" />
+                            <img src="/images/img_3.webp" class="lg:w-[115px] w-[90px] md:h-[45px] h-[35px] inline-block" />
                         </template>
                     </i18n-t>
 

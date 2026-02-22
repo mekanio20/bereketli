@@ -30,7 +30,8 @@
     "order_info": "Sargyt maglumatlary",
     "order_statuses": "Sargydyň ýagdaýlary",
     "pending": "Garaşylýanlar",
-    "delivered": "Tamamlananlar"
+    "delivered": "Tamamlananlar",
+    "about": "Näme üçin bizi saýlamaly"
   },
   "menu": {
     "home_page": "Baş sahypa",
@@ -60,7 +61,8 @@
     "logout": "Ulgamdan çykmak isleýärsiňizmi?",
     "delete_account": "Hasabyňyzy pozmak isleýärsiňizmi? Bu hereketi yzyna gaýtaryp bolmaýar.",
     "home_1": "Biz ygtybarly, netijeli we {img1} döwrebap logistika çözgütlerini hödürleýäris. Transport, ammarçylyk we üpjünçilik zynjyrynda baý {img2} tejribämiz bilen iberişleri takyk we wagtynda ýetirilmegini üpjün edýäris {img3}",
-    "cancel_request": "Sargydy goýbolsun etmek isleýärsiňizmi?"
+    "cancel_request": "Sargydy goýbolsun etmek isleýärsiňizmi?",
+    "about_1": "Her kilometrde <span class=\"text-gold-gradient italic\">netijeliligi</span> üpjün edýäris"
   },
   "forms": {
     "name": "Adyňyz",
@@ -124,7 +126,7 @@
     "update": "Üýtgetmek",
     "delete_account": "Hasaby pozmak",
     "load_messages": "Öňki yazylanlary ýükle",
-    "delete_all": "Hemmesini aýyr", 
+    "delete_all": "Hemmesini aýyr",
     "send": "Ugrat",
     "add_container": "Täze konteýner goşmak",
     "confirmation": "Tassyklamak",
@@ -161,7 +163,7 @@
     },
     "customer_comments": {
       "comment": "“Bereketli Logistika bilen hyzmatdaşlyk etmek örän ynamdar we aňsat boldy. Olar her bir iberişi takyk we wagtynda ýetirmegi üpjün edýärler. Müşderi hyzmatlary hemişe ünsli we kömekçi bolýar, haýsydyr bir soragym ýa-da islegim bolanda derrew çözgüt berýärler.”",
-      "profession": "DHL kompaniýasynyň hünärmeni" 
+      "profession": "DHL kompaniýasynyň hünärmeni"
     },
     "order_service": {
       "title_1": "Ýer üsti ýük gatnawy",
@@ -170,18 +172,18 @@
       "category": "Transport"
     },
     "about": {
-      "title_1": "",
-      "title_2": "",
-      "title_3": "",
-      "title_4": "",
-      "title_5": "",
-      "title_6": "",
-      "desc_1": "",
-      "desc_2": "",
-      "desc_3": "",
-      "desc_4": "",
-      "desc_5": "",
-      "desc_6": "."
+      "title_1": "Hakyky wagtda yzarlamak",
+      "title_2": "Öýden alyp eltmek",
+      "title_3": "Ätiýaçlandyryş hyzmaty",
+      "title_4": "24/7 Müşderi goldawy",
+      "title_5": "Hünärmen gaplaýyş",
+      "title_6": "Mobil yzarlaýjy goşundy",
+      "desc_1": "Takyk hakyky wagtda yzarlaýyş ulgamymyz arkaly ýüküňiziň hereketini elmydama biliň.",
+      "desc_2": "Amatly alyp eltmek hyzmatymyz bilen bökdençsiz ýük daşama tejribesini başdan geçiriň.",
+      "desc_3": "Ygtybarly ätiýaçlandyryş mümkinçilikleri bilen gymmatly ýüklerinizi goraň.",
+      "desc_4": "Biziň goldaw toparymyz islendik soraglaryňyza kömek etmek üçin gije-gündiz elýeterlidir.",
+      "desc_5": "Biziň goldaw toparymyz islendik soraglaryňyza kömek etmek üçin gije-gündiz elýeterlidir.",
+      "desc_6": "Ulanyjy üçin amatly mobil goşundymyz arkaly ýüklerinizi göni smartfonyňyzdan dolandyryň we yzarlaň."
     }
   },
   "privacy": {

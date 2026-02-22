@@ -7,56 +7,56 @@
         <MainContainer>
             <SectionContainer>
                 <!-- Breadcrumb -->
-                <bread-crumb class="mb-8" :items="[
+                <bread-crumb class="mb-6 md:mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
                     { label: $t('menu.order_requests'), to: '/order/requests' },
                     { label: `#${order_request?.id}` }
                 ]" />
 
-                <div class="flex items-center justify-between mb-10">
-                    <div class="flex items-center space-x-10">
-                        <!-- Title -->
+                <!-- Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-10">
+                    <div class="flex flex-wrap items-center gap-4 sm:space-x-10">
                         <h1 class="section_title">
                             ID #{{ order_request?.id }}
                         </h1>
-                        <div class="text-sm font-medium px-7 py-2 rounded-full w-fit"
+                        <div class="text-sm font-medium px-5 sm:px-7 py-2 rounded-full w-fit"
                             :class="statusBadgeClass(order_request?.status)">
                             {{ getStatusLabel(order_request?.status) }}
                         </div>
                     </div>
-                    <div v-if="order_request?.status === 'PENDING'">
+                    <div v-if="order_request?.status === 'PENDING'" class="w-full sm:w-auto">
                         <button @click="showCancelModal = true"
-                            class="px-8 py-[6px] rounded-xl bg-[#E62927] text-white text-lg font-sembold hover:bg-red-600 hover:scale-105 transition duration-200 text-nowrap">
+                            class="w-full sm:w-auto px-6 sm:px-8 py-[6px] rounded-xl bg-[#E62927] text-white text-base sm:text-lg font-semibold hover:bg-red-600 hover:scale-105 transition duration-200 whitespace-nowrap">
                             {{ $t('buttons.cancel_request') }}
                         </button>
                     </div>
                 </div>
 
-                <div class="flex items-start space-x-6">
+                <div class="flex flex-col lg:flex-row items-start gap-6 lg:space-x-6">
                     <!-- Left Column -->
-                    <div class="flex-1 space-y-6">
+                    <div class="w-full lg:flex-1 space-y-6">
                         <!-- Delivery Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('info.delivery') }}</h2>
-                            <div class="flex items-center space-x-6 mb-4">
-                                <div class="flex-1 flex flex-col space-y-8">
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('info.delivery') }}</h2>
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:space-x-6 mb-4">
+                                <div class="w-full sm:flex-1 flex flex-col space-y-6 sm:space-y-8">
                                     <SimpleSelect v-if="isAdvanced" v-model="formData.from_incoterm" :options="incoTerms"
                                         :placeholder="$t('forms.from_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
-                                    <!-- From Location -->
                                     <SimpleSelect :readonly="true" v-model="formData.from_country"
                                         :options="nirdenOptions" :placeholder="$t('forms.from')" :icon="'map_pin-icon'" />
                                 </div>
+
                                 <!-- Swap Button -->
-                                <div class="flex-shrink-0">
+                                <div class="flex-shrink-0 self-center">
                                     <button type="button" disabled
-                                        class="w-[50px] h-[50px] bg-custom-gradient rounded-full -space-x-1 flex items-center justify-center transform transition-all duration-300">
+                                        class="w-[50px] h-[50px] bg-custom-gradient rounded-full flex items-center justify-center transform transition-all duration-300">
                                         <arrow_group-icon class="rotate-[90deg]" />
                                     </button>
                                 </div>
-                                <div class="flex-1 flex flex-col space-y-8">
+
+                                <div class="w-full sm:flex-1 flex flex-col space-y-6 sm:space-y-8">
                                     <SimpleSelect v-if="isAdvanced" v-model="formData.to_incoterm" :options="incoTerms"
                                         :placeholder="$t('forms.to_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
-                                    <!-- To Location -->
                                     <SimpleSelect :readonly="true" v-model="formData.to_country" :options="niraOptions"
                                         :placeholder="$t('forms.to')" :icon="'map_pin-icon'" />
                                 </div>
@@ -65,19 +65,19 @@
 
                         <!-- Information Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('info.name') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('info.name') }}</h2>
                             <textarea v-model="formData.description" disabled :placeholder="$t('forms.write_description')"
                                 rows="2"
-                                class="bg-[#EBF3FD] w-full px-[30px] py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+                                class="bg-[#EBF3FD] w-full px-5 sm:px-[30px] py-4 sm:py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
                         </FormContainer>
 
                         <!-- Categories Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.cargo_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.cargo_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <button v-for="(item, index) in itemCategoryStore.item_categories" :key="index"
                                     v-show="formData.categories.includes(item.id)"
-                                    class="px-6 py-2.5 rounded-[14px] transition-all duration-300 transform hover:scale-105"
+                                    class="px-4 sm:px-6 py-2.5 rounded-[14px] transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
                                     :class="formData.categories.includes(item.id)
                                         ? 'bg-[#002244] font-bold text-white shadow-lg'
                                         : 'bg-[#EBF3FD] text-[#222222] font-medium hover:bg-[#ddebfd]'">
@@ -88,17 +88,15 @@
 
                         <!-- Shipping Type Section -->
                         <FormContainer v-if="isAdvanced">
-                            <h2 class="form_title mb-8">{{ $t('forms.route_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.route_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
-                                <!-- Direct -->
                                 <div v-if="formData.route_type === 'direct'" :class="cardClass('direct')">
                                     <div class="flex items-start justify-between">
                                         <div>
                                             <p :class="titleClass('direct')">{{ $t('forms.direct') }}</p>
                                             <p :class="descClass('direct')">{{ $t('forms.direct_time') }}</p>
                                         </div>
-
-                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full"
+                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full ml-2"
                                             :class="[formData.route_type === 'direct' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
                                             <div v-if="formData.route_type === 'direct'"
                                                 class="w-[13px] h-[13px] bg-custom-gradient rounded-full"></div>
@@ -106,14 +104,13 @@
                                     </div>
                                 </div>
 
-                                <!-- Transit -->
                                 <div v-if="formData.route_type === 'transit'" :class="cardClass('transit')">
                                     <div class="flex items-start justify-between">
                                         <div>
                                             <p :class="titleClass('transit')">{{ $t('forms.transit') }}</p>
                                             <p :class="descClass('transit')">{{ $t('forms.transit_time') }}</p>
                                         </div>
-                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full"
+                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full ml-2"
                                             :class="[formData.route_type === 'transit' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
                                             <div v-if="formData.route_type === 'transit'"
                                                 class="w-[13px] h-[13px] bg-custom-gradient rounded-full"></div>
@@ -125,48 +122,54 @@
 
                         <!-- Transport Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.transport_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.transport_type') }}</h2>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <button v-for="transport in transportTypes" :key="transport.id"
                                     v-show="formData.transportation_type === transport.id"
-                                    class="flex items-center justify-center space-x-1 px-10 py-[13px] gap-2 rounded-[14px] transition-all duration-300 transform hover:scale-105"
+                                    class="flex items-center justify-center space-x-1 px-6 sm:px-10 py-3 gap-2 rounded-[14px] transition-all duration-300 transform hover:scale-105 text-sm"
                                     :class="formData.transportation_type === transport.id
                                         ? 'bg-[#002244] font-bold text-white shadow-lg'
                                         : 'bg-[#EBF3FD] text-[#222222] font-medium hover:bg-[#ddebfd]'">
-                                    <component :is="icons[transport.icon]" :size="24"
+                                    <component :is="icons[transport.icon]" :size="22"
                                         :color="formData.transportation_type === transport.id ? 'white' : '#222222'" />
-                                    <span class="text-sm">{{ transport.label }}</span>
+                                    <span>{{ transport.label }}</span>
                                 </button>
                             </div>
                         </FormContainer>
 
                         <!-- Containers -->
                         <FormContainer v-if="isAdvanced">
-                            <h2 class="form_title mb-8">{{ $t('forms.containers') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.containers') }}</h2>
                             <div v-for="(item, index) in formData.containers" :key="index" class="my-6">
-                                <div class="flex items-center space-x-6">
-                                    <SimpleSelect :readonly="true" v-model="item.type" :options="containerTypeOptions" :placeholder="$t('forms.type')" />
-                                    <form-input :readonly="true" v-model="item.quantity" type="number" />
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:space-x-6">
+                                    <div class="w-full sm:flex-1">
+                                        <SimpleSelect :readonly="true" v-model="item.type" :options="containerTypeOptions"
+                                            :placeholder="$t('forms.type')" />
+                                    </div>
+                                    <div class="w-full sm:flex-1">
+                                        <form-input :readonly="true" v-model="item.quantity" type="number" />
+                                    </div>
                                 </div>
-                                <div v-if="item.type" class="py-20 flex items-center space-x-20">
-                                    <div class="w-[220px] h-220px">
+
+                                <div v-if="item.type" class="py-10 sm:py-20 flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:space-x-20">
+                                    <div class="w-full sm:w-[220px] max-w-[220px]">
                                         <img :src="item.image" class="w-full h-full object-cover rounded-lg">
                                     </div>
-                                    <div class="grid grid-cols-2 gap-x-24 gap-y-14">
+                                    <div class="grid grid-cols-2 gap-x-10 sm:gap-x-24 gap-y-8 sm:gap-y-14">
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.length') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.length') }}:</h5>
                                             <p class="text-[#222222]">{{ item.length_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.weight') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.weight') }}:</h5>
                                             <p class="text-[#222222]">{{ item.max_weight_kg }} kg</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.width') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.width') }}:</h5>
                                             <p class="text-[#222222]">{{ item.width_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.height') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.height') }}:</h5>
                                             <p class="text-[#222222]">{{ item.height_m }} m</p>
                                         </div>
                                     </div>
@@ -176,47 +179,63 @@
 
                         <!-- Items Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.cargos') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.cargos') }}</h2>
                             <div class="space-y-3 mb-4">
                                 <div v-for="(item, index) in formData.items" :key="index"
-                                    class="flex items-center justify-between p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
+                                    class="flex items-center justify-between p-3 sm:p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
                                     @click="viewItem(index)">
                                     <div>
-                                        <p class="font-semibold text-gray-900">{{ `${item.name}` }}</p>
+                                        <p class="font-semibold text-gray-900 text-sm sm:text-base">{{ `${item.name}` }}</p>
                                         <p class="text-sm text-[#EBF3FD]0">{{ formattedMeasurement(item) }}</p>
                                     </div>
                                     <div class="flex items-center gap-3">
-                                        <!-- Chevron -->
                                         <chevron_down-icon class="rotate-[-90deg]" :size="24" />
                                     </div>
                                 </div>
                             </div>
                         </FormContainer>
-                    </div>
 
-                    <!-- Right Column -->
-                    <div class="w-[35%] space-y-6 self-start sticky top-32">
-                        <!-- Date Section -->
-                        <FormContainer>
-                            <h2 class="text-xl font-bold text-gray-900 mb-8">{{ $t('forms.transport_time') }}</h2>
-
+                        <!-- Right Column - Mobile only -->
+                        <FormContainer class="lg:hidden">
+                            <h2 class="text-xl font-bold text-gray-900 mb-6">{{ $t('forms.transport_time') }}</h2>
                             <div class="space-y-6">
-                                <!-- Pickup Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
                                     <VueDatePicker readonly v-model="formData.date_shipment_expected"
                                         :enable-time-picker="false" />
                                 </div>
-
-                                <!-- Delivery Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
                                     <VueDatePicker readonly v-model="formData.date_arrival_expected"
                                         :enable-time-picker="false" />
                                 </div>
                             </div>
+                            <button type="button" @click="redirectContact"
+                                class="w-full mt-10 py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300">
+                                <div class="flex items-center justify-center gap-3">
+                                    <message_circle-icon />
+                                    <span>{{ $t('menu.contacts') }}</span>
+                                </div>
+                            </button>
+                        </FormContainer>
+                    </div>
 
-                            <!-- Submit Button -->
+                    <!-- Right Column - Desktop only -->
+                    <div class="hidden lg:block w-[35%] space-y-6 self-start sticky top-32">
+                        <FormContainer>
+                            <h2 class="text-xl font-bold text-gray-900 mb-8">{{ $t('forms.transport_time') }}</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
+                                    <VueDatePicker readonly v-model="formData.date_shipment_expected"
+                                        :enable-time-picker="false" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
+                                    <VueDatePicker readonly v-model="formData.date_arrival_expected"
+                                        :enable-time-picker="false" />
+                                </div>
+                            </div>
                             <button type="button" @click="redirectContact"
                                 class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300">
                                 <div class="flex items-center justify-center gap-3">
@@ -229,10 +248,10 @@
                 </div>
             </SectionContainer>
         </MainContainer>
+
         <!-- Modals -->
         <ItemModal :mode="itemMode" :is-open="showModal" :edit-data="viewData" :approximateItems="approximateItems"
             :measurementItems="measurementItems" @close="showModal = false" />
-        <!-- Cancel Modal -->
         <ConfirmModal :is-open="showCancelModal" :loading="orderRequestStore.loading" :title="$t('buttons.cancel_request')"
             :message="$t('descriptions.cancel_request')" type="danger"
             @confirm="confirmCancel" @cancel="showCancelModal = false" />
@@ -319,7 +338,7 @@ const incoTerms = ref([
 ])
 
 const cardClass = (type) => [
-    'w-[200px] rounded-[14px] px-5 py-4 cursor-pointer transition-all duration-200',
+    'flex-1 min-w-[140px] sm:w-[200px] rounded-[14px] px-4 sm:px-5 py-4 transition-all duration-200',
     formData.value.route_type === type
         ? 'border border-[#FFAE24] bg-[#fffaeb]'
         : 'bg-blue-50 border border-transparent'
@@ -331,7 +350,7 @@ const titleClass = (type) =>
         : 'font-medium text-[#222222]'
 
 const descClass = (type) => [
-    'text-sm mt-8 font-medium',
+    'text-sm mt-6 sm:mt-8 font-medium',
     formData.value.route_type === type
         ? 'text-gold-gradient'
         : 'text-[#939393]'
@@ -398,13 +417,12 @@ const confirmCancel = async () => {
         await orderRequestStore.cancelOrderRequest(route.params.id)
         router.push({ name: 'OrderRequest' })
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 </script>
 
 <style scoped>
-/* Date picker */
 :deep(.dp__input) {
     border: none;
     border-radius: 14px;

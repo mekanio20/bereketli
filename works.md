@@ -2,5 +2,4 @@
 - [x] Paginations
 - [x] Languages (en, ru, tr, ch, tm) - (sections)
 - [x] About us page
-- [] Responsive mobile
-- [] Form validations
+- [x] Responsive mobile

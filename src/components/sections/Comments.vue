@@ -1,15 +1,15 @@
 <template>
     <section class="space-y-10 pb-10">
         <div class="flex items-center justify-between select-none">
-            <h2 class="text-[44px] font-semibold text-[#222222]">{{ $t('names.customer_comments') }}</h2>
+            <h2 class="section_title">{{ $t('names.customer_comments') }}</h2>
             <!-- Arrow icons -->
             <div class="flex items-center space-x-2">
                 <div
-                    class="prev_el w-[50px] h-[50px] bg-custom-gradient flex items-center justify-center rounded-full cursor-pointer">
+                    class="prev_el sm:w-[50px] w-[40px] sm:h-[50px] h-[40px] bg-custom-gradient flex items-center justify-center rounded-full cursor-pointer">
                     <arrow_down-icon :color="'#fff'" :size="20" class="rotate-[90deg]" />
                 </div>
                 <div
-                    class="next_el w-[50px] h-[50px] bg-custom-gradient flex items-center justify-center rounded-full cursor-pointer">
+                    class="next_el sm:w-[50px] w-[40px] sm:h-[50px] h-[40px] bg-custom-gradient flex items-center justify-center rounded-full cursor-pointer">
                     <arrow_down-icon :color="'#fff'" :size="20" class="rotate-[-90deg]" />
                 </div>
             </div>

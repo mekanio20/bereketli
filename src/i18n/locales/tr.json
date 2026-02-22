@@ -30,7 +30,8 @@
     "order_info": "Sipariş Bilgileri",
     "order_statuses": "Sipariş Durumları",
     "pending": "Beklemede",
-    "delivered": "Tamamlandı"
+    "delivered": "Tamamlandı",
+    "about": "Neden bizi seçmelisiniz"
   },
   "menu": {
     "home_page": "Ana Sayfa",
@@ -60,7 +61,8 @@
     "logout": "Çıkış yapmak istiyor musunuz?",
     "delete_account": "Hesabınızı silmek istiyor musunuz? Bu işlem geri alınamaz.",
     "home_1": "Güvenilir, verimli ve {img1} modern lojistik çözümleri sunuyoruz. Taşımacılık, depolama ve tedarik zincirindeki geniş {img2} deneyimimiz ile gönderilerin doğru ve zamanında teslim edilmesini sağlıyoruz {img3}",
-    "cancel_request": "Siparişi iptal etmek istiyor musunuz?"
+    "cancel_request": "Siparişi iptal etmek istiyor musunuz?",
+    "about_1": "Her kilometre'de <span class=\"text-gold-gradient italic\">verimlilik</span> sunuyoruz"
   },
   "forms": {
     "name": "Ad",
@@ -170,18 +172,18 @@
       "category": "Taşımacılık"
     },
     "about": {
-      "title_1": "",
-      "title_2": "",
-      "title_3": "",
-      "title_4": "",
-      "title_5": "",
-      "title_6": "",
-      "desc_1": "",
-      "desc_2": "",
-      "desc_3": "",
-      "desc_4": "",
-      "desc_5": "",
-      "desc_6": "."
+      "title_1": "Gerçek zamanlı takip",
+      "title_2": "Kapıdan kapıya teslimat",
+      "title_3": "Sigorta hizmeti",
+      "title_4": "7/24 Müşteri desteği",
+      "title_5": "Profesyonel ambalaj",
+      "title_6": "Mobil takip uygulaması",
+      "desc_1": "Gerçek zamanlı takip sistemimiz sayesinde gönderinizin her adımından anında haberdar olun.",
+      "desc_2": "Pratik alım ve teslimat hizmetimizle kesintisiz bir kargo deneyimi yaşayın.",
+      "desc_3": "Güvenilir sigorta seçeneklerimizle değerli gönderilerinizi güvence altına alın.",
+      "desc_4": "Uzman destek ekibimiz, sorularınızı ve taleplerinizi yanıtlamak için 7/24 hizmetinizdedir.",
+      "desc_5": "Uzman destek ekibimiz, sorularınızı ve taleplerinizi yanıtlamak için 7/24 hizmetinizdedir.",
+      "desc_6": "Kullanıcı dostu mobil uygulamamız ile gönderilerinizi doğrudan akıllı telefonunuzdan yönetin ve takip edin."
     }
   },
   "privacy": {

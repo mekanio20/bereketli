@@ -7,11 +7,11 @@
 
         <!-- Main Footer Content -->
         <MainContainer>
-            <div class="py-20 relative z-10">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-8">
+            <div class="sm:py-20 py-14 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 sm:gap-20 gap-14 mb-8">
 
                     <!-- Logo and App Downloads Column -->
-                    <div class="space-y-24" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.1s">
+                    <div class="sm:space-y-24 space-y-10" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.1s">
                         <!-- Logo -->
                         <router-link to="/"
                             class="bg-white rounded-lg py-[10px] px-[25px] inline-block shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -34,7 +34,7 @@
                     </div>
 
                     <!-- Navigation Column 1 -->
-                    <nav class="space-y-8" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.2s">
+                    <nav class="sm:space-y-8 space-y-4" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.2s">
                         <div>
                             <router-link to="/"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
@@ -53,7 +53,7 @@
                     </nav>
 
                     <!-- Navigation Column 2 -->
-                    <nav class="space-y-8" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.3s">
+                    <nav class="sm:space-y-8 space-y-4" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.3s">
                         <div>
                             <router-link to="/warehouses"
                                 class="text-sm sm:text-base font-medium mb-4 hover:text-orange-400 transition-colors duration-300 cursor-pointer">
@@ -72,7 +72,7 @@
                     </nav>
 
                     <!-- Contact Information Column -->
-                    <div class="space-y-8" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.4s">
+                    <div class="sm:space-y-8 space-y-4" :class="{ 'animate-slide-up': isVisible }" style="animation-delay: 0.4s">
                         <div>
                             <h3 class="text-sm font-medium text-gray-300 mb-3">{{ $t('info.address') }}</h3>
                             <p class="text-base leading-relaxed hover:text-orange-400 transition-colors duration-300">

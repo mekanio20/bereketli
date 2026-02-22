@@ -14,14 +14,14 @@
         <!-- Date with Icon Animation -->
         <div class="flex items-center gap-2">
             <date-icon />
-            <p class="text-sm text-[#838589] leading-[100%] group-hover:text-[#555555] transition-colors duration-300">
+            <p class="sm:text-sm text-xs text-[#838589] leading-[100%] group-hover:text-[#555555] transition-colors duration-300">
                 {{ date }}
             </p>
         </div>
 
         <!-- Title with Underline Effect -->
         <div class="relative">
-            <h3 class="text-[20px] font-semibold leading-tight text-[#222222] 
+            <h3 class="sm:text-[20px] text-base font-semibold leading-tight text-[#222222] 
            group-hover:text-[#ffa50d] transition-colors duration-300 truncate">
                 {{ title }}
             </h3>

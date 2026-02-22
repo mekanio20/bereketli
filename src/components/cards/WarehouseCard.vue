@@ -9,12 +9,12 @@
                     class="w-[50px] h-[50px] bg-[#F3F8FF] rounded-full flex items-center justify-center transition-all duration-300">
                     <map-icon />
                 </div>
-                <h3 class="text-lg font-semibold text-[#222222] group-hover:text-[#002244] transition-colors">
+                <h3 class="sm:text-lg text-base font-semibold text-[#222222] group-hover:text-[#002244] transition-colors">
                     {{ warehouse.name }}
                 </h3>
             </div>
 
-            <span class="px-6 py-1.5 rounded-full text-sm font-medium transition-all duration-300"
+            <span class="px-6 py-1.5 rounded-full sm:text-sm text-xs font-medium transition-all duration-300"
                 :class="[warehouse.isOpen ? 'bg-[#B3FFCE] text-[#009D37]' : 'bg-[#FFC1C0] text-[#B50200]']">
                 {{ warehouse.isOpen ? 'Açyk' : 'Ýapyk' }}
             </span>
@@ -29,8 +29,8 @@
                 <map_pin-icon />
             </div>
             <div>
-                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">{{ $t('info.address') }}</p>
-                <p class="text-base font-medium text-[#222222]">{{ warehouse.address }}</p>
+                <p class="sm:text-base text-sm text-[#838589] mb-2 leading-[114.99999999999999%]">{{ $t('info.address') }}</p>
+                <p class="sm:text-base text-sm font-medium text-[#222222]">{{ warehouse.address }}</p>
             </div>
         </div>
 
@@ -40,8 +40,8 @@
                 <clock-icon />
             </div>
             <div>
-                <p class="text-base text-[#838589] mb-2 leading-[114.99999999999999%]">{{ $t('info.working_time') }}</p>
-                <p class="text-base font-medium text-gray-900">
+                <p class="sm:text-base text-sm text-[#838589] mb-2 leading-[114.99999999999999%]">{{ $t('info.working_time') }}</p>
+                <p class="sm:text-base text-sm font-medium text-gray-900">
                     {{ warehouse.work_hours_start }} / {{ warehouse.work_hours_end }}
                 </p>
             </div>

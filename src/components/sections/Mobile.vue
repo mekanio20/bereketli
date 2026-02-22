@@ -1,9 +1,9 @@
 <template>
-    <section class="relative w-full h-[370px] mt-10 mb-20 bg-custom-gradient py-6 md:py-10 rounded-3xl lg:py-24">
-        <div class="h-full flex items-center justify-between pl-20 max-w-[550px]">
+    <section class="relative w-full md:h-[370px] h-[300px] mt-10 mb-20 bg-custom-gradient py-6 md:py-10 rounded-3xl lg:py-24">
+        <div class="h-full flex items-center justify-between sm:pl-20 pl-4 max-w-[550px]">
             <div class="h-full flex flex-col space-y-10 justify-center">
-                <h2 class="text-[44px] text-white font-bold leading-[100%]">{{ $t('names.mobile_app') }}</h2>
-                <p class="text-lg text-white font-medium leading-[100%]">{{ $t('descriptions.mobile_1') }}</p>
+                <h2 class="lg:text-[44px] md:text-4xl text-3xl text-white font-bold leading-[100%]">{{ $t('names.mobile_app') }}</h2>
+                <p class="lg:text-lg text-base text-white font-medium leading-[100%]">{{ $t('descriptions.mobile_1') }}</p>
                 <a :href="link" target="_blank" class="group relative z-10 flex items-center w-fit">
                     <!-- Text -->
                     <button type="button"
@@ -22,7 +22,7 @@
                 </a>
             </div>
         </div>
-        <div class="absolute bottom-0 right-[100px] z-20 flex items-center space-x-10">
+        <div class="absolute bottom-0 right-[100px] z-20 lg:flex hidden items-center space-x-10">
             <canvas id="qrcode" class="w-[120px] h-[120px]"></canvas>
             <div class="w-[360px] h-full">
                 <img src="/icons/phone.webp" class="w-full h-full object-cover">

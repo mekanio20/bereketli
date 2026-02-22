@@ -8,8 +8,8 @@
             </div>
             <!-- Title -->
             <div class="absolute top-48 left-1/2 -translate-x-1/2 w-full">
-                <h1 class="font-semibold lg:text-[94px] md:text-7xl sm:text-6xl text-5xl md:leading-[90px] uppercase text-[#0C1A30] text-center md:mx-40">
-                    Delivering <span class="text-gold-gradient italic">efficiency</span> at every mile
+                <h1
+                    class="font-semibold lg:text-[94px] md:text-7xl sm:text-6xl text-5xl md:leading-[90px] uppercase text-[#0C1A30] text-center md:mx-40" v-html="$t('descriptions.about_1')">
                 </h1>
             </div>
             <!-- Bg container -->
@@ -19,17 +19,17 @@
         </div>
         <MainContainer>
             <i18n-t keypath="descriptions.home_1" tag="div"
-                class="font-medium lg:text-[52px] md:text-5xl sm:text-4xl text-3xl text-[#222222] lg:leading-[62px] pt-20">
+                class="font-medium lg:text-[52px] md:text-[44px] text-3xl text-[#222222] lg:leading-[62px] md:leading-[54px] leading-[40px] py-5">
                 <template #img1>
-                    <img src="/images/img_1.webp" class="lg:w-[115px] w-[70px] lg:h-[45px] h-[30px] inline-block" />
+                    <img src="/images/img_1.webp" class="lg:w-[115px] w-[90px] md:h-[45px] h-[35px] inline-block" />
                 </template>
 
                 <template #img2>
-                    <img src="/images/img_2.webp" class="lg:w-[115px] w-[70px] lg:h-[45px] h-[30px] inline-block" />
+                    <img src="/images/img_2.webp" class="lg:w-[115px] w-[90px] md:h-[45px] h-[35px] inline-block" />
                 </template>
 
                 <template #img3>
-                    <img src="/images/img_3.webp" class="lg:w-[115px] w-[70px] lg:h-[45px] h-[30px] inline-block" />
+                    <img src="/images/img_3.webp" class="lg:w-[115px] w-[90px] md:h-[45px] h-[35px] inline-block" />
                 </template>
             </i18n-t>
         </MainContainer>
@@ -37,7 +37,7 @@
         <div class="bg-[#F5F9FF] sm:py-20 py-10">
             <MainContainer>
                 <h1 class="section_title mb-10">
-                    Why Choose Us
+                    {{ $t('names.about') }}
                 </h1>
                 <div class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
                     <AboutCard v-for="item in aboutCards" :key="item.id" :data="item" />

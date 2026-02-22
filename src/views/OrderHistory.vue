@@ -23,12 +23,12 @@
                 <div class="w-fit flex gap-0 p-[7px] mb-14 animate-slide-up bg-[#002645] rounded-2xl"
                     style="animation-delay: 0.1s">
                     <button @click="activeTab = 'pending'"
-                        class="py-[9px] px-10 mr-2 font-semibold transition-all duration-300 rounded-xl"
+                        class="sm:py-[9px] py-[7px] sm:text-base text-sm sm:px-10 px-6 mr-2 font-semibold transition-all duration-300 rounded-xl"
                         :class="activeTab === 'pending' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
                         {{ $t('names.pending') }}
                     </button>
                     <button @click="activeTab = 'delivered'"
-                        class="py-[9px] px-10 font-semibold transition-all duration-300 rounded-xl -ml-px"
+                        class="sm:py-[9px] py-[7px] sm:text-base text-sm sm:px-10 px-6 font-semibold transition-all duration-300 rounded-xl -ml-px"
                         :class="activeTab === 'delivered' ? 'bg-white text-[#002645] z-10' : 'bg-[#002645] text-white'">
                         {{ $t('names.delivered') }}
                     </button>

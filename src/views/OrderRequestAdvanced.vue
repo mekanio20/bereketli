@@ -7,43 +7,43 @@
         <MainContainer>
             <SectionContainer>
                 <!-- Breadcrumb -->
-                <bread-crumb class="mb-8" :items="[
+                <bread-crumb class="mb-6 md:mb-8" :items="[
                     { icon: 'home-icon', to: '/' },
                     { label: $t('menu.order_requests'), to: '/order/requests' },
                     { label: $t('menu.advanced_order') }
                 ]" />
 
                 <!-- Title -->
-                <h1 class="section_title mb-10">
+                <h1 class="section_title mb-6 md:mb-10">
                     {{ $t('menu.advanced_order') }}
                 </h1>
 
-                <div class="flex items-start space-x-6">
+                <div class="flex flex-col lg:flex-row items-start gap-6 lg:space-x-6">
                     <!-- Left Column -->
-                    <div class="flex-1 space-y-6">
+                    <div class="w-full lg:flex-1 space-y-6">
                         <!-- Delivery Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('info.delivery') }}</h2>
-                            <div class="flex items-center space-x-6 mb-4">
-                                <div class="flex-1 flex flex-col space-y-8">
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('info.delivery') }}</h2>
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:space-x-6 mb-4">
+                                <div class="w-full sm:flex-1 flex flex-col space-y-6 sm:space-y-8">
                                     <SimpleSelect v-model="formData.from_incoterm" :options="incoTerms"
                                         :placeholder="$t('forms.from_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
-                                    <!-- From Location -->
                                     <SimpleSelect v-model="formData.from_country" :options="nirdenOptions"
                                         :placeholder="$t('forms.from')" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
+
                                 <!-- Swap Button -->
-                                <div class="flex-shrink-0">
+                                <div class="flex-shrink-0 self-center sm:self-auto">
                                     <button type="button" @click="swapLocations"
-                                        class="w-[50px] h-[50px] bg-custom-gradient rounded-full -space-x-1 flex items-center justify-center transform transition-all duration-300"
+                                        class="w-[50px] h-[50px] bg-custom-gradient rounded-full flex items-center justify-center transform transition-all duration-300"
                                         :class="[isSwap ? 'rotate-180' : '']">
-                                        <arrow_group-icon class="rotate-[90deg]" />
+                                        <arrow_group-icon class="rotate-[90deg] sm:rotate-[90deg]" />
                                     </button>
                                 </div>
-                                <div class="flex-1 flex flex-col space-y-8">
+
+                                <div class="w-full sm:flex-1 flex flex-col space-y-6 sm:space-y-8">
                                     <SimpleSelect v-model="formData.to_incoterm" :options="incoTerms"
                                         :placeholder="$t('forms.to_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
-                                    <!-- To Location -->
                                     <SimpleSelect v-model="formData.to_country" :options="niraOptions"
                                         :placeholder="$t('forms.to')" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
@@ -52,18 +52,18 @@
 
                         <!-- Information Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('info.name') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('info.name') }}</h2>
                             <textarea v-model="formData.description" :placeholder="$t('forms.write_description')" rows="2"
-                                class="bg-[#EBF3FD] w-full px-[30px] py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+                                class="bg-[#EBF3FD] w-full px-5 sm:px-[30px] py-4 sm:py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
                         </FormContainer>
 
                         <!-- Cargo Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.cargo_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.cargo_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <button type="button" v-for="(item, index) in itemCategoryStore.item_categories"
                                     :key="index" @click="toggleCargoType(item.id)"
-                                    class="px-6 py-2.5 rounded-[14px] transition-all duration-300 transform hover:scale-105"
+                                    class="px-4 sm:px-6 py-2.5 rounded-[14px] transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
                                     :class="formData.categories.includes(item.id)
                                         ? 'bg-[#002244] font-bold text-white shadow-lg'
                                         : 'bg-[#EBF3FD] text-[#222222] font-medium hover:bg-[#ddebfd]'">
@@ -74,7 +74,7 @@
 
                         <!-- Shipping Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.route_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.route_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <!-- Direct -->
                                 <div @click="formData.route_type = 'direct'" :class="cardClass('direct')">
@@ -83,8 +83,7 @@
                                             <p :class="titleClass('direct')">{{ $t('forms.direct') }}</p>
                                             <p :class="descClass('direct')">{{ $t('forms.direct_time') }}</p>
                                         </div>
-
-                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full"
+                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full ml-2"
                                             :class="[formData.route_type === 'direct' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
                                             <div v-if="formData.route_type === 'direct'"
                                                 class="w-[13px] h-[13px] bg-custom-gradient rounded-full"></div>
@@ -99,7 +98,7 @@
                                             <p :class="titleClass('transit')">{{ $t('forms.transit') }}</p>
                                             <p :class="descClass('transit')">{{ $t('forms.transit_time') }}</p>
                                         </div>
-                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full"
+                                        <div class="w-6 h-6 border flex items-center justify-center rounded-full ml-2"
                                             :class="[formData.route_type === 'transit' ? 'border-[#FED181]' : 'border-[#C9C9C9]']">
                                             <div v-if="formData.route_type === 'transit'"
                                                 class="w-[13px] h-[13px] bg-custom-gradient rounded-full"></div>
@@ -111,73 +110,78 @@
 
                         <!-- Transport Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.transport_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.transport_type') }}</h2>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <button v-for="transport in transportTypes" :key="transport.id"
                                     @click="formData.transportation_type = transport.id"
-                                    class="flex items-center justify-center space-x-1 px-10 py-[13px] gap-2 rounded-[14px] transition-all duration-300 transform hover:scale-105"
+                                    class="flex items-center justify-center space-x-1 px-5 sm:px-10 py-3 gap-2 rounded-[14px] transition-all duration-300 transform hover:scale-105 text-sm"
                                     :class="formData.transportation_type === transport.id
                                         ? 'bg-[#002244] font-bold text-white shadow-lg'
-                                        : 'bg-[#EBF3FD] text-[#222222] font-medium  hover:bg-[#ddebfd]'">
-                                    <component :is="icons[transport.icon]" :size="24"
+                                        : 'bg-[#EBF3FD] text-[#222222] font-medium hover:bg-[#ddebfd]'">
+                                    <component :is="icons[transport.icon]" :size="22"
                                         :color="formData.transportation_type === transport.id ? 'white' : '#222222'" />
-                                    <span class="text-sm">{{ transport.label }}</span>
+                                    <span>{{ transport.label }}</span>
                                 </button>
                             </div>
                         </FormContainer>
 
-                        <!-- Container -->
+                        <!-- Container Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.containers') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.containers') }}</h2>
                             <div v-for="(item, index) in formData.containers" :key="index" class="my-6">
-                                <div class="flex items-center space-x-6">
-                                    <SimpleSelect v-model="item.type" :options="containerTypeOptions"
-                                        :placeholder="$t('forms.container_type')" :isSearch="true"
-                                        @change="selectedContainer($event, index)" />
-                                    <form-input v-model="item.quantity" type="number"
-                                        :placeholder="$t('forms.container_quantity')" />
-                                    <div class="flex items-center space-x-2 !ml-2">
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:space-x-6">
+                                    <div class="w-full sm:flex-1">
+                                        <SimpleSelect v-model="item.type" :options="containerTypeOptions"
+                                            :placeholder="$t('forms.container_type')" :isSearch="true"
+                                            @change="selectedContainer($event, index)" />
+                                    </div>
+                                    <div class="w-full sm:flex-1">
+                                        <form-input v-model="item.quantity" type="number"
+                                            :placeholder="$t('forms.container_quantity')" />
+                                    </div>
+                                    <div class="flex items-center space-x-2">
                                         <button @click="item.quantity--"
-                                            class="w-[50px] h-[50px] text-[#222222] text-[20px] font-medium bg-[#EBF3FD] hover:bg-blue-100 duration-300 rounded-[14px] flex items-center justify-center">
+                                            class="w-[46px] h-[46px] sm:w-[50px] sm:h-[50px] text-[#222222] text-[20px] font-medium bg-[#EBF3FD] hover:bg-blue-100 duration-300 rounded-[14px] flex items-center justify-center">
                                             -
                                         </button>
                                         <button @click="item.quantity++"
-                                            class="w-[50px] h-[50px] text-[#222222] text-[20px] font-medium bg-[#EBF3FD] hover:bg-blue-100 duration-300 rounded-[14px] flex items-center justify-center">
+                                            class="w-[46px] h-[46px] sm:w-[50px] sm:h-[50px] text-[#222222] text-[20px] font-medium bg-[#EBF3FD] hover:bg-blue-100 duration-300 rounded-[14px] flex items-center justify-center">
                                             +
                                         </button>
                                     </div>
                                 </div>
-                                <div v-if="item.type" class="py-20 flex items-center space-x-20">
+
+                                <div v-if="item.type" class="py-10 sm:py-20 flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:space-x-20">
                                     <!-- DELETE ICON -->
                                     <button type="button" @click.stop="formData.containers.splice(index, 1)"
                                         class="text-red-500 hover:text-red-600">
                                         <delete-icon :size="22" :color="'currentColor'" />
                                     </button>
-                                    <div class="w-[220px] h-220px">
+                                    <div class="w-full sm:w-[220px] max-w-[220px]">
                                         <img :src="item.image" class="w-full h-full object-cover rounded-lg">
                                     </div>
-                                    <div class="grid grid-cols-2 gap-x-24 gap-y-14">
+                                    <div class="grid grid-cols-2 gap-x-10 sm:gap-x-24 gap-y-8 sm:gap-y-14">
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.length') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.length') }}:</h5>
                                             <p class="text-[#222222]">{{ item.length_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.weight') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.weight') }}:</h5>
                                             <p class="text-[#222222]">{{ item.max_weight_kg }} kg</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.width') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.width') }}:</h5>
                                             <p class="text-[#222222]">{{ item.width_m }} m</p>
                                         </div>
                                         <div>
-                                            <h5 class="text-[#939393]">{{ $t('forms.height') }}:</h5>
+                                            <h5 class="text-[#939393] text-sm">{{ $t('forms.height') }}:</h5>
                                             <p class="text-[#222222]">{{ item.height_m }} m</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <button type="button" @click="addNewContainer"
-                                class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2">
+                                class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
                                 <div class="w-6 h-6 bg-[#002244] rounded-full flex items-center justify-center">
                                     <plus-icon class="text-white" :size="14" />
                                 </div>
@@ -187,66 +191,78 @@
 
                         <!-- Items Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.cargos') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.cargos') }}</h2>
                             <div class="space-y-3 mb-4">
                                 <div v-for="(item, index) in formData.items" :key="index"
-                                    class="flex items-center justify-between p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
+                                    class="flex items-center justify-between p-3 sm:p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
                                     @click="editItem(index)">
                                     <div>
-                                        <p class="font-semibold text-gray-900">{{ `${item.name}` }}</p>
+                                        <p class="font-semibold text-gray-900 text-sm sm:text-base">{{ `${item.name}` }}</p>
                                         <p class="text-sm text-[#EBF3FD]0">{{ formattedMeasurement(item) }}</p>
                                     </div>
                                     <div class="flex items-center gap-3">
-                                        <!-- DELETE ICON -->
                                         <button type="button" @click.stop="formData.items.splice(index, 1)"
                                             class="opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 text-red-500 hover:text-red-600">
                                             <delete-icon :size="22" />
                                         </button>
-
-                                        <!-- Chevron -->
                                         <chevron_down-icon class="rotate-[-90deg]" :size="24" />
                                     </div>
                                 </div>
                             </div>
 
                             <button type="button" @click="() => { itemMode = 'add'; showModal = true }"
-                                class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2">
-                                <div
-                                    class="w-6 h-6 rounded-full text-white bg-[#002244] flex items-center justify-center">
+                                class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
+                                <div class="w-6 h-6 rounded-full text-white bg-[#002244] flex items-center justify-center">
                                     <plus-icon :size="20" />
                                 </div>
                                 {{ $t('buttons.add_cargo') }}
                             </button>
                         </FormContainer>
-                    </div>
 
-                    <!-- Right Column -->
-                    <div class="w-[35%] space-y-6 self-start sticky top-32">
-                        <!-- Date Section -->
-                        <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.transport_time') }}</h2>
-
+                        <!-- Date Section - Mobile only (shown below items on mobile) -->
+                        <FormContainer class="lg:hidden">
+                            <h2 class="form_title mb-6">{{ $t('forms.transport_time') }}</h2>
                             <div class="space-y-6">
-                                <!-- Pickup Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
-                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false" >
-                                    </VueDatePicker>
+                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false" />
                                 </div>
-
-                                <!-- Delivery Date -->
                                 <div>
                                     <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
-                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false"  />
+                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false" />
                                 </div>
                             </div>
+                            <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
+                                class="w-full mt-10 py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
+                                :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
+                                <span v-if="!orderRequestStore.loading">{{ $t('buttons.confirmation') }}</span>
+                                <span v-else class="flex items-center justify-center gap-2">
+                                    <animate_spin-icon />
+                                    {{ $t('info.loading') }}
+                                </span>
+                            </button>
+                        </FormContainer>
+                    </div>
 
-                            <!-- Submit Button -->
+                    <!-- Right Column - Desktop only -->
+                    <div class="hidden lg:block w-[35%] space-y-6 self-start sticky top-32">
+                        <FormContainer>
+                            <h2 class="form_title mb-8">{{ $t('forms.transport_time') }}</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
+                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
+                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false" />
+                                </div>
+                            </div>
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
                                 <span v-if="!orderRequestStore.loading">{{ $t('buttons.confirmation') }}</span>
-                                <span v-else class="flex items-center justify-center">
+                                <span v-else class="flex items-center justify-center gap-2">
                                     <animate_spin-icon />
                                     {{ $t('info.loading') }}
                                 </span>
@@ -256,6 +272,7 @@
                 </div>
             </SectionContainer>
         </MainContainer>
+
         <!-- Modals -->
         <ItemModal :mode="itemMode" :is-open="showModal" :edit-data="editData" :approximateItems="approximateItems"
             :measurementItems="measurementItems" @close="showModal = false" @submit="handleItemSubmit" />
@@ -312,7 +329,7 @@ const showModal = ref(false)
 const editingIndex = ref(null)
 
 const cardClass = (type) => [
-    'w-[200px] rounded-[14px] px-5 py-4 cursor-pointer transition-all duration-200',
+    'flex-1 min-w-[140px] sm:w-[200px] rounded-[14px] px-4 sm:px-5 py-4 cursor-pointer transition-all duration-200',
     formData.route_type === type
         ? 'border border-[#FFAE24] bg-[#fffaeb]'
         : 'bg-blue-50 border border-transparent'
@@ -324,7 +341,7 @@ const titleClass = (type) =>
         : 'font-medium text-[#222222]'
 
 const descClass = (type) => [
-    'text-sm mt-8 font-medium',
+    'text-sm mt-6 sm:mt-8 font-medium',
     formData.route_type === type
         ? 'text-gold-gradient'
         : 'text-[#939393]'
@@ -376,17 +393,10 @@ const toggleCargoType = (id) => {
 
 const handleItemSubmit = (payload) => {
     const { tab, mode, data } = payload
-
     if (mode === 'add') {
-        formData.items.push({
-            ...data,
-            tab
-        })
+        formData.items.push({ ...data, tab })
     } else if (mode === 'edit' && editingIndex.value !== null) {
-        formData.items[editingIndex.value] = {
-            ...data,
-            tab
-        }
+        formData.items[editingIndex.value] = { ...data, tab }
         editingIndex.value = null
     }
 }
@@ -412,7 +422,7 @@ const submitOrder = async () => {
         })
         resetForm()
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
@@ -435,10 +445,7 @@ const resetForm = () => {
     formData.description = ''
     formData.categories = []
     formData.route_type = 'direct'
-    formData.containers = [{
-        type: null,
-        quantity: 0
-    }]
+    formData.containers = [{ type: null, quantity: 0 }]
     formData.items = []
     formData.transportation_type = ''
     formData.date_shipment_expected = ''
@@ -446,10 +453,7 @@ const resetForm = () => {
 }
 
 const addNewContainer = () => {
-    formData.containers.push({
-        type: null,
-        quantity: 0
-    })
+    formData.containers.push({ type: null, quantity: 0 })
 }
 
 const selectedContainer = (data, index) => {
@@ -467,11 +471,11 @@ watch(
             await containerTypeStore.fetchContainerTypes({ transportation_type: newVal })
             containerTypeOptions.value = normalizeToIdLabel(containerTypeStore.container_types, true)
         }
-    })
+    }
+)
 </script>
 
 <style scoped>
-/* Date picker */
 :deep(.dp__input) {
     border: none;
     border-radius: 14px;
