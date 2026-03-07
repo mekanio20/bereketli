@@ -50,7 +50,7 @@
     "simple_order": "Simple Order",
     "advanced_order": "Advanced Order",
     "order_requests": "Order Requests",
-    "FAQ": "FAQ"
+    "FAQ": "Frequently Asked Questions"
   },
   "descriptions": {
     "hero_1": "Your trust is our duty",
@@ -140,8 +140,9 @@
     "status": "Status",
     "working_time": "Working Hours",
     "created_at": "Created At",
-    "copyright": "Copyright © 2025 Bereketli Logistika - All rights reserved.",
-    "notification_bar": "Delivery service 10% discount",
+    "copyright": "Copyright © 2026 Bereketli Logistika - All rights reserved.",
+    "notification_bar_1": "We safely deliver your cargo to anywhere in the world",
+    "notification_bar_2": "Cargo transportation services by land, air, and sea",
     "already_account": "Already have an account?",
     "delivery": "Delivery",
     "no_notifications": "You have no notifications!",
@@ -247,6 +248,10 @@
     "invalid_email": "Invalid email address!",
     "invalid_phone": "Invalid phone number!",
     "name_fields": "Enter your full name!",
-    "empty_fields": "Enter required information!"
+    "empty_fields": "Enter required information!",
+    "login_failed": "Invalid login credentials!",
+    "register_failed": "User already exists!",
+    "otp_failed": "Invalid verification code!",
+    "reset_password_failed": "Failed to reset password!"
   }
 }

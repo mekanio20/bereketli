@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="toasts.length"
-    class="fixed sm:top-32 top-20 right-0 z-[60] space-y-3"
+    class="fixed top-2 right-2 z-[60] space-y-3"
   >
     <TransitionGroup name="toast">
       <div

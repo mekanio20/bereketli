@@ -23,58 +23,67 @@
                         </div>
 
                         <!-- Right Side - Form -->
-                        <div class="flex flex-col py-8 md:pt-24 relative">
+                        <div class="flex flex-col py-8 md:pt-32 relative">
 
                             <img :src="background" class="absolute top-32 -z-10 w-full h-[500px] object-cover" />
 
                             <h2
-                                class="text-2xl lg:text-3xl font-bold text-[#222222] mb-16 text-center animate-slide-down">
-                               {{ $t('names.create_password') }}
+                                class="text-2xl lg:text-3xl font-bold text-[#222222] mb-12 text-center animate-slide-down">
+                                {{ $t('buttons.reset_password') }}
                             </h2>
+
+                            <!-- Tab Buttons -->
+                            <div class="flex gap-3 mb-8 bg-[#EBF3FD] rounded-full p-2 mx-8">
+                                <button @click="activeTab = 'phone'"
+                                    class="flex-1 py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
+                                    :class="activeTab === 'phone'
+                                        ? 'bg-custom-gradient text-white shadow-lg font-bold'
+                                        : 'bg-white text-[#838589]'">
+                                    {{ $t('forms.phone') }}
+                                </button>
+                                <button @click="activeTab = 'email'"
+                                    class="flex-1 py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
+                                    :class="activeTab === 'email'
+                                        ? 'bg-custom-gradient text-white shadow-lg font-bold'
+                                        : 'bg-white text-[#838589]'">
+                                    {{ $t('forms.email') }}
+                                </button>
+                            </div>
 
                             <!-- Form -->
                             <form @submit.prevent="handleSubmit" class="flex-1 flex flex-col px-8">
                                 <Transition name="fade" mode="out-in">
-                                    <div class="flex flex-col space-y-8">
+                                    <div v-if="activeTab === 'phone'" key="phone" class="space-y-6">
+                                        <!-- Phone Number Field -->
                                         <div>
-                                            <label id="password" class="inline-block mb-3 text-[#222222]">
-                                                {{ $t('forms.password') }}
+                                            <label for="phone" class="block text-sm text-[#222222] mb-3">
+                                                {{ $t('forms.phone_number') }}
                                             </label>
                                             <div class="relative">
-                                                <form-input :label="'password'" v-model="formData.password"
-                                                    :type="passwordType" :placeholder="$t('forms.password')" />
-                                                <div
-                                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
-                                                    <eye_hide-icon v-if="passwordType === 'password'"
-                                                        @click="passwordType = 'text'" />
-                                                    <eye-icon v-if="passwordType === 'text'"
-                                                        @click="passwordType = 'password'" />
-                                                </div>
+                                                <input id="phone" v-model="formData.phone" type="tel" placeholder="+993"
+                                                    class="w-full px-4 py-4 bg-[#EBF3FD] rounded-xl outline-none  transition-all duration-300 text-[#222222] placeholder-gray-400"
+                                                    :class="{ 'border-red-400': errors.phone }" />
+                                                <Transition name="fade">
+                                                    <p v-if="errors.phone" class="mt-2 text-sm text-red-600">{{
+                                                        errors.phone }}</p>
+                                                </Transition>
                                             </div>
-                                            <Transition name="fade">
-                                                <p v-if="errors.password" class="mt-2 text-sm text-red-600">{{
-                                                    errors.password
-                                                }}</p>
-                                            </Transition>
                                         </div>
+                                    </div>
+
+                                    <div v-else key="email" class="space-y-6">
+                                        <!-- Email Field -->
                                         <div>
-                                            <label id="confirm_password" class="inline-block mb-3 text-[#222222]">
-                                                {{ $t('forms.confirm_password') }}
+                                            <label for="email" class="block text-sm text-[#222222] mb-3">
+                                               {{ $t('forms.email_address') }}
                                             </label>
-                                            <div class="relative">
-                                                <form-input :label="'confirm_password'"
-                                                    v-model="formData.confirm_password" :type="confirmPasswordType"
-                                                    :placeholder="$t('forms.confirm_password')" />
-                                                <div
-                                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
-                                                    <eye_hide-icon v-if="confirmPasswordType === 'password'"
-                                                        @click="confirmPasswordType = 'text'" />
-                                                    <eye-icon v-if="confirmPasswordType === 'text'"
-                                                        @click="confirmPasswordType = 'password'" />
-                                                </div>
-                                            </div>
+                                            <input id="email" v-model="formData.email" type="email"
+                                                placeholder="example@email.com"
+                                                class="w-full px-4 py-4 bg-[#EBF3FD] rounded-xl outline-none transition-all duration-300 text-[#222222] placeholder-gray-400"
+                                                :class="{ 'border-red-400': errors.email }" />
                                             <Transition name="fade">
-                                                <p v-if="errors.confirm_password" class="mt-2 text-sm text-red-600">{{ errors.confirm_password }}</p>
+                                                <p v-if="errors.email" class="mt-2 text-sm text-red-600">{{ errors.email
+                                                }}</p>
                                             </Transition>
                                         </div>
                                     </div>
@@ -82,13 +91,22 @@
 
                                 <!-- Submit Button -->
                                 <button type="submit" :disabled="isSubmitting"
-                                    class="w-full py-4 bg-[#002645] text-white font-semibold rounded-full hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-12 select-none">
+                                    class="w-full py-4 bg-[#002645] text-white font-semibold rounded-full hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-12">
                                     <span v-if="!isSubmitting">{{ $t('buttons.next') }}</span>
                                     <span v-else class="flex items-center justify-center">
                                         <animate_spin-icon />
                                         {{ $t('info.loading') }}
                                     </span>
                                 </button>
+
+                                <!-- Already Have Account -->
+                                <p class="text-center text-sm text-[#222222] mt-6">
+                                    {{ $t('info.already_account') }}
+                                    <button type="button" @click="$emit('redirect', 'login')"
+                                        class="text-[#F98900] hover:text-orange-500 font-semibold hover:underline transition-colors duration-300 cursor-pointer">
+                                        {{ $t('buttons.login') }}
+                                    </button>
+                                </p>
                             </form>
                         </div>
                     </div>
@@ -105,35 +123,49 @@ const { t, locale } = useI18n({ useScope: 'global' })
 import authImage from '@/assets/images/auth.webp'
 import background from '@/assets/images/modal.webp'
 const emit = defineEmits(['close', 'redirect'])
-const authStore = useAuthStore()
 const props = defineProps({
     isOpen: {
         type: Boolean,
         default: false
     }
 })
-const passwordType = ref('password')
-const confirmPasswordType = ref('password')
+
+const activeTab = ref('phone')
 const isSubmitting = ref(false)
+
 const formData = reactive({
-    password: '',
-    confirm_password: ''
+    phone: '+993',
+    email: '',
 })
 
 const errors = reactive({
-    password: '',
-    confirm_password: '',
+    phone: '',
+    email: '',
 })
 
 const validateForm = () => {
     let isValid = true
 
-    if (formData.password.length < 6) {
-        errors.password = t('warning.password_length')
-        isValid = false
-    } else if (formData.password !== formData.confirm_password) {
-        errors.confirm_password = t('warning.password_mismatch')
-        isValid = false
+    // Reset errors
+    errors.phone = ''
+    errors.email = ''
+
+    if (activeTab.value === 'phone') {
+        if (!formData.phone || formData.phone === '+993') {
+            errors.phone = t('errors.required')
+            isValid = false
+        } else if (!/^\+993\d{8}$/.test(formData.phone)) {
+            errors.phone = t('errors.invalid_phone')
+            isValid = false
+        }
+    } else {
+        if (!formData.email) {
+            errors.email = t('errors.required')
+            isValid = false
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            errors.email = t('errors.invalid_email')
+            isValid = false
+        }
     }
 
     return isValid
@@ -141,30 +173,17 @@ const validateForm = () => {
 
 const handleSubmit = async () => {
     if (!validateForm()) return
-
     isSubmitting.value = true
 
     try {
-        const register_data = JSON.parse(localStorage.getItem('register_data'))
-        const reset_data = JSON.parse(localStorage.getItem('reset_data'))
-        if (register_data) {
-            register_data.password = formData.password
-            localStorage.setItem('register_data', JSON.stringify(register_data))
-            await authStore.sendOtp({
-                email: register_data.email,
-                phone_number: register_data.phone_number,
-                purpose: "registration"
-            })
-        } else if (reset_data) {
-            reset_data.password = formData.password
-            localStorage.setItem('reset_data', JSON.stringify(reset_data))
-            await authStore.sendOtp({
-                email: reset_data.email,
-                phone_number: reset_data.phone_number,
-                purpose: "forgot_password"
-            })
+        const payload = {
+            identifier: activeTab.value === 'phone' ? formData.phone : formData.email,
+            language: "tk"
         }
-        emit('redirect', 'otp')
+        if (activeTab.value === 'phone') payload.phone_number = formData.phone
+        else if (activeTab.value === 'email') payload.email = formData.email
+        localStorage.setItem('reset_data', JSON.stringify(payload))
+        emit('redirect', 'password')
     } catch (error) {
         console.error('Submission error:', error)
     } finally {

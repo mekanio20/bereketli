@@ -27,6 +27,7 @@
                             <p class="font-bold text-[#222222] text-lg">{{ item.price.toFixed(2) }} TMT</p>
                         </div>
                     </div>
+                    <NoData v-else :message="$t('info.no_data')" />
                 </div>
             </div>
         </Transition>

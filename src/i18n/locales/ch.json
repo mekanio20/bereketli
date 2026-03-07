@@ -140,8 +140,9 @@
     "status": "状态",
     "working_time": "工作时间",
     "created_at": "创建时间",
-    "copyright": "版权 © 2025 Bereketli Logistika - 保留所有权利。",
-    "notification_bar": "配送服务享受 10% 折扣",
+    "copyright": "版权 © 2026 Bereketli Logistika - 保留所有权利。",
+    "notification_bar_1": "我们将您的货物安全送达世界任何地方",
+    "notification_bar_2": "提供陆运、空运和海运货物运输服务",
     "already_account": "已经有账户？",
     "delivery": "配送",
     "no_notifications": "您没有通知！",
@@ -247,6 +248,10 @@
     "invalid_email": "电子邮件地址无效！",
     "invalid_phone": "电话号码无效！",
     "name_fields": "请输入您的全名！",
-    "empty_fields": "请输入必填信息！"
+    "empty_fields": "请输入必填信息！",
+    "login_failed": "登录信息不正确！",
+    "register_failed": "用户已存在！",
+    "otp_failed": "验证码不正确！",
+    "reset_password_failed": "无法重置密码！"
   }
 }

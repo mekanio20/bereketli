@@ -139,6 +139,7 @@
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         </Transition>
     </Teleport>
@@ -211,14 +212,15 @@ const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        localStorage.setItem('register_data', JSON.stringify({
+        const payload = {
             identifier: activeTab.value === 'phone' ? formData.phone : formData.email,
-            phone_number: formData.phone,
-            email: formData.email,
             first_name: formData.fullname?.split(' ')[0],
             last_name: formData.fullname?.split(' ')[1],
             language: "tk"
-        }))
+        }
+        if (activeTab.value === 'phone') payload.phone_number = formData.phone
+        else if (activeTab.value === 'email') payload.email = formData.email
+        localStorage.setItem('register_data', JSON.stringify(payload))
         emit('redirect', 'password')
     } catch (error) {
         console.error('Submission error:', error)

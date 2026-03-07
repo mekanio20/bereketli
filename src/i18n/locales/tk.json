@@ -50,7 +50,7 @@
     "simple_order": "Ýönekeý sargyt",
     "advanced_order": "Çylşyrymly sargyt",
     "order_requests": "Sargyt talaplary",
-    "FAQ": "KSS"
+    "FAQ": "Köp soralýan soraglar"
   },
   "descriptions": {
     "hero_1": "Siziň ynamyňyz - biziň borjumyzdyr",
@@ -140,8 +140,9 @@
     "status": "Ýagdaýy",
     "working_time": "Iş wagty",
     "created_at": "Döredilen wagty",
-    "copyright": "Copyright © 2025 Bereketli Logistika - Ähli hukuklar goralandyr.",
-    "notification_bar": "Etip bermek hyzmaty 10% arzanladyşda",
+    "copyright": "Copyright © 2026 Bereketli Logistika - Ähli hukuklar goralandyr.",
+    "notification_bar_1": "Ýükleriňizi dünýäniň islendik ýerine ygtybarly ýetirýäris",
+    "notification_bar_2": "Gury ýol, howa we deňiz arkaly ýük daşamak hyzmatlary",
     "already_account": "Hasabyňyz barmy?",
     "delivery": "Eltip bermek",
     "no_notifications": "Sizde bildiriş ýok!",
@@ -247,6 +248,10 @@
     "invalid_email": "E-poçta belgisi nädogry!",
     "invalid_phone": "Telefon belgisi nädogry!",
     "name_fields": "Doly adyňyzy giriziň!",
-    "empty_fields": "Gerekli maglumatlary giriziň!"
+    "empty_fields": "Gerekli maglumatlary giriziň!",
+    "login_failed": "Giriş maglumatlary nädogry!",
+    "register_failed": "Ulanyjy eýýäm bar!",
+    "otp_failed": "Tassyklama kodu nädogry!",
+    "reset_password_failed": "Paroly täzeläp bolmady!"
   }
 }

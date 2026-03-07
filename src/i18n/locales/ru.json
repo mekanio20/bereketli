@@ -50,7 +50,7 @@
     "simple_order": "Простой заказ",
     "advanced_order": "Сложный заказ",
     "order_requests": "Запросы заказов",
-    "FAQ": "ЧЗВ"
+    "FAQ": "Часто задаваемые вопросы"
   },
   "descriptions": {
     "hero_1": "Ваше доверие — наш долг",
@@ -140,8 +140,9 @@
     "status": "Статус",
     "working_time": "Рабочее время",
     "created_at": "Дата создания",
-    "copyright": "Copyright © 2025 Bereketli Logistika - Все права защищены.",
-    "notification_bar": "Услуга доставки со скидкой 10%",
+    "copyright": "Copyright © 2026 Bereketli Logistika - Все права защищены.",
+    "notification_bar_1": "Мы надежно доставляем ваши грузы в любую точку мира",
+    "notification_bar_2": "Услуги перевозки грузов по суше, воздуху и морю",
     "already_account": "У вас уже есть аккаунт?",
     "delivery": "Доставка",
     "no_notifications": "У вас нет уведомлений!",
@@ -247,6 +248,10 @@
     "invalid_email": "Неверный email!",
     "invalid_phone": "Неверный номер телефона!",
     "name_fields": "Введите полное имя!",
-    "empty_fields": "Введите необходимые данные!"
+    "empty_fields": "Введите необходимые данные!",
+    "login_failed": "Неверные данные для входа!",
+    "register_failed": "Пользователь уже существует!",
+    "otp_failed": "Неверный код подтверждения!",
+     "reset_password_failed": "Не удалось сбросить пароль!"
   }
 }

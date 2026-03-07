@@ -50,7 +50,7 @@
     "simple_order": "Basit Sipariş",
     "advanced_order": "Gelişmiş Sipariş",
     "order_requests": "Sipariş Talepleri",
-    "FAQ": "SSS"
+    "FAQ": "Sık Sorulan Sorular"
   },
   "descriptions": {
     "hero_1": "Güveniniz bizim görevimizdir",
@@ -140,8 +140,9 @@
     "status": "Durum",
     "working_time": "Çalışma Saatleri",
     "created_at": "Oluşturulma Tarihi",
-    "copyright": "Telif Hakkı © 2025 Bereketli Logistika - Tüm hakları saklıdır.",
-    "notification_bar": "Teslimat hizmetlerinde %10 indirim",
+    "copyright": "Telif Hakkı © 2026 Bereketli Logistika - Tüm hakları saklıdır.",
+    "notification_bar_1": "Yüklerinizi dünyanın her yerine güvenle ulaştırıyoruz",
+    "notification_bar_2": "Kara, hava ve deniz yoluyla yük taşımacılığı hizmetleri",
     "already_account": "Zaten hesabınız var mı?",
     "delivery": "Teslimat",
     "no_notifications": "Hiç bildiriminiz yok!",
@@ -247,6 +248,10 @@
     "invalid_email": "Geçersiz e-posta adresi!",
     "invalid_phone": "Geçersiz telefon numarası!",
     "name_fields": "Ad soyadınızı girin!",
-    "empty_fields": "Gerekli bilgileri girin!"
+    "empty_fields": "Gerekli bilgileri girin!",
+    "login_failed": "Giriş bilgileri hatalı!",
+    "register_failed": "Kullanıcı zaten mevcut!",
+    "otp_failed": "Doğrulama kodu hatalı!",
+    "reset_password_failed": "Şifre sıfırlanamadı!"
   }
 }

@@ -66,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         </Transition>
     </Teleport>
@@ -107,11 +108,14 @@ const handleSubmit = async () => {
         isSubmitting.value = true
         try {
             const register_data = JSON.parse(localStorage.getItem('register_data'))
-            const response = await authStore.register({ ...register_data, otp: [...codeInputs.value].join('') })
-            if (response.status === "ok") {
-                closeModal()
-                emit('success', true)
+            const reset_data = JSON.parse(localStorage.getItem('reset_data'))
+            if (register_data) {
+                await authStore.register({ ...register_data, otp: [...codeInputs.value].join('') })
+            } else if (reset_data) {
+                await authStore.resetPassword({ ...reset_data, otp: [...codeInputs.value].join('') })
             }
+            closeModal()
+            emit('success', true)
         } catch (err) {
             console.error(err)
             emit('success', false)
@@ -134,12 +138,21 @@ const startTimer = () => {
 
 const resetTimer = async () => {
     const register_data = JSON.parse(localStorage.getItem('register_data'))
+    const reset_data = JSON.parse(localStorage.getItem('reset_data'))
 
-    await authStore.sendOtp({
-        email: register_data.email,
-        phone_number: register_data.phone_number,
-        purpose: "registration"
-    })
+    if (register_data) {
+        await authStore.sendOtp({
+            email: register_data.email,
+            phone_number: register_data.phone_number,
+            purpose: "registration"
+        })
+    } else if (reset_data) {
+        await authStore.sendOtp({
+            email: register_data.email,
+            phone_number: register_data.phone_number,
+            purpose: "forgot_password"
+        })
+    }
     timer.value = 60;
     isTimerActive.value = true;
     clearInterval(timerInterval.value);

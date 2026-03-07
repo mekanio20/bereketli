@@ -14,16 +14,15 @@
                 ]" />
 
                 <!-- Header -->
-                <div class="mb-6 md:mb-10 animate-slide-down flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div
+                    class="mb-6 md:mb-10 animate-slide-down flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <h1 class="section_title">
                         {{ $t('names.order_info') }}
                     </h1>
                     <!-- Action Buttons -->
                     <div class="w-full sm:w-auto">
-                        <router-link
-                            :to="{ name: 'Chat', query: { code: order.code } }"
-                            class="w-full sm:w-auto py-3 px-8 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
-                        >
+                        <router-link :to="{ name: 'Chat', query: { code: order.code } }"
+                            class="w-full sm:w-auto py-3 px-8 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
                             <message_circle-icon />
                             <span>{{ $t('menu.contacts') }}</span>
                         </router-link>
@@ -36,7 +35,8 @@
                         <!-- Order Info Card -->
                         <FormContainer class="animate-slide-up" style="animation-delay: 0.1s;">
                             <div class="flex flex-wrap items-start sm:items-center justify-between gap-3 mb-6">
-                                <h2 class="text-xl sm:text-2xl font-bold text-[#222222] break-all">{{ order?.code }}</h2>
+                                <h2 class="text-xl sm:text-2xl font-bold text-[#222222] break-all">{{ order?.code }}
+                                </h2>
                                 <span class="px-4 sm:px-5 py-[7px] rounded-full text-sm font-medium whitespace-nowrap"
                                     :class="statusBadgeClass(order?.status)">
                                     {{ getStatusLabel(order?.status) }}
@@ -44,17 +44,20 @@
                             </div>
 
                             <!-- Route -->
-                            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-6 gap-4 sm:gap-0">
+                            <div
+                                class="flex flex-col sm:flex-row items-start sm:items-center justify-between py-6 gap-4 sm:gap-0">
                                 <div class="flex-1 w-full sm:w-auto">
                                     <p class="text-sm text-[#939393] mb-1">{{ order?.date_shipment_expected }}</p>
-                                    <p class="text-base sm:text-lg font-medium text-[#222222]">{{ order?.from_country?.name }}</p>
+                                    <p class="text-base sm:text-lg font-medium text-[#222222]">{{
+                                        order?.from_country?.name }}</p>
                                 </div>
                                 <div class="flex-shrink-0 mx-4 sm:mx-6 self-center rotate-90 sm:rotate-0">
                                     <chevron_group-icon />
                                 </div>
                                 <div class="flex-1 w-full sm:w-auto sm:text-right">
                                     <p class="text-sm text-[#939393] mb-1">{{ order?.date_arrival_expected }}</p>
-                                    <p class="text-base sm:text-lg font-medium text-[#222222]">{{ order?.to_country?.name }}</p>
+                                    <p class="text-base sm:text-lg font-medium text-[#222222]">{{
+                                        order?.to_country?.name }}</p>
                                 </div>
                             </div>
 
@@ -79,7 +82,8 @@
 
                         <!-- Timeline Card -->
                         <FormContainer class="animate-slide-up" style="animation-delay: 0.2s">
-                            <h3 class="text-[20px] sm:text-[22px] font-semibold text-[#222222] mb-6">{{ $t('names.order_statuses') }}</h3>
+                            <h3 class="text-[20px] sm:text-[22px] font-semibold text-[#222222] mb-6">{{
+                                $t('names.order_statuses') }}</h3>
 
                             <div class="pt-6">
                                 <!-- Timeline Item -->
@@ -94,7 +98,9 @@
                                         }"></div>
                                     </div>
                                     <div class="flex-1 pb-8 sm:pb-10">
-                                        <p class="font-medium text-[#222222] mb-2 text-sm sm:text-base">{{ event.title }}</p>
+                                        <p class="font-medium text-[#222222] mb-2 text-sm sm:text-base">{{ event.title
+                                            }}</p>
+                                        <p v-if="index - 1 >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase())" class="text-[#838589] text-xs sm:text-sm">{{ time() }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -105,27 +111,33 @@
                     <div class="space-y-6">
                         <!-- Delivery Details Card -->
                         <FormContainer class="animate-slide-up" style="animation-delay: 0.3s">
-                            <h3 class="text-[20px] sm:text-[22px] font-bold text-[#222222] mb-6">{{ $t('info.delivery') }}</h3>
+                            <h3 class="text-[20px] sm:text-[22px] font-bold text-[#222222] mb-6">{{ $t('info.delivery')
+                                }}</h3>
                             <div class="space-y-4 sm:space-y-6">
                                 <!-- From Incoterm -->
                                 <div>
-                                    <label class="block text-[#939393] mb-2 sm:mb-3 text-sm sm:text-base">{{ $t('forms.from_incoterm') }}</label>
+                                    <label class="block text-[#939393] mb-2 sm:mb-3 text-sm sm:text-base">{{
+                                        $t('forms.from_incoterm') }}</label>
                                     <div class="p-3 sm:p-4 bg-[#EBF3FD] rounded-[14px]">
-                                        <p class="font-medium text-[#222222] text-sm sm:text-base">{{ order?.from_incoterm }}</p>
+                                        <p class="font-medium text-[#222222] text-sm sm:text-base">{{
+                                            order?.from_incoterm }}</p>
                                     </div>
                                 </div>
 
                                 <!-- To Incoterm -->
                                 <div>
-                                    <label class="block text-[#939393] mb-2 sm:mb-3 text-sm sm:text-base">{{ $t('forms.to_incoterm') }}</label>
+                                    <label class="block text-[#939393] mb-2 sm:mb-3 text-sm sm:text-base">{{
+                                        $t('forms.to_incoterm') }}</label>
                                     <div class="p-3 sm:p-4 bg-[#EBF3FD] rounded-[14px]">
-                                        <p class="font-medium text-[#222222] text-sm sm:text-base">{{ order?.to_incoterm }}</p>
+                                        <p class="font-medium text-[#222222] text-sm sm:text-base">{{ order?.to_incoterm
+                                            }}</p>
                                     </div>
                                 </div>
 
                                 <!-- Transport Type -->
                                 <div>
-                                    <label class="block text-[#939393] mb-2 sm:mb-3 text-sm sm:text-base">{{ $t('forms.transport_type') }}</label>
+                                    <label class="block text-[#939393] mb-2 sm:mb-3 text-sm sm:text-base">{{
+                                        $t('forms.transport_type') }}</label>
                                     <div class="flex items-center gap-3 p-3 sm:p-4 bg-[#EBF3FD] rounded-[14px]">
                                         <component :is="icons[getTransportTypeIcon(order?.transportation_type)]"
                                             color="#222222" />
@@ -160,6 +172,17 @@ const timeline = ref([
     { title: t('data.timeline.title_3'), status: 'customs' },
     { title: t('data.timeline.title_4'), status: 'delivered' },
 ])
+
+const time = () => {
+    const today = new Date()
+
+    const day = String(today.getDate()).padStart(2, "0")
+    const month = String(today.getMonth() + 1).padStart(2, "0")
+    const year = today.getFullYear()
+
+    const formattedDate = `${day}.${month}.${year}`
+    return formattedDate
+}
 
 watch(() => route.params.id, async (newId) => {
     if (newId) await orderStore.fetchOrder(newId)

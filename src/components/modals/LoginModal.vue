@@ -85,6 +85,9 @@
                                                         @click="passwordType = 'password'" />
                                                 </div>
                                             </div>
+                                            <div class="flex items-center justify-end">
+                                                <button type="button" @click="$emit('redirect', 'reset')" class="font-medium text-sm text-[#002645] hover:underline mt-2">Açar sözi unutdym</button>
+                                            </div>
                                             <Transition name="fade">
                                                 <p v-if="errors.password" class="mt-2 text-sm text-red-600">{{
                                                     errors.password
@@ -104,11 +107,12 @@
                                                 class="w-full px-4 py-4 bg-[#EBF3FD] rounded-xl outline-none transition-all duration-300 text-[#222222] placeholder-gray-400"
                                                 :class="{ 'border-red-400': errors.email }" />
                                             <Transition name="fade">
-                                                <p v-if="errors.email" class="mt-2 text-sm text-red-600">{{ errors.email
+                                                <p v-if="errors.email" class="text-sm text-red-600">{{ errors.email
                                                 }}</p>
                                             </Transition>
                                         </div>
 
+                                        <!-- Password Field -->
                                         <div>
                                             <label id="password" class="inline-block mb-3 text-[#222222]">
                                                 {{ $t('forms.password') }}</label>
@@ -123,8 +127,11 @@
                                                         @click="passwordType = 'password'" />
                                                 </div>
                                             </div>
+                                            <div class="flex items-center justify-end mt-2">
+                                                <button type="button" @click="$emit('redirect', 'reset')" class="font-medium text-sm text-[#002645] hover:underline">Açar sözi unutdym</button>
+                                            </div>
                                             <Transition name="fade">
-                                                <p v-if="errors.password" class="mt-2 text-sm text-red-600">{{
+                                                <p v-if="errors.password" class="text-sm text-red-600">{{
                                                     errors.password
                                                 }}</p>
                                             </Transition>
@@ -154,6 +161,7 @@
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         </Transition>
     </Teleport>

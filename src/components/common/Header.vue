@@ -90,7 +90,7 @@
                                                     <notification-icon :color="'currentColor'" />
                                                 </div>
                                                 <div class="flex flex-col space-y-2 items-start text-start">
-                                                    <p class="font-medium">{{ item.title }}</p>
+                                                    <p class="font-medium">{{ item.body || item.title }}</p>
                                                     <p class="text-[#939393] text-sm">{{ item.date_created }}</p>
                                                 </div>
                                                 <!-- Notification read -->
@@ -141,7 +141,7 @@
                 </div>
 
                 <!-- Mobile Actions -->
-                <div class="flex items-center space-x-4">
+                <div v-if="isMobile" class="flex items-center space-x-4">
                     <!-- Notification -->
                     <button v-if="isMobile" ref="notifRef" type="button"
                         class="cursor-pointer relative text-[#002645] hover:text-[#F98900] transition-colors duration-200"
@@ -164,7 +164,7 @@
                                                 <notification-icon :color="'currentColor'" />
                                             </div>
                                             <div class="flex flex-col space-y-2 items-start text-start">
-                                                <p class="font-medium">{{ item.title }}</p>
+                                                <p class="font-medium">{{ item.body || item.title }}</p>
                                                 <p class="text-[#939393] text-sm">{{ item.date_created }}</p>
                                             </div>
                                             <!-- Notification read -->
@@ -390,7 +390,7 @@ const handleClickOutside = (e) => {
 // Close mobile menu when route changes
 watch(() => route.path, async () => {
     mobileMenuOpen.value = false
-    await notificationStore.fetchNotifications()
+    if (autStore.isAuthenticated) await notificationStore.fetchNotifications()
 }, { immediate: true })
 
 // Prevent body scroll when mobile menu is open

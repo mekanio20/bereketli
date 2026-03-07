@@ -1,5 +1,14 @@
-- [x] BaseLink component
-- [x] Paginations
-- [x] Languages (en, ru, tr, ch, tm) - (sections)
-- [x] About us page
-- [x] Responsive mobile
+- [x] marquee text
+- [x] calculator result cykaranok
+- [x] search size
+- [x] haysy order status update #Reqe3290e8 bomaly
+- [x] statuslar detail
+- [x] forgot password nirde?
+- [x] home page-da news bar, ustune basyp girsem page acylyar yone goni home page oklayar
+- [x] navbarda containera bir zada bolupdyr
+- [x] calculatorda terjime edilmedik sozler bar
+- [x] arassala regular we gray eday, kan goze dusmesin
+- [x] copyright 2026 edayeli
+- [x] KSS dal, Köp soralýan soraglar
+- [x] mende eyyam akkaunt bar, sondada hasap doretjek basdym, password doredip continue basyan yone basylyp dur, yzy yok, error message cykaysyn sende eyyam akkaunt bar, ulgama gir diyip
+- [x] posmotret wse 1 setir eday

@@ -7,12 +7,12 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-14">
             <div class="relative">
                 <SimpleSelect :isSearch="true" v-model="formData.from_country" :options="nirdenOptions"
-                    @change="selectedCountry('nirden', $event)" :placeholder="$t('forms.from')" />
+                   :placeholder="$t('forms.from')" />
             </div>
 
             <div class="relative">
                 <SimpleSelect :isSearch="true" v-model="formData.to_country" :options="niraOptions"
-                    @change="selectedCountry('nira', $event)" :placeholder="$t('forms.to')" />
+                   :placeholder="$t('forms.to')" />
             </div>
 
             <div class="relative">
@@ -29,7 +29,7 @@
                 <span>{{ $t('buttons.calculate') }}</span>
             </button>
             <!-- Clear button -->
-            <button type="button" @click="handleClear" class="text-[#002645] sm:font-semibold font-medium hover:underline text-lg md:text-[20px]">
+            <button type="button" @click="handleClear" class="text-gray-500 hover:underline text-lg md:text-[20px]">
                 {{ $t('buttons.clear') }}
             </button>
         </div>
@@ -60,16 +60,6 @@ const formData = ref({
     height: 0,
     item_size: 0
 })
-
-const selectedCountry = async (type, data) => {
-    if (type === 'nirden') {
-        const countries = await countryStore.fetchCountries({ from_country: data.id })
-        niraOptions.value = normalizeToIdLabel(countries)
-    } else if (type === 'nira') {
-        const countries = await countryStore.fetchCountries({ to_country: data.id })
-        nirdenOptions.value = normalizeToIdLabel(countries)
-    }
-}
 
 const handleAddData = async (data) => {
     formData.value = {

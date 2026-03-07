@@ -10,6 +10,8 @@ export const useAppStore = defineStore("app", {
     },
     closeModal() {
       this.activeModal = null;
+      localStorage.removeItem("register_data");
+      localStorage.removeItem("reset_data");
     },
   },
 });
