@@ -31,7 +31,9 @@
     "order_statuses": "Статусы заказа",
     "pending": "Ожидающие",
     "delivered": "Завершённые",
-    "about": "Почему выбирают нас"
+    "about": "Почему выбирают нас",
+    "lang": "Язык",
+    "forgot_password": "Забыли пароль"
   },
   "menu": {
     "home_page": "Главная",
@@ -86,7 +88,7 @@
     "new_password": "Новый пароль",
     "from": "Откуда",
     "to": "Куда",
-    "write_sms": "Напишите SMS...",
+    "write_sms": "Напишите сообщение...",
     "write_description": "Напишите описание...",
     "from_incoterm": "Инкотермс (от)",
     "to_incoterm": "Инкотермс (до)",

@@ -31,7 +31,9 @@
     "order_statuses": "Sipariş Durumları",
     "pending": "Beklemede",
     "delivered": "Tamamlandı",
-    "about": "Neden bizi seçmelisiniz"
+    "about": "Neden bizi seçmelisiniz",
+    "lang": "Dil",
+    "forgot_password": "Şifreyi unuttum"
   },
   "menu": {
     "home_page": "Ana Sayfa",

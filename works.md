@@ -12,3 +12,13 @@
 - [x] KSS dal, Köp soralýan soraglar
 - [x] mende eyyam akkaunt bar, sondada hasap doretjek basdym, password doredip continue basyan yone basylyp dur, yzy yok, error message cykaysyn sende eyyam akkaunt bar, ulgama gir diyip
 - [x] posmotret wse 1 setir eday
+
+17.03.2026
+
+- [x] Refresh token fix
+- [x] Form phone regex digit bolmaly
+- [x] Translate acar soz
+- [x] Forgot password don’t work hich hilli
+- [x] Alert esli net order
+- [x] sms yazyn неправильно , напиши сообщение
+- [x] сообщение отправляется рано

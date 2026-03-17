@@ -31,7 +31,9 @@
     "order_statuses": "订单状态",
     "pending": "待处理",
     "delivered": "已完成",
-    "about": "为什么选择我们"
+    "about": "为什么选择我们",
+    "lang": "语言",
+    "forgot_password": "忘记密码"
   },
   "menu": {
     "home_page": "首页",

@@ -31,7 +31,9 @@
     "order_statuses": "Order Statuses",
     "pending": "Pending",
     "delivered": "Completed",
-    "about": "Why Choose Us"
+    "about": "Why Choose Us",
+    "lang": "Language",
+    "forgot_password": "Forgot password"
   },
   "menu": {
     "home_page": "Home",

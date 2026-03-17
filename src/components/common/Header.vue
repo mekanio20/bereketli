@@ -271,7 +271,7 @@
                             class="w-full flex items-center justify-between py-3 text-[#222222] hover:text-[#F98900] rounded-lg transition-colors">
                             <div class="flex items-center gap-2">
                                 <lang-icon :color="'currentColor'" />
-                                <span class="font-medium">Dil</span>
+                                <span class="font-medium">{{ $t('names.lang') }}</span>
                             </div>
                             <chevron_down-icon :size="16" :color="'currentColor'"
                                 :class="{ 'rotate-180 transition-transform duration-200': mobileLangDropdown }" />

@@ -283,6 +283,7 @@ import { formatFileSize } from '@/utils/numbers'
 const route = useRoute()
 const roomStore = useRoomStore()
 const messageStore = useMessageStore()
+const userStore = useUserStore()
 const fileStore = useFileStore()
 
 // Refs
@@ -609,6 +610,7 @@ const downloadFile = (url, filename) => {
 }
 
 onMounted(async () => {
+    await userStore.getUser()
     currentUser.value = JSON.parse(getUserId())
     await roomStore.getRooms()
     connectToWebSocket()

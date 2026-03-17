@@ -62,7 +62,8 @@
                                             <div class="relative">
                                                 <input id="phone" v-model="formData.phone" type="tel" placeholder="+993"
                                                     class="w-full px-4 py-4 bg-[#EBF3FD] rounded-xl outline-none  transition-all duration-300 text-[#222222] placeholder-gray-400"
-                                                    :class="{ 'border-red-400': errors.phone }" />
+                                                    :class="{ 'border-red-400': errors.phone }"
+                                                    @input="formData.phone = $event.target.value.replace(/[^0-9+]/g, '')" />
                                                 <Transition name="fade">
                                                     <p v-if="errors.phone" class="mt-2 text-sm text-red-600">{{
                                                         errors.phone }}</p>

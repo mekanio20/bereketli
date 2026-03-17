@@ -45,7 +45,8 @@
                                 </Transition>
 
                                 <div class="flex items-center justify-between pb-5">
-                                    <button type="button" @click.stop="resetTimer" class="text-[#F98900] hover:underline cursor-pointer">
+                                    <button type="button" @click="resetTimer" :disabled="isTimerActive" class="text-[#F98900]"
+                                    :class="[isTimerActive ? 'opacity-40' : 'cursor-pointer']">
                                         {{ $t('buttons.resend') }}
                                     </button>
                                     <span class="text-sm font-medium text-[#222222]">
@@ -142,14 +143,14 @@ const resetTimer = async () => {
 
     if (register_data) {
         await authStore.sendOtp({
-            email: register_data.email,
-            phone_number: register_data.phone_number,
+            email: register_data?.email,
+            phone_number: register_data?.phone_number,
             purpose: "registration"
         })
     } else if (reset_data) {
         await authStore.sendOtp({
-            email: register_data.email,
-            phone_number: register_data.phone_number,
+            email: reset_data?.email,
+            phone_number: reset_data?.phone_number,
             purpose: "forgot_password"
         })
     }

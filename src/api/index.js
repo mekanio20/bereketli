@@ -6,7 +6,6 @@ import {
   setRefreshToken,
   clearTokens,
 } from "@/composables/useTokens";
-import router from "@/router/index.js";
 
 const api = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
@@ -20,6 +19,12 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const plainAxios = axios.create({
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+  headers: { "Content-Type": "application/json" },
+  withCredentials: true,
+});
+
 api.interceptors.request.use(
   (config) => {
     config.headers["Accept-Language"] = localStorage.getItem("lang");
@@ -28,7 +33,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 let isRefreshing = false;
@@ -64,7 +69,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { data } = await api.post("token/refresh", {
+        const { data } = await plainAxios.post("token/refresh", {
           refresh: getRefreshToken() || "",
         });
 
@@ -76,7 +81,11 @@ api.interceptors.response.use(
       } catch (err) {
         processQueue(err, null);
         clearTokens();
-        router.push({ name: "Home" });
+
+        const { useAppStore } = await import("@/stores/app");
+        const appStore = useAppStore();
+        appStore.toggleModal("login");
+
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
@@ -84,7 +93,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

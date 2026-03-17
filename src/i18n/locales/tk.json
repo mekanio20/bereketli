@@ -31,7 +31,9 @@
     "order_statuses": "Sargydyň ýagdaýlary",
     "pending": "Garaşylýanlar",
     "delivered": "Tamamlananlar",
-    "about": "Näme üçin bizi saýlamaly"
+    "about": "Näme üçin bizi saýlamaly",
+    "lang": "Dil",
+    "forgot_password": "Açar sözi unutdym"
   },
   "menu": {
     "home_page": "Baş sahypa",

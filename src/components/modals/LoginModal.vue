@@ -62,7 +62,8 @@
                                             <div class="relative">
                                                 <input id="phone" v-model="formData.phone" type="tel" placeholder="+993"
                                                     class="w-full px-4 py-4 bg-[#EBF3FD] rounded-xl outline-none  transition-all duration-300 text-[#222222] placeholder-gray-400"
-                                                    :class="{ 'border-red-400': errors.phone }" />
+                                                    :class="{ 'border-red-400': errors.phone }"
+                                                    @input="formData.phone = $event.target.value.replace(/[^0-9+]/g, '')" />
                                                 <Transition name="fade">
                                                     <p v-if="errors.phone" class="mt-2 text-sm text-red-600">{{
                                                         errors.phone }}</p>
@@ -86,7 +87,7 @@
                                                 </div>
                                             </div>
                                             <div class="flex items-center justify-end">
-                                                <button type="button" @click="$emit('redirect', 'reset')" class="font-medium text-sm text-[#002645] hover:underline mt-2">Açar sözi unutdym</button>
+                                                <button type="button" @click="$emit('redirect', 'reset')" class="font-medium text-sm text-[#002645] hover:underline mt-2">{{ $t('names.forgot_password') }}</button>
                                             </div>
                                             <Transition name="fade">
                                                 <p v-if="errors.password" class="mt-2 text-sm text-red-600">{{
@@ -128,7 +129,7 @@
                                                 </div>
                                             </div>
                                             <div class="flex items-center justify-end mt-2">
-                                                <button type="button" @click="$emit('redirect', 'reset')" class="font-medium text-sm text-[#002645] hover:underline">Açar sözi unutdym</button>
+                                                <button type="button" @click="$emit('redirect', 'reset')" class="font-medium text-sm text-[#002645] hover:underline">{{ $t('names.forgot_password') }}</button>
                                             </div>
                                             <Transition name="fade">
                                                 <p v-if="errors.password" class="text-sm text-red-600">{{

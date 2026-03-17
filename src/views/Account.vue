@@ -76,27 +76,29 @@
                                     <div class="w-12 h-12 bg-[#EBF3FD] rounded-xl flex items-center justify-center">
                                         <edit-icon class="text-blue-600" />
                                     </div>
-                                    <h2 class="sm:text-2xl text-xl font-bold text-[#222222]">{{ $t('names.account_info') }}</h2>
+                                    <h2 class="sm:text-2xl text-xl font-bold text-[#222222]">{{ $t('names.account_info')
+                                        }}</h2>
                                 </div>
 
                                 <form @submit.prevent="handleSaveProfile" class="space-y-6">
                                     <!-- First Name and Last Name -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-medium text-[#838589] mb-2">{{ $t('forms.name') }}</label>
+                                            <label class="block text-sm font-medium text-[#838589] mb-2">{{
+                                                $t('forms.name') }}</label>
                                             <form-input v-model="profileData.first_name" type="text" />
                                         </div>
                                         <div>
-                                            <label
-                                                class="block text-sm font-medium text-[#838589] mb-2">{{ $t('forms.surname') }}</label>
+                                            <label class="block text-sm font-medium text-[#838589] mb-2">{{
+                                                $t('forms.surname') }}</label>
                                             <form-input v-model="profileData.last_name" type="text" />
                                         </div>
                                     </div>
 
                                     <!-- Company Name -->
                                     <div>
-                                        <label
-                                            class="block text-sm font-medium text-[#838589] mb-2">{{ $t('forms.company') }}</label>
+                                        <label class="block text-sm font-medium text-[#838589] mb-2">{{
+                                            $t('forms.company') }}</label>
                                         <form-input v-model="profileData.company" type="text" />
                                     </div>
 
@@ -105,7 +107,9 @@
                                         <label class="block text-sm font-medium text-[#838589] mb-2">
                                             {{ $t('forms.phone_number') }}
                                         </label>
-                                        <form-input v-model="profileData.phone_number" type="tel" />
+                                        <input v-model="profileData.phone_number"
+                                            @input="profileData.phone_number = $event.target.value.replace(/[^0-9+]/g, '')"
+                                            class="bg-[#EBF3FD] text-[#222222] sm:text-base text-sm h-[50px] font-medium outline-none w-full px-[30px] py-[9px] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300" />
                                     </div>
 
                                     <!-- Save Button -->
@@ -127,7 +131,8 @@
                                     <div class="w-12 h-12 bg-[#EBF3FD] rounded-xl flex items-center justify-center">
                                         <key-icon />
                                     </div>
-                                    <h2 class="sm:text-2xl text-xl font-bold text-[#222222]">{{ $t('buttons.reset_password') }}</h2>
+                                    <h2 class="sm:text-2xl text-xl font-bold text-[#222222]">{{
+                                        $t('buttons.reset_password') }}</h2>
                                 </div>
 
                                 <form @submit.prevent="handleChangePassword" class="space-y-6">
@@ -155,7 +160,8 @@
                                             {{ $t('forms.confirm_password') }}
                                         </label>
                                         <div class="relative">
-                                            <form-input v-model="passwordData.confirm" :type="confirmPasswordType" placeholder="" />
+                                            <form-input v-model="passwordData.confirm" :type="confirmPasswordType"
+                                                placeholder="" />
                                             <div
                                                 class="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer">
                                                 <eye_hide-icon v-if="confirmPasswordType === 'password'"
@@ -185,12 +191,11 @@
 
         <!-- Confirmation Modals -->
         <ConfirmModal :is-open="showLogoutModal" :title="$t('buttons.logout')" :message="$t('descriptions.logout')"
-            type="danger" @confirm="confirmLogout"
-            @cancel="showLogoutModal = false" />
+            type="danger" @confirm="confirmLogout" @cancel="showLogoutModal = false" />
 
         <ConfirmModal :is-open="showDeleteModal" :title="$t('buttons.delete_account')"
-            :message="$t('descriptions.delete_account')"
-            type="danger" @confirm="confirmDelete" @cancel="showDeleteModal = false" />
+            :message="$t('descriptions.delete_account')" type="danger" @confirm="confirmDelete"
+            @cancel="showDeleteModal = false" />
     </section>
 </template>
 
