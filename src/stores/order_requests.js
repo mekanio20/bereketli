@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { useToastStore } from "@/stores/toast";
 import api from "@/api/index";
+import i18n from "@/i18n/index";
+const { t } = i18n.global
 
 export const useOrderRequestStore = defineStore("order_requests", {
   state: () => ({
@@ -50,18 +52,18 @@ export const useOrderRequestStore = defineStore("order_requests", {
 
         toast.show({
           type: "success",
-          title: "Üstünlikli",
-          message: "Sargyt islegi üstünlikli ugradyldy.",
-        });
+          title: t('success.name'),
+          message: t('success.order_send'),
+        })
 
         return response.data;
       } catch (error) {
         console.log("POST order request: ", error);
         toast.show({
           type: "error",
-          title: "Ýalňyşlyk",
-          message: "Sargyt islegini ugratmakda näsazlyk ýüze çykdy.",
-        });
+          title: t('errors.name'),
+          message: t('errors.order_send'),
+        })
         this.error = error;
         throw error;
       } finally {
@@ -91,8 +93,8 @@ export const useOrderRequestStore = defineStore("order_requests", {
 
         toast.show({
           type: "success",
-          title: "Üstünlikli",
-          message: "Sargyt islegi üstünlikli üýtgedildi.",
+          title: t('success.name'),
+          message: t('success.order_update'),
         });
 
         return response.data;
@@ -100,8 +102,8 @@ export const useOrderRequestStore = defineStore("order_requests", {
         console.log("PATCH order request: ", error);
         toast.show({
           type: "error",
-          title: "Ýalňyşlyk",
-          message: "Sargyt islegini üýtgetmekde näsazlyk ýüze çykdy.",
+          title: t('errors.name'),
+          message: t('success.order_update'),
         });
         this.error = error;
         throw error;
@@ -121,8 +123,8 @@ export const useOrderRequestStore = defineStore("order_requests", {
 
         toast.show({
           type: "success",
-          title: "Üstünlikli",
-          message: "Sargyt islegi üstünlikli pozuldy.",
+          title: t('success.name'),
+          message: ('success.order_delete'),
         });
 
         return response.data;
@@ -130,8 +132,8 @@ export const useOrderRequestStore = defineStore("order_requests", {
         console.log("DELETE order request: ", error);
         toast.show({
           type: "error",
-          title: "Ýalňyşlyk",
-          message: "Sargyt islegini pozmakda näsazlyk ýüze çykdy.",
+          title: t('errors.name'),
+          message: t('errors.order_delete'),
         });
         this.error = error;
         throw error;

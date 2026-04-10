@@ -177,7 +177,19 @@ const handleBackspace = (index) => {
     }
 }
 
-watch(() => props.isOpen, (isOpen) => { if (isOpen) startTimer() })
+watch(() => props.isOpen, async (isOpen) => { 
+    if (isOpen) {
+        startTimer();
+        
+        await nextTick();
+        
+        setTimeout(() => {
+            if (inputRefs.value[0]) {
+                inputRefs.value[0].focus();
+            }
+        }, 100);
+    } 
+})
 
 onUnmounted(() => {
     clearInterval(timerInterval.value);

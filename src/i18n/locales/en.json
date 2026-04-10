@@ -38,7 +38,7 @@
   "menu": {
     "home_page": "Home",
     "about_us": "About Us",
-    "contacts": "Contact",
+    "contacts": "Chat",
     "services": "Our Services",
     "warehouses": "Warehouses",
     "privacy": "Privacy",
@@ -237,9 +237,13 @@
     "name": "Success!",
     "reset_password": "Your password has been successfully updated",
     "send_otp": "Verification code has been sent",
-    "order": "Your order has been successfully placed",
     "account_update": "Account information has been successfully updated",
-    "contact_send": "Message has been sent"
+    "contact_send": "Message has been sent",
+    "order": "Order updated successfully",
+    "order_send": "Order request sent successfully",
+    "order_update": "Order request modified successfully",
+    "order_delete": "Order request deleted successfully",
+    "user_update": "User information updated successfully"
   },
   "errors": {
     "name": "Failed!",
@@ -254,6 +258,11 @@
     "login_failed": "Invalid login credentials!",
     "register_failed": "User already exists!",
     "otp_failed": "Invalid verification code!",
-    "reset_password_failed": "Failed to reset password!"
+    "reset_password_failed": "Failed to reset password!",
+    "order": "Could not update order!",
+    "order_send": "An error occurred while sending the order request.",
+    "order_update": "An error occurred while modifying the order request.",
+    "order_delete": "An error occurred while deleting the order request.",
+    "user_update": "Could not update user information"
   }
 }

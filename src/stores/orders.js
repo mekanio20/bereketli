@@ -1,20 +1,12 @@
 import { defineStore } from "pinia";
 import api from "@/api/index";
 import { useToastStore } from "@/stores/toast";
+import i18n from "@/i18n/index";
+const { t } = i18n.global
 
 export const useOrderStore = defineStore("orders", {
   state: () => ({
-    orders: [
-      {
-        id: 1,
-        code: "ORD-1232",
-        date_shipment_expected: "2025.12.24",
-        from_country: { name: "NewYork" },
-        date_arrival_expected: "2024.24.11",
-        to_country: { name: "Men" },
-        status: "PENDING",
-      },
-    ],
+    orders: [],
     order: {},
     error: null,
     loading: false,
@@ -60,8 +52,8 @@ export const useOrderStore = defineStore("orders", {
 
         toast.show({
           type: "success",
-          title: "Üstünlikli",
-          message: "Sargyt üstünlikli täzelendi.",
+          title: t('success.name'),
+          message: t('success.order'),
         });
 
         return response.data;
@@ -69,8 +61,8 @@ export const useOrderStore = defineStore("orders", {
         console.log("PATCH order: ", error);
         toast.show({
           type: "error",
-          title: "Ýalňyşlyk",
-          message: "Sargydy täzeläp bolmady.",
+          title: t('errors.name'),
+          message: t('errors.order'),
         });
         this.error = error;
         throw error;

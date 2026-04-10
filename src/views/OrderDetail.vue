@@ -70,14 +70,14 @@
                             </div>
 
                             <!-- View on Map Button -->
-                            <a target="_blank" :href="order?.location"
+                            <!-- <a target="_blank" :href="order?.location"
                                 class="w-full sm:max-w-[400px] my-4 flex items-center justify-center gap-3 px-[10px] py-4 bg-[#002645] text-white rounded-full hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 group relative cursor-pointer">
                                 <div
                                     class="w-10 h-10 absolute left-3 bg-white rounded-full flex items-center justify-center group-hover:scale-105 transform transition-all duration-300">
                                     <route-icon />
                                 </div>
                                 <span class="font-semibold pl-4 pr-6">{{ $t('buttons.view_map') }}</span>
-                            </a>
+                            </a> -->
                         </FormContainer>
 
                         <!-- Timeline Card -->

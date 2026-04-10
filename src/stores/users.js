@@ -3,6 +3,8 @@ import { useAuthStore } from "@/stores/auth";
 import { useToastStore } from "@/stores/toast";
 import { setUserId } from "@/composables/useTokens";
 import api from "@/api/index";
+import i18n from "@/i18n/index";
+const { t } = i18n.global
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -43,15 +45,15 @@ export const useUserStore = defineStore("user", {
 
         toast.show({
           type: "success",
-          title: "Üstünlikli",
-          message: "Ulanyjy maglumatlary üstünlikli täzelendi.",
+          title: t('success.name'),
+          message: t('success.user_update'),
         });
       } catch (error) {
         this.error = error;
         toast.show({
           type: "error",
-          title: "Ýalňyşlyk",
-          message: "Ulanyjy maglumatlaryny täzeläp bolmady.",
+          title: t('errors.name'),
+          message: t('errors.user_update'),
         });
       } finally {
         this.loading = false;

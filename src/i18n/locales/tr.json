@@ -38,7 +38,7 @@
   "menu": {
     "home_page": "Ana Sayfa",
     "about_us": "Hakkımızda",
-    "contacts": "İletişim",
+    "contacts": "Sohbet",
     "services": "Hizmetlerimiz",
     "warehouses": "Depolar",
     "privacy": "Gizlilik",
@@ -237,9 +237,13 @@
     "name": "Başarılı!",
     "reset_password": "Şifreniz başarıyla güncellendi",
     "send_otp": "Doğrulama kodu gönderildi",
-    "order": "Siparişiniz başarıyla oluşturuldu",
     "account_update": "Hesap bilgileriniz başarıyla güncellendi",
-    "contact_send": "Mesaj gönderildi"
+    "contact_send": "Mesaj gönderildi",
+    "order": "Sipariş başarıyla güncellendi",
+    "order_send": "Sipariş talebi başarıyla gönderildi",
+    "order_update": "Sipariş talebi başarıyla değiştirildi",
+    "order_delete": "Sipariş talebi başarıyla silindi",
+    "user_update": "Kullanıcı bilgileri başarıyla güncellendi"
   },
   "errors": {
     "name": "Başarısız!",
@@ -254,6 +258,11 @@
     "login_failed": "Giriş bilgileri hatalı!",
     "register_failed": "Kullanıcı zaten mevcut!",
     "otp_failed": "Doğrulama kodu hatalı!",
-    "reset_password_failed": "Şifre sıfırlanamadı!"
+    "reset_password_failed": "Şifre sıfırlanamadı!",
+    "order": "Sipariş güncellenemedi!",
+    "order_send": "Sipariş talebi gönderilirken bir hata oluştu.",
+    "order_update": "Sipariş talebi değiştirilirken bir hata oluştu.",
+    "order_delete": "Sipariş talebi silinirken bir hata oluştu.",
+    "user_update": "Kullanıcı bilgileri güncellenemedi"
   }
 }

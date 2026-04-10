@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <div v-else class="py-10">
-                        <NoData :message="$t('no_order')" />
+                        <NoData :message="$t('info.no_order')" />
                     </div>
                 </div>
             </div>

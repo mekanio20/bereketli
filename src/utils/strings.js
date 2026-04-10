@@ -7,7 +7,7 @@ export const getChatName = (room) => {
     if (room.room_type === 'order' && room.order) {
         return `ORD-${room.order.code}`
     } else if (room.room_type === 'order' && !room.order) {
-        return `REQ-${room.code}`
+        return `ORD-${room.code}` // REQ bolmaly aslynda
     } else {
         return 'Bereketli support'
     }

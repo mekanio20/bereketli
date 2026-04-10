@@ -68,7 +68,7 @@
                     </aside>
 
                     <!-- Main Chat Area -->
-                    <main v-if="selectedRoom"
+                    <main v-show="selectedRoom"
                         class="flex-1 flex flex-col bg-white rounded-[26px] h-[600px] overflow-y-auto">
                         <!-- Chat Header -->
                         <header class="flex items-center gap-4 px-6 py-5 border-b border-[#EDEDED]">
@@ -78,7 +78,7 @@
                             </div>
                             <div>
                                 <h2 class="text-xl font-bold text-[#222222]">{{ getChatName(selectedRoom) }}</h2>
-                                <p class="text-sm text-[#838589]">{{ selectedRoom.code }}</p>
+                                <p class="text-sm text-[#838589]">{{ selectedRoom?.code }}</p>
                             </div>
                         </header>
 
@@ -240,7 +240,7 @@
                                     <attachment-icon />
                                 </button>
 
-                                <form-input v-model="newMessage" type="text" :placeholder="$t('forms.write_sms')"
+                                <form-input ref="messageInputRef" v-model="newMessage" type="text" :placeholder="$t('forms.write_sms')"
                                     class="rounded-full placeholder:text-[#838589] font-normal text-[#222222] mx-2" />
 
                                 <button type="submit"
@@ -257,7 +257,7 @@
                     </main>
 
                     <!-- Empty State -->
-                    <div v-else class="flex-1 flex items-center justify-center bg-white rounded-[26px]">
+                    <div v-show="!selectedRoom" class="flex-1 flex items-center justify-center bg-white rounded-[26px]">
                         <div class="text-center">
                             <div
                                 class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -290,6 +290,7 @@ const fileStore = useFileStore()
 const messagesContainer = ref(null)
 const imageInput = ref(null)
 const fileInput = ref(null)
+const messageInputRef = ref(null);
 
 const selectedRoom = ref(null)
 const newMessage = ref('')
@@ -467,6 +468,12 @@ const selectChat = async (room) => {
     room.unread_count = 0
     currentOffset.value = 0
     hasMoreMessages.value = false
+
+    await nextTick()
+
+    if (messageInputRef.value) {
+        messageInputRef.value.focus();
+    }
 
     const result = await messageStore.getMessages({
         room_code: room.code,

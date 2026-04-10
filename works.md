@@ -22,3 +22,18 @@
 - [x] Alert esli net order
 - [x] sms yazyn неправильно , напиши сообщение
 - [x] сообщение отправляется рано
+
+05.04.2026
+
+- [x] OTP modal autofocus
+- [x] search result modal -> no_order
+- [x] Contact -> Chat yazmaly
+- [x] Chat'da autofocus
+- [x] simple order toast terjime redirect Home
+- [x] order detail karta yok etmeli
+- [] gitmei sene barmaly sene ayyrmaly -> srocna select goshmaly
+- [] order formda required icon goymaly
+- [] request orderlarda sort gerek
+- [] chat'da song
+- [] order detail'da order checkpointler bolmaly
+- [] from to routerlara gora etmeli

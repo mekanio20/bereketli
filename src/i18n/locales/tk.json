@@ -38,7 +38,7 @@
   "menu": {
     "home_page": "Baş sahypa",
     "about_us": "Biz barada",
-    "contacts": "Habarlaşmak",
+    "contacts": "Söhbetdeşlik",
     "services": "Hyzmatlarymyz",
     "warehouses": "Ammarlar",
     "privacy": "Howpsuzlyk",
@@ -237,9 +237,13 @@
     "name": "Üstünlikli!",
     "reset_password": "Parolyňyz üstünlikli täzelendi",
     "send_otp": "Tassyklama kody ugradyldy",
-    "order": "Sargydyňyz üstünlikli amala aşyryldy",
     "account_update": "Hasap maglumatlary üstünlikli täzelendi",
-    "contact_send": "Habar ugradyldy"
+    "contact_send": "Habar ugradyldy",
+    "order": "Sargyt üstünlikli täzelendi",
+    "order_send": "Sargyt islegi üstünlikli ugradyldy",
+    "order_update": "Sargyt islegi üstünlikli üýtgedildi.",
+    "order_delete": "Sargyt islegi üstünlikli pozuldy",
+    "user_update": "Ulanyjy maglumatlary üstünlikli täzelendi"
   },
   "errors": {
     "name": "Şowsuz boldy!",
@@ -254,6 +258,11 @@
     "login_failed": "Giriş maglumatlary nädogry!",
     "register_failed": "Ulanyjy eýýäm bar!",
     "otp_failed": "Tassyklama kodu nädogry!",
-    "reset_password_failed": "Paroly täzeläp bolmady!"
+    "reset_password_failed": "Paroly täzeläp bolmady!",
+    "order": "Sargydy täzeläp bolmady!",
+    "order_send": "Sargyt islegini ugratmakda näsazlyk ýüze çykdy.",
+    "order_update": "Sargyt islegini üýtgetmekde näsazlyk ýüze çykdy.",
+    "order_delete": "Sargyt islegini pozmakda näsazlyk ýüze çykdy.",
+    "user_update": "Ulanyjy maglumatlaryny täzeläp bolmady"
   }
 }

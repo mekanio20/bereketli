@@ -38,7 +38,7 @@
   "menu": {
     "home_page": "首页",
     "about_us": "关于我们",
-    "contacts": "联系我们",
+    "contacts": "聊天",
     "services": "我们的服务",
     "warehouses": "仓库",
     "privacy": "隐私",
@@ -237,9 +237,13 @@
     "name": "成功！",
     "reset_password": "您的密码已成功更新",
     "send_otp": "验证码已发送",
-    "order": "您的订单已成功提交",
     "account_update": "账户信息已成功更新",
-    "contact_send": "消息已发送"
+    "contact_send": "消息已发送",
+    "order": "订单更新成功",
+    "order_send": "订单请求发送成功",
+    "order_update": "订单请求修改成功",
+    "order_delete": "订单请求删除成功",
+    "user_update": "用户信息更新成功"
   },
   "errors": {
     "name": "失败！",
@@ -254,6 +258,11 @@
     "login_failed": "登录信息不正确！",
     "register_failed": "用户已存在！",
     "otp_failed": "验证码不正确！",
-    "reset_password_failed": "无法重置密码！"
+    "reset_password_failed": "无法重置密码！",
+    "order": "无法更新订单！",
+    "order_send": "发送订单请求时出错。",
+    "order_update": "修改订单请求时出错。",
+    "order_delete": "删除订单请求时出错。",
+    "user_update": "无法更新用户信息"
   }
 }
