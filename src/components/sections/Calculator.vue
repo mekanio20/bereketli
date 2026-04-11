@@ -6,12 +6,12 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-14">
             <div class="relative">
-                <SimpleSelect :isSearch="true" v-model="formData.from_country" :options="nirdenOptions"
+                <SimpleSelect :isSearch="true" v-model="formData.from_country" :options="nirdenOptions" @change="getToCountry($event, 'from')" :loading="countryStore.loading"
                    :placeholder="$t('forms.from')" />
             </div>
 
             <div class="relative">
-                <SimpleSelect :isSearch="true" v-model="formData.to_country" :options="niraOptions"
+                <SimpleSelect :isSearch="true" v-model="formData.to_country" :options="niraOptions" @change="getToCountry($event, 'to')" :loading="countryStore.loading"
                    :placeholder="$t('forms.to')" />
             </div>
 
@@ -60,6 +60,16 @@ const formData = ref({
     height: 0,
     item_size: 0
 })
+
+const getToCountry = async (country, where) => {
+    if (where === 'from') {
+        await countryStore.fetchCountries({ from_country: country.id })
+        niraOptions.value = normalizeToIdLabel(countryStore.countries)
+    } else if (where === 'to') {
+        await countryStore.fetchCountries({ to_country: country.id })
+        nirdenOptions.value = normalizeToIdLabel(countryStore.countries)
+    }
+}
 
 const handleAddData = async (data) => {
     formData.value = {

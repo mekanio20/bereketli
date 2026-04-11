@@ -105,7 +105,9 @@
     "container_quantity": "集装箱数量",
     "cargos": "货物",
     "pickup_date": "取货日期",
-    "delivery_date": "送达日期"
+    "delivery_date": "送达日期",
+    "urgent": "紧急",
+    "not_urgent": "不紧急"
   },
   "buttons": {
     "view_all": "查看全部",

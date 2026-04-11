@@ -35,7 +35,9 @@
                     {{ option.label }}
                 </button>
 
-                <div v-if="!filteredOptions.length" class="px-6 py-4 sm:text-sm text-xs text-gray-400">
+                <Loading v-if="loading" />
+
+                <div v-if="!filteredOptions.length && !loading" class="px-6 py-4 sm:text-sm text-xs text-gray-400">
                     {{ $t('info.no_results') }}
                 </div>
             </div>
@@ -60,6 +62,10 @@ const props = defineProps({
     placeholder: {
         type: String,
         default: ''
+    },
+    loading: {
+        type: Boolean,
+        default: false
     },
     isSearch: Boolean,
     readonly: Boolean,

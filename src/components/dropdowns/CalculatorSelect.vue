@@ -224,6 +224,8 @@ const handleClickOutside = (e) => {
     }
 }
 
+
+
 onMounted(async () => {
     await Promise.all([
         measurementStore.fetchMeasurements(),

@@ -105,7 +105,9 @@
     "container_quantity": "Konteýner sany",
     "cargos": "Ýükler",
     "pickup_date": "Ugradylmaly senesi",
-    "delivery_date": "Barmaly senesi"
+    "delivery_date": "Barmaly senesi",
+    "urgent": "Gyssagly",
+    "not_urgent": "Gyssagly däl"
   },
   "buttons": {
     "view_all": "Ählisini görmek",

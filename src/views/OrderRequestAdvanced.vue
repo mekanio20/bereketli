@@ -28,7 +28,7 @@
                                 <div class="w-full sm:flex-1 flex flex-col space-y-6 sm:space-y-8">
                                     <SimpleSelect v-model="formData.from_incoterm" :options="incoTerms"
                                         :placeholder="$t('forms.from_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
-                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions"
+                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions" @change="getToCountry($event, 'from')" :loading="countryStore.loading"
                                         :placeholder="$t('forms.from')" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
 
@@ -44,7 +44,7 @@
                                 <div class="w-full sm:flex-1 flex flex-col space-y-6 sm:space-y-8">
                                     <SimpleSelect v-model="formData.to_incoterm" :options="incoTerms"
                                         :placeholder="$t('forms.to_incoterm')" :isSearch="true" :icon="'map_pin-icon'" />
-                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions"
+                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions" @change="getToCountry($event, 'to')" :loading="countryStore.loading"
                                         :placeholder="$t('forms.to')" :isSearch="true" :icon="'map_pin-icon'" />
                                 </div>
                             </div>
@@ -222,16 +222,7 @@
                         <!-- Date Section - Mobile only (shown below items on mobile) -->
                         <FormContainer class="lg:hidden">
                             <h2 class="form_title mb-6">{{ $t('forms.transport_time') }}</h2>
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
-                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false" />
-                                </div>
-                                <div>
-                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
-                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false" />
-                                </div>
-                            </div>
+                            <SimpleSelect v-model="formData.urgent" :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-10 py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
@@ -248,18 +239,9 @@
                     <div class="hidden lg:block w-[35%] space-y-6 self-start sticky top-32">
                         <FormContainer>
                             <h2 class="form_title mb-8">{{ $t('forms.transport_time') }}</h2>
-                            <div class="space-y-6">
-                                <div>
-                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.pickup_date') }}</label>
-                                    <VueDatePicker v-model="formData.date_shipment_expected" :enable-time-picker="false" />
-                                </div>
-                                <div>
-                                    <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.delivery_date') }}</label>
-                                    <VueDatePicker v-model="formData.date_arrival_expected" :enable-time-picker="false" />
-                                </div>
-                            </div>
+                            <SimpleSelect v-model="formData.urgent" :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
-                                class="w-full mt-[70px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
+                                class="w-full mt-[30px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
                                 <span v-if="!orderRequestStore.loading">{{ $t('buttons.confirmation') }}</span>
                                 <span v-else class="flex items-center justify-center gap-2">
@@ -281,12 +263,11 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n'
-const { t, locale } = useI18n({ useScope: 'global' })
+const { t } = useI18n({ useScope: 'global' })
 
 import background from '@/assets/images/background.webp'
 import { normalizeToIdLabel } from '@/utils/normalizers'
 import { formattedMeasurement } from '@/utils/strings'
-import { formatToYYYYMMDD } from '@/utils/date'
 
 const { icons } = useIcons()
 const countryStore = useCountryStore()
@@ -350,6 +331,7 @@ const descClass = (type) => [
 const editData = ref({})
 const formData = reactive({
     type: 'ADVANCED',
+    urgent: false,
     from_country: null,
     to_country: null,
     from_incoterm: null,
@@ -357,8 +339,6 @@ const formData = reactive({
     description: '',
     route_type: 'direct',
     transportation_type: '',
-    date_shipment_expected: '',
-    date_arrival_expected: '',
     categories: [],
     containers: [{
         type: null,
@@ -371,6 +351,16 @@ const formData = reactive({
     }],
     items: []
 })
+
+const getToCountry = async (country, where) => {
+    if (where === 'from') {
+        await countryStore.fetchCountries({ from_country: country.id })
+        niraOptions.value = normalizeToIdLabel(countryStore.countries)
+    } else if (where === 'to') {
+        await countryStore.fetchCountries({ to_country: country.id })
+        nirdenOptions.value = normalizeToIdLabel(countryStore.countries)
+    }
+}
 
 const swapLocations = () => {
     isSwap.value = !isSwap.value
@@ -416,9 +406,7 @@ const submitOrder = async () => {
             containers: formData.containers.map(container => ({
                 type: container.type,
                 quantity: container.quantity
-            })),
-            date_arrival_expected: formatToYYYYMMDD(formData.date_arrival_expected),
-            date_shipment_expected: formatToYYYYMMDD(formData.date_shipment_expected)
+            }))
         })
         resetForm()
     } catch (error) {
@@ -448,8 +436,6 @@ const resetForm = () => {
     formData.containers = [{ type: null, quantity: 0 }]
     formData.items = []
     formData.transportation_type = ''
-    formData.date_shipment_expected = ''
-    formData.date_arrival_expected = ''
 }
 
 const addNewContainer = () => {

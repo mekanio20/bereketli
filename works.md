@@ -31,9 +31,9 @@
 - [x] Chat'da autofocus
 - [x] simple order toast terjime redirect Home
 - [x] order detail karta yok etmeli
-- [] gitmei sene barmaly sene ayyrmaly -> srocna select goshmaly
-- [] order formda required icon goymaly
+- [x] chat'da song
+- [x] gitmei sene barmaly sene ayyrmaly -> srocna select goshmaly
+- [x] from to routerlara gora etmeli
 - [] request orderlarda sort gerek
-- [] chat'da song
+- [] order formda required icon goymaly
 - [] order detail'da order checkpointler bolmaly
-- [] from to routerlara gora etmeli

@@ -105,7 +105,9 @@
     "container_quantity": "Количество контейнеров",
     "cargos": "Грузы",
     "pickup_date": "Дата отправки",
-    "delivery_date": "Дата прибытия"
+    "delivery_date": "Дата прибытия",
+    "urgent": "Срочно",
+    "not_urgent": "Не срочно"
   },
   "buttons": {
     "view_all": "Посмотреть всё",

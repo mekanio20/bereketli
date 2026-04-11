@@ -105,7 +105,9 @@
     "container_quantity": "Konteyner Sayısı",
     "cargos": "Kargolar",
     "pickup_date": "Alım Tarihi",
-    "delivery_date": "Teslim Tarihi"
+    "delivery_date": "Teslim Tarihi",
+    "urgent": "Acil",
+    "not_urgent": "Acil değil"
   },
   "buttons": {
     "view_all": "Tümünü Gör",

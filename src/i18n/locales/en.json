@@ -105,7 +105,9 @@
     "container_quantity": "Container Quantity",
     "cargos": "Cargos",
     "pickup_date": "Pickup Date",
-    "delivery_date": "Delivery Date"
+    "delivery_date": "Delivery Date",
+    "urgent": "Urgent",
+    "not_urgent": "Not urgent"
   },
   "buttons": {
     "view_all": "View All",

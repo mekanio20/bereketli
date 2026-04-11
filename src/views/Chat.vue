@@ -368,7 +368,6 @@ const connectToWebSocket = () => {
     socket.value.onmessage = (event) => {
         try {
             const data = JSON.parse(event.data)
-
             if (data.type === 'receive_message') {
                 const message = data.message
 
@@ -430,6 +429,8 @@ const connectToWebSocket = () => {
                 console.error('WebSocket error:', data.error)
                 isSending.value = false
             }
+            const sms = new Audio('/sms.mp3')
+            sms.play()
         } catch (err) {
             console.error('WS message parse error:', err)
         }

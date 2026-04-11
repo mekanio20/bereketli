@@ -86,7 +86,7 @@ const fetchData = async ({ reset = false } = {}) => {
 
   try {
     const data = await orderRequestStore.fetchOrderRequests({
-      sort: "date_created",
+      sort: "-date_created",
       search: searchQuery.value?.trim() || undefined,
       limit,
       offset: offset.value,
