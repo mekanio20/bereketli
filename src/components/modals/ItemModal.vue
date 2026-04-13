@@ -16,7 +16,8 @@
                     <div class="p-8 md:p-10">
                         <!-- Header -->
                         <h2 class="text-[30px] text-[#222222] font-bold mb-8 text-center animate-fade-in">
-                            {{ mode === 'add' ? $t('names.new_product_add') : mode === 'view' ? $t('names.products') : $t('names.update_product') }}
+                            {{ mode === 'add' ? $t('names.new_product_add') : mode === 'view' ? $t('names.products') :
+                                $t('names.update_product') }}
                         </h2>
 
                         <!-- Tab Buttons -->
@@ -42,38 +43,64 @@
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <!-- size and Quantity -->
                                         <div>
-                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.quantity') }}</label>
-                                            <form-input :readonly="isReadonly" v-model="formData.quantity" type="number" />
+                                            <label class="block text-sm text-[#939393] mb-2 required">{{
+                                                $t('forms.quantity') }}</label>
+                                            <form-input :readonly="isReadonly" v-model="formData.quantity"
+                                                type="number" />
+                                            <span v-if="errors.quantity" class="text-red-500 text-sm mt-1 block">
+                                                {{ $t('errors.required') }}
+                                            </span>
                                         </div>
                                         <div>
-                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.weight') }}</label>
+                                            <label class="block text-sm text-[#939393] mb-2 required">{{
+                                                $t('forms.weight') }}</label>
                                             <div class="flex gap-2">
-                                                <form-input :readonly="isReadonly" v-model="formData.weight" type="number" />
-                                                <SimpleSelect :readonly="isReadonly" v-model="formData.weightUnit" :options="measurementItems"
-                                                    class="flex-1" />
+                                                <form-input :readonly="isReadonly" v-model="formData.weight"
+                                                    type="number" />
+                                                <SimpleSelect :readonly="isReadonly" v-model="formData.weightUnit"
+                                                    :options="measurementItems" class="flex-1" />
                                             </div>
+                                            <span v-if="errors.weight || errors.weightUnit"
+                                                class="text-red-500 text-sm mt-1 block">
+                                                {{ $t('errors.required') }}
+                                            </span>
                                         </div>
                                     </div>
 
                                     <!-- Dimensions -->
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="space-y-2">
-                                            <label class="text-sm text-[#939393]">{{ $t('forms.width') }}</label>
+                                            <label class="text-sm text-[#939393] required">{{ $t('forms.width')
+                                            }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.width" type="number" />
+                                            <span v-if="errors.width" class="text-red-500 text-sm mt-1 block">
+                                                {{ $t('errors.required') }}
+                                            </span>
                                         </div>
                                         <div class="space-y-2">
-                                            <label class="text-sm text-[#939393]">{{ $t('forms.length') }}</label>
-                                            <form-input :readonly="isReadonly" v-model="formData.length" type="number" />
+                                            <label class="text-sm text-[#939393] required">{{ $t('forms.length')
+                                            }}</label>
+                                            <form-input :readonly="isReadonly" v-model="formData.length"
+                                                type="number" />
+                                            <span v-if="errors.length" class="text-red-500 text-sm mt-1 block">
+                                                {{ $t('errors.required') }}
+                                            </span>
                                         </div>
                                         <div class="space-y-2">
-                                            <label class="text-sm text-[#939393]">{{ $t('forms.height') }}</label>
-                                            <form-input :readonly="isReadonly" v-model="formData.height" type="number" />
+                                            <label class="text-sm text-[#939393] required">{{ $t('forms.height')
+                                            }}</label>
+                                            <form-input :readonly="isReadonly" v-model="formData.height"
+                                                type="number" />
+                                            <span v-if="errors.height" class="text-red-500 text-sm mt-1 block">
+                                                {{ $t('errors.required') }}
+                                            </span>
                                         </div>
                                     </div>
 
                                     <!-- Description -->
                                     <div>
-                                        <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description') }}</label>
+                                        <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description')
+                                        }}</label>
                                         <textarea :readonly="isReadonly" v-model="formData.description" rows="2"
                                             class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
                                     </div>
@@ -82,17 +109,25 @@
                                 <div v-else key="approximate" class="space-y-3 max-h-96 overflow-y-auto pb-2">
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="px-1">
-                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.quantity') }}</label>
-                                            <form-input :readonly="isReadonly" v-model="formData.quantity" type="number" />
+                                            <label class="block text-sm text-[#939393] mb-2 required">{{
+                                                $t('forms.quantity') }}</label>
+                                            <form-input :readonly="isReadonly" v-model="formData.quantity"
+                                                type="number" />
+                                            <span v-if="errors.quantity" class="text-red-500 text-sm mt-1 block">
+                                                {{ $t('errors.required') }}
+                                            </span>
                                         </div>
                                         <!-- Description -->
                                         <div class="px-1 col-span-2">
-                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description') }}</label>
-                                            <form-input :readonly="isReadonly" v-model="formData.description" type="text" />
+                                            <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description')
+                                            }}</label>
+                                            <form-input :readonly="isReadonly" v-model="formData.description"
+                                                type="text" />
                                         </div>
                                     </div>
-                                    <button type="button" v-for="item in approximateItems" :key="item.id" :disabled="isReadonly" @click="selectItem(item)"
-                                        class="w-full flex items-center space-x-8 px-14 py-4 rounded-xl bg-[#EBF3FD] cursor-pointer duration-100"
+                                    <button type="button" v-for="item in approximateItems" :key="item.id"
+                                        :disabled="isReadonly" @click="selectItem(item)"
+                                        class="w-full flex items-center space-x-8 px-14 py-4 mb-2 rounded-xl bg-[#EBF3FD] cursor-pointer duration-100"
                                         :class="[findArrayItem(approximateData, 'id', item.id) ? 'bg-[#bad7ff]' : '']">
                                         <div class="w-[58px] h-[40px]">
                                             <img :src="item.icon" class="w-full h-full object-cover" />
@@ -103,6 +138,9 @@
                                             <p class="text-[#838589] text-sm">{{ formattedMeasurement(item) }}</p>
                                         </div>
                                     </button>
+                                    <span v-if="errors.approximateData" class="text-red-500 text-sm mt-1 block">
+                                        {{ $t('errors.required') }}
+                                    </span>
                                 </div>
                             </Transition>
 
@@ -169,9 +207,19 @@ const formData = reactive({
     description: ''
 })
 
-const handleSubmit = async () => {
-    isSubmitting.value = true
+const errors = reactive({
+    quantity: false,
+    weight: false,
+    weightUnit: false,
+    width: false,
+    length: false,
+    height: false,
+    approximateData: false
+})
 
+const handleSubmit = async () => {
+    if (!validateForm()) return
+    isSubmitting.value = true
     try {
         if (activeTab.value === 'approximate') {
             const selected = approximateData.value[0]
@@ -217,6 +265,26 @@ const handleSubmit = async () => {
         isSubmitting.value = false
     }
 }
+
+const validateForm = () => {
+    Object.keys(errors).forEach(key => errors[key] = false);
+
+    let isValid = true;
+
+    if (activeTab.value === 'individual') {
+        if (!formData.weight || formData.weight <= 0) { errors.weight = true; isValid = false; }
+        if (!formData.weightUnit) { errors.weightUnit = true; isValid = false; }
+        if (!formData.width || formData.width <= 0) { errors.width = true; isValid = false; }
+        if (!formData.length || formData.length <= 0) { errors.length = true; isValid = false; }
+        if (!formData.height || formData.height <= 0) { errors.height = true; isValid = false; }
+        if (!formData.quantity || formData.quantity <= 0) { errors.quantity = true; isValid = false; }
+    } else if (activeTab.value === 'approximate') {
+        if (!formData.quantity || formData.quantity <= 0) { errors.quantity = true; isValid = false; }
+        if (!approximateData.value.length) { errors.approximateData = true; isValid = false; }
+    }
+
+    return isValid;
+};
 
 const selectItem = (item) => {
     if (findArrayItem(approximateData.value, 'id', item.id)) {
@@ -269,7 +337,7 @@ const initEditState = () => {
         formData.length = item.length_m ?? null
         formData.height = item.height_m ?? null
         formData.size = item.size ?? null
-        formData.weightUnit = item.measurement ?? null  
+        formData.weightUnit = item.measurement ?? null
         formData.quantity = item.quantity ?? null
         formData.description = item.description ?? ''
     }

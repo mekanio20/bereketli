@@ -23,12 +23,16 @@
                     <div class="w-full lg:flex-1 space-y-6">
                         <!-- Delivery Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-6 md:mb-8">{{ $t('info.delivery') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8 required">{{ $t('info.delivery') }}</h2>
                             <div class="flex flex-col sm:flex-row items-stretch sm:items-end gap-4 sm:space-x-6 mb-4">
                                 <!-- From Location -->
                                 <div class="w-full sm:flex-1">
-                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions" @change="getToCountry($event, 'from')" :loading="countryStore.loading"
+                                    <SimpleSelect v-model="formData.from_country" :options="nirdenOptions"
+                                        @change="getToCountry($event, 'from')" :loading="countryStore.loading"
                                         :placeholder="$t('forms.from')" :isSearch="true" :icon="'map_pin-icon'" />
+                                    <span v-if="errors.from_country" class="text-red-500 text-sm mt-2 block">
+                                        {{ $t('errors.required') }}
+                                    </span>
                                 </div>
                                 <!-- Swap Button -->
                                 <div class="flex-shrink-0 self-center">
@@ -40,22 +44,30 @@
                                 </div>
                                 <!-- To Location -->
                                 <div class="w-full sm:flex-1">
-                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions" @change="getToCountry($event, 'to')" :loading="countryStore.loading"
+                                    <SimpleSelect v-model="formData.to_country" :options="niraOptions"
+                                        @change="getToCountry($event, 'to')" :loading="countryStore.loading"
                                         :placeholder="$t('forms.to')" :isSearch="true" :icon="'map_pin-icon'" />
+                                    <span v-if="errors.to_country" class="text-red-500 text-sm mt-2 block">
+                                        {{ $t('errors.required') }}
+                                    </span>
                                 </div>
                             </div>
                         </FormContainer>
 
                         <!-- Information Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-6 md:mb-8">{{ $t('info.name') }}</h2>
-                            <textarea v-model="formData.description" :placeholder="$t('forms.write_description')" rows="2"
+                            <h2 class="form_title mb-6 md:mb-8 required">{{ $t('info.name') }}</h2>
+                            <textarea v-model="formData.description" :placeholder="$t('forms.write_description')"
+                                rows="2"
                                 class="bg-[#EBF3FD] w-full px-5 sm:px-[30px] py-4 sm:py-[20px] rounded-[14px] focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+                            <span v-if="errors.description" class="text-red-500 text-sm block">
+                                {{ $t('errors.required') }}
+                            </span>
                         </FormContainer>
 
                         <!-- Categories Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.cargo_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8 required">{{ $t('forms.cargo_type') }}</h2>
                             <div class="flex flex-wrap gap-3">
                                 <button v-for="(item, index) in itemCategoryStore.item_categories" :key="index"
                                     @click="toggleCargoType(item.id)"
@@ -66,11 +78,14 @@
                                     {{ item.name }}
                                 </button>
                             </div>
+                            <span v-if="errors.categories" class="text-red-500 mt-2 text-sm block">
+                                {{ $t('errors.required') }}
+                            </span>
                         </FormContainer>
 
                         <!-- Transport Type Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.transport_type') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8 required">{{ $t('forms.transport_type') }}</h2>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <button v-for="transport in transportTypes" :key="transport.id"
                                     @click="formData.transportation_type = transport.id"
@@ -83,17 +98,21 @@
                                     <span>{{ transport.label }}</span>
                                 </button>
                             </div>
+                            <span v-if="errors.transportation_type" class="text-red-500 text-sm mt-2 block">
+                                {{ $t('errors.required') }}
+                            </span>
                         </FormContainer>
 
                         <!-- Items Section -->
                         <FormContainer>
-                            <h2 class="form_title mb-6 md:mb-8">{{ $t('forms.cargos') }}</h2>
+                            <h2 class="form_title mb-6 md:mb-8 required">{{ $t('forms.cargos') }}</h2>
                             <div class="space-y-3 mb-4">
                                 <div v-for="(item, index) in formData.items" :key="index"
                                     class="flex items-center justify-between p-3 sm:p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors cursor-pointer group"
                                     @click="editItem(index)">
                                     <div>
-                                        <p class="font-semibold text-gray-900 text-sm sm:text-base">{{ `${item.name}` }}</p>
+                                        <p class="font-semibold text-gray-900 text-sm sm:text-base">{{ `${item.name}` }}
+                                        </p>
                                         <p class="text-sm text-[#EBF3FD]0">{{ formattedMeasurement(item) }}</p>
                                     </div>
                                     <div class="flex items-center gap-3">
@@ -108,17 +127,23 @@
 
                             <button @click="() => { itemMode = 'add'; showModal = true }"
                                 class="w-full py-3 bg-blue-50 text-[#002244] font-semibold rounded-xl hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
-                                <div class="w-6 h-6 rounded-full text-white bg-[#002244] flex items-center justify-center">
+                                <div
+                                    class="w-6 h-6 rounded-full text-white bg-[#002244] flex items-center justify-center">
                                     <plus-icon :size="20" />
                                 </div>
                                 {{ $t('buttons.add_cargo') }}
                             </button>
+
+                            <span v-if="errors.items" class="text-red-500 text-sm mt-2 block">
+                                {{ $t('errors.required') }}
+                            </span>
                         </FormContainer>
 
                         <!-- Date Section - Mobile only -->
                         <FormContainer class="lg:hidden">
                             <h2 class="form_title mb-6">{{ $t('forms.transport_time') }}</h2>
-                            <SimpleSelect v-model="formData.urgent" :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
+                            <SimpleSelect v-model="formData.urgent"
+                                :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-10 py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
@@ -135,7 +160,8 @@
                     <div class="hidden lg:block w-[35%] space-y-6 self-start sticky top-32">
                         <FormContainer>
                             <h2 class="form_title mb-8">{{ $t('forms.transport_time') }}</h2>
-                            <SimpleSelect v-model="formData.urgent" :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
+                            <SimpleSelect v-model="formData.urgent"
+                                :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-[30px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
@@ -200,6 +226,14 @@ const formData = reactive({
     transportation_type: '',
     items: []
 })
+const errors = reactive({
+    from_country: false,
+    to_country: false,
+    description: false,
+    categories: false,
+    transportation_type: false,
+    items: false
+})
 
 const getToCountry = async (country, where) => {
     if (where === 'from') {
@@ -245,12 +279,28 @@ const editItem = (index) => {
 }
 
 const submitOrder = async () => {
+    if (!validateForm()) return
     try {
         await orderRequestStore.createOrderRequest({ ...formData })
         resetForm()
     } catch (error) {
         console.log(error)
     }
+}
+
+const validateForm = () => {
+    Object.keys(errors).forEach(key => errors[key] = false)
+
+    let isValid = true
+
+    if (!formData.from_country) { errors.from_country = true; isValid = false }
+    if (!formData.to_country) { errors.to_country = true; isValid = false }
+    if (!formData.description) { errors.description = true; isValid = false }
+    if (formData.categories.length === 0) { errors.categories = true; isValid = false }
+    if (!formData.transportation_type) { errors.transportation_type = true; isValid = false }
+    if (formData.items.length === 0) { errors.items = true; isValid = false }
+
+    return isValid
 }
 
 onMounted(async () => {

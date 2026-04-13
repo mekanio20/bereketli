@@ -34,6 +34,5 @@
 - [x] chat'da song
 - [x] gitmei sene barmaly sene ayyrmaly -> srocna select goshmaly
 - [x] from to routerlara gora etmeli
-- [] request orderlarda sort gerek
-- [] order formda required icon goymaly
+- [x] order formda required icon goymaly
 - [] order detail'da order checkpointler bolmaly
