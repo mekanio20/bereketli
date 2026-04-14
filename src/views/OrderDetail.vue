@@ -87,20 +87,20 @@
 
                             <div class="pt-6">
                                 <!-- Timeline Item -->
-                                <div v-for="(event, index) in timeline" :key="index" class="flex gap-3 sm:gap-4">
+                                <div v-for="(event, index) in displayTimeline" :key="event.id || index" class="flex gap-3 sm:gap-4">
                                     <div class="flex flex-col items-center">
                                         <dote border_width="24px" border_height="24px" bg_width="12px" bg_height="12px"
-                                            :border_color="index - 1 >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'"
-                                            :bg_color="index - 1 >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'" />
-                                        <div v-if="index < timeline.length - 1" class="flex-1" :style="{
-                                            background: `repeating-linear-gradient(to bottom, ${index >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'}, ${index >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase()) ? '#E5E7EB' : '#FFA500'} 5px, transparent 2px, transparent 8px)`,
+                                            :border_color="event.isCompleted ? '#FFA500' : '#E5E7EB'"
+                                            :bg_color="event.isCompleted ? '#FFA500' : '#E5E7EB'" />
+                                        <div v-if="index < displayTimeline.length - 1" class="flex-1" :style="{
+                                            background: `repeating-linear-gradient(to bottom, ${event.isCompleted ? '#FFA500' : '#E5E7EB'}, ${event.isCompleted ? '#FFA500' : '#E5E7EB'} 5px, transparent 2px, transparent 8px)`,
                                             width: '1px'
                                         }"></div>
                                     </div>
                                     <div class="flex-1 pb-8 sm:pb-10">
                                         <p class="font-medium text-[#222222] mb-2 text-sm sm:text-base">{{ event.title
                                             }}</p>
-                                        <p v-if="index - 1 >= timeline.findIndex(e => e.status === String(order?.status).toLowerCase())" class="text-[#838589] text-xs sm:text-sm">{{ time() }}</p>
+                                        <p v-if="event.subtitle" class="text-[#838589] text-xs sm:text-sm">{{ event.subtitle }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -173,16 +173,43 @@ const timeline = ref([
     { title: t('data.timeline.title_4'), status: 'delivered' },
 ])
 
-const time = () => {
-    const today = new Date()
+const checkpointTimeline = computed(() => {
+    const checkpoints = order.value?.checkpoints
+    if (!Array.isArray(checkpoints) || checkpoints.length === 0) return []
 
-    const day = String(today.getDate()).padStart(2, "0")
-    const month = String(today.getMonth() + 1).padStart(2, "0")
-    const year = today.getFullYear()
+    return [...checkpoints]
+        .sort((a, b) => (a.sequence ?? 0) - (b.sequence ?? 0))
+        .map((item) => {
+            const countryName = item?.checkpoint?.country?.name
+            const checkpointName = item?.checkpoint?.name
+            const transportType = item?.checkpoint?.type
+            const date = item?.date_arrived || item?.date_expected || item?.date_updated || item?.date_created || ''
+            const notes = item?.price_notes || item?.notes || ''
 
-    const formattedDate = `${day}.${month}.${year}`
-    return formattedDate
-}
+            return {
+                id: item.id,
+                title: [countryName, checkpointName, transportType].filter(Boolean).join(' - '),
+                subtitle: notes ? `${notes}${date ? ` | ${date}` : ''}` : date,
+                isCompleted: Boolean(item.is_completed),
+            }
+        })
+})
+
+const displayTimeline = computed(() => {
+    if (checkpointTimeline.value.length > 0) return checkpointTimeline.value
+    else return []
+
+    const activeStatusIndex = timeline.value.findIndex(
+        (e) => e.status === String(order.value?.status || '').toLowerCase()
+    )
+
+    return timeline.value.map((item, index) => ({
+        id: `${item.status}-${index}`,
+        title: item.title,
+        subtitle: '',
+        isCompleted: activeStatusIndex !== -1 ? index <= activeStatusIndex : false,
+    }))
+})
 
 watch(() => route.params.id, async (newId) => {
     if (newId) await orderStore.fetchOrder(newId)

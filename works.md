@@ -35,4 +35,4 @@
 - [x] gitmei sene barmaly sene ayyrmaly -> srocna select goshmaly
 - [x] from to routerlara gora etmeli
 - [x] order formda required icon goymaly
-- [] order detail'da order checkpointler bolmaly
+- [x] order detail'da order checkpointler bolmaly
