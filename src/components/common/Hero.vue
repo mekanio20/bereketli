@@ -16,7 +16,7 @@
                 {{ $t('descriptions.hero_2') }}
             </h1>
 
-            <div class="bg-white rounded-3xl shadow-2xl lg:w-[800px] sm:w-[600px] w-[400px] p-6 sm:p-8 space-y-4 animate-slide-up">
+            <div class="bg-white rounded-3xl shadow-2xl lg:w-[800px] sm:w-[600px] w-[400px] p-6 sm:p-8 space-y-4 mx-auto animate-slide-up">
                 <div class="relative">
                     <input v-model="searchInput" @keyup.enter="$emit('search', searchInput)" type="text" :placeholder="$t('descriptions.order_search')"
                         class="w-full md:text-lg sm:text-base text-sm px-6 py-[22px] bg-[#EBF3FD] rounded-[18px] sm:pr-48 pr-20 outline-none text-[#4D4D4D] placeholder-[#4D4D4D]" />

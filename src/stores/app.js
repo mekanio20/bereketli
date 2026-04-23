@@ -5,6 +5,9 @@ export const useAppStore = defineStore("app", {
     activeModal: "", // 'login' | 'register' | 'reset' | 'password' | 'otp'
   }),
   actions: {
+    setModal(modal) {
+      this.activeModal = modal;
+    },
     toggleModal(modal) {
       this.activeModal = this.activeModal === modal ? null : modal;
     },

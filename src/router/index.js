@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAppStore } from "@/stores/app";
 
 const routes = [
   // MAIN
@@ -36,31 +37,37 @@ const routes = [
     path: "/order/requests",
     name: "OrderRequest",
     component: () => import("@/views/OrderRequest.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/order/requests/detail/:id",
     name: "OrderRequestDetail",
     component: () => import("@/views/OrderRequestDetail.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/order/request/simple",
     name: "OrderRequestSimple",
     component: () => import("@/views/OrderRequestSimple.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/order/request/advanced",
     name: "OrderRequestAdvanced",
     component: () => import("@/views/OrderRequestAdvanced.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/order/history",
     name: "OrderHistory",
     component: () => import("@/views/OrderHistory.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/order/:id",
     name: "OrderDetail",
     component: () => import("@/views/OrderDetail.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/account",
@@ -100,6 +107,18 @@ const router = createRouter({
 
     return { top: 0 };
   },
+});
+
+router.beforeEach((to, from, next) => {
+  const appStore = useAppStore();
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const accessToken = localStorage.getItem("access_token");
+
+  if (requiresAuth && !accessToken) {
+    appStore.setModal("login");
+  } else {
+    next();
+  }
 });
 
 export default router;

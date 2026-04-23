@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="flex flex-col space-y-1">
                                     <h4 class="text-[#222222] font-semibold">{{ item.type }}</h4>
-                                    <p class="text-[#868686] text-sm">{{ $t('names.delivery') }}: {{ item.delivery_days }} {{ $t('names.day') }}</p>
+                                    <p class="text-[#868686] text-sm">{{ $t('forms.delivery_date') }}: {{ formatDate(item.delivery_days) }}</p>
                                 </div>
                             </div>
                             <p class="font-bold text-[#222222] text-lg">{{ item.price.toFixed(2) }} TMT</p>
@@ -36,6 +36,9 @@
 
 <script setup>
 const { icons } = useIcons()
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n({ useScope: 'global' })
+import { formatToRuDate } from '@/utils/date';
 defineEmits(['confirm', 'close'])
 defineProps({
     isOpen: Boolean,
@@ -53,6 +56,11 @@ const getTypeIcon = (type) => {
         case 'RAIL':
             return 'train_2-icon'
     }
+}
+
+const formatDate = (day) => {
+    if (locale.value === 'ru') return formatToRuDate(day) 
+    return `${day} ${t('names.day')}`
 }
 </script>
 

@@ -71,7 +71,7 @@
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393] required">{{ $t('forms.width')
-                                            }}</label>
+                                            }} (sm)</label>
                                             <form-input :readonly="isReadonly" v-model="formData.width" type="number" />
                                             <span v-if="errors.width" class="text-red-500 text-sm mt-1 block">
                                                 {{ $t('errors.required') }}
@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393] required">{{ $t('forms.length')
-                                            }}</label>
+                                            }} (sm)</label>
                                             <form-input :readonly="isReadonly" v-model="formData.length"
                                                 type="number" />
                                             <span v-if="errors.length" class="text-red-500 text-sm mt-1 block">
@@ -88,7 +88,7 @@
                                         </div>
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393] required">{{ $t('forms.height')
-                                            }}</label>
+                                            }} (sm)</label>
                                             <form-input :readonly="isReadonly" v-model="formData.height"
                                                 type="number" />
                                             <span v-if="errors.height" class="text-red-500 text-sm mt-1 block">

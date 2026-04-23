@@ -139,13 +139,10 @@
                             </span>
                         </FormContainer>
 
-                        <!-- Date Section - Mobile only -->
-                        <FormContainer class="lg:hidden">
-                            <h2 class="form_title mb-6">{{ $t('forms.transport_time') }}</h2>
-                            <SimpleSelect v-model="formData.urgent"
-                                :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
+                        <!-- Submit Section -->
+                        <FormContainer>
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
-                                class="w-full mt-10 py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
+                                class="w-full py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
                                 <span v-if="!orderRequestStore.loading">{{ $t('buttons.confirmation') }}</span>
                                 <span v-else class="flex items-center justify-center gap-2">
@@ -157,11 +154,8 @@
                     </div>
 
                     <!-- Right Column - Desktop only -->
-                    <div class="hidden lg:block w-[35%] space-y-6 self-start sticky top-32">
-                        <FormContainer>
-                            <h2 class="form_title mb-8">{{ $t('forms.transport_time') }}</h2>
-                            <SimpleSelect v-model="formData.urgent"
-                                :options="[{ id: true, label: $t('forms.urgent') }, { id: false, label: $t('forms.not_urgent') }]" />
+                    <div class="hidden lg:block w-[30%] space-y-6 self-start sticky top-32">
+                        <!-- <FormContainer>
                             <button type="submit" :disabled="orderRequestStore.loading" @click="submitOrder"
                                 class="w-full mt-[30px] py-4 bg-[#002645] text-white font-semibold rounded-full transform hover:scale-[1.02] transition-all duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': orderRequestStore.loading }">
@@ -171,7 +165,7 @@
                                     {{ $t('info.loading') }}
                                 </span>
                             </button>
-                        </FormContainer>
+                        </FormContainer> -->
                     </div>
                 </div>
             </SectionContainer>

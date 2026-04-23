@@ -34,6 +34,7 @@ const RAW_RUNTIME_STATE =
           ["autoprefixer", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.4.23"],\
           ["axios", "npm:1.13.2"],\
           ["countup.js", "npm:2.9.0"],\
+          ["lottie-web", "npm:5.13.0"],\
           ["pinia", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:3.0.4"],\
           ["postcss", "npm:8.5.6"],\
           ["qrcode", "npm:1.5.4"],\
@@ -2444,6 +2445,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["lottie-web", [\
+      ["npm:5.13.0", {\
+        "packageLocation": "../../.yarn/berry/cache/lottie-web-npm-5.13.0-eada0c2e04-10c0.zip/node_modules/lottie-web/",\
+        "packageDependencies": [\
+          ["lottie-web", "npm:5.13.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["lru-cache", [\
       ["npm:11.2.4", {\
         "packageLocation": "../../.yarn/berry/cache/lru-cache-npm-11.2.4-3f72660965-10c0.zip/node_modules/lru-cache/",\
@@ -3899,6 +3909,7 @@ const RAW_RUNTIME_STATE =
           ["autoprefixer", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.4.23"],\
           ["axios", "npm:1.13.2"],\
           ["countup.js", "npm:2.9.0"],\
+          ["lottie-web", "npm:5.13.0"],\
           ["pinia", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:3.0.4"],\
           ["postcss", "npm:8.5.6"],\
           ["qrcode", "npm:1.5.4"],\

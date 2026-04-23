@@ -15,3 +15,20 @@ export const parseTRDate = (str) => {
   const [dd, mm, yyyy] = str.split('.')
   return new Date(Number(yyyy), Number(mm) - 1, Number(dd))
 }
+
+export const formatToRuDate = (day) => {
+    const n = Math.abs(day) % 100;
+    const n1 = n % 10;
+
+    if (n > 10 && n < 20) {
+        return `${day} дней`;
+    }
+    if (n1 === 1) {
+        return `${day} день`;
+    }
+    if (n1 >= 2 && n1 <= 4) {
+        return `${day} дня`;
+    }
+    
+    return `${day} дней`;
+}

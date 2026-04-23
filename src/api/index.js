@@ -84,7 +84,7 @@ api.interceptors.response.use(
 
         const { useAppStore } = await import("@/stores/app");
         const appStore = useAppStore();
-        appStore.toggleModal("login");
+        appStore.setModal("login");
 
         return Promise.reject(err);
       } finally {

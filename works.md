@@ -36,3 +36,12 @@
 - [x] from to routerlara gora etmeli
 - [x] order formda required icon goymaly
 - [x] order detail'da order checkpointler bolmaly
+
+19.04.2026
+
+- [x] Page loader goymaly
+- [x] Auth componentler cykyp ayrylyar
+- [x] Result Price componentde harp yalnsyh den -> dney
+- [x] simple, advanced orderlarda (sm) goymaly
+- [x] orderda srocna ne srocna gerek dal
+- [x] simple order, advanced order -> не сложный, а детальный

@@ -49,8 +49,8 @@
     "news": "Новости",
     "forbidden_cargos": "Запрещённые грузы",
     "sending_order": "Отправить заказ",
-    "simple_order": "Простой заказ",
-    "advanced_order": "Сложный заказ",
+    "simple_order": "Не сложный заказ",
+    "advanced_order": "Детальный заказ",
     "order_requests": "Запросы заказов",
     "FAQ": "Часто задаваемые вопросы"
   },
