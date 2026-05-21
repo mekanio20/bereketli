@@ -61,7 +61,7 @@
                 </div>
                 <div class="flex-1">
                   <p class="text-base font-medium text-[#222222]">
-                   {{ warehouse.work_hours_start }} / {{ warehouse.work_hours_end }}
+                   {{ warehouse.workingHours }}
                   </p>
                 </div>
               </div>

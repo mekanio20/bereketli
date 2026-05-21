@@ -32,3 +32,49 @@ export const formatToRuDate = (day) => {
     
     return `${day} дней`;
 }
+
+export const getWarehouseStatus = (warehouse) => {
+  const now = new Date();
+
+  const days = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+
+  const today = days[now.getDay()];
+
+  const startTime = warehouse[`${today}_start`];
+  const endTime = warehouse[`${today}_end`];
+
+  if (!startTime || !endTime) {
+    return {
+      isOpen: false,
+      message: "Closed today",
+    };
+  }
+
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const [startHour, startMinute] = startTime.split(":");
+  const startTotalMinutes =
+    Number(startHour) * 60 + Number(startMinute);
+
+  const [endHour, endMinute] = endTime.split(":");
+  const endTotalMinutes =
+    Number(endHour) * 60 + Number(endMinute);
+
+  const isOpen =
+    currentMinutes >= startTotalMinutes &&
+    currentMinutes <= endTotalMinutes;
+
+  return {
+    isOpen,
+    today,
+    workingHours: `${startTime} - ${endTime}`,
+  };
+}

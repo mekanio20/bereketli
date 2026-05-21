@@ -42,7 +42,7 @@
             <div>
                 <p class="sm:text-base text-sm text-[#838589] mb-2 leading-[114.99999999999999%]">{{ $t('info.working_time') }}</p>
                 <p class="sm:text-base text-sm font-medium text-gray-900">
-                    {{ warehouse.work_hours_start }} / {{ warehouse.work_hours_end }}
+                    {{ warehouse.workingHours }}
                 </p>
             </div>
         </div>
