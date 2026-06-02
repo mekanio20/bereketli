@@ -112,7 +112,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const appStore = useAppStore();
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem("bereketli_access");
 
   if (requiresAuth && !accessToken) {
     appStore.setModal("login");
