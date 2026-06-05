@@ -76,8 +76,8 @@
                         <div>
                             <h3 class="text-sm font-medium text-gray-300 mb-3">{{ $t('info.address') }}</h3>
                             <p class="text-base leading-relaxed hover:text-orange-400 transition-colors duration-300">
-                                Jebel Free Zone, BCW, Office No.<br />
-                                104-03, Dubai, UAE
+                                Aşgabat şäheri, Köpetdag etraby,<br />
+                                Bitarap Türkmenistan şaýoly, 154/1
                             </p>
                         </div>
 
