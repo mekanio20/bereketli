@@ -35,6 +35,22 @@
     "lang": "Language",
     "forgot_password": "Forgot password"
   },
+  "statuses": {
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "completed": "Completed",
+    "in_transit": "In Transit",
+    "customs": "In Customs",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled",
+    "rejected": "Rejected"
+  },
+  "transportationTypes": {
+    "air": "Air",
+    "sea": "Sea",
+    "land": "Road",
+    "rail": "Rail"
+  },
   "menu": {
     "home_page": "Home",
     "about_us": "About Us",

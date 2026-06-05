@@ -1,3 +1,5 @@
+import i18n from "@/i18n/index.js";
+
 export const statusBadgeClass = (status) => {
   switch (String(status).trim().toLowerCase()) {
     case "pending":
@@ -22,24 +24,9 @@ export const statusBadgeClass = (status) => {
 };
 
 export const getStatusLabel = (status) => {
-  switch (String(status).trim().toLowerCase()) {
-    case "pending":
-      return "Garaşylýar";
-    case "accepted":
-      return "Tassyklanan";
-    case "completed":
-      return "Tamamlanan";
-    case "in_transit":
-      return "Transitda";
-    case "customs":
-      return "Gümrükde";
-    case "delivered":
-      return "Eltip berildi";
-    case "cancelled":
-      return "Ýatyrldy";
-    case "rejected":
-      return "Ret edilen";
-  }
+  const { t } = i18n.global;
+  const key = String(status).trim().toLowerCase();
+  return t(`statuses.${key}`);
 };
 
 export const orderProgress = (status) => {
@@ -71,16 +58,13 @@ export const getTransportTypeIcon = (transportation_type) => {
 };
 
 export const getTransportTypeLabel = (transportation_type) => {
-  switch (String(transportation_type).trim().toLowerCase()) {
-    case "air":
-      return "Uçar";
-    case "sea":
-      return "Deňiz";
-    case "land":
-      return "Ýol";
-    case "rail":
-      return "Demir ýol";
-  }
+  const { t } = i18n.global;
+
+  const key = String(transportation_type)
+    .trim()
+    .toLowerCase();
+
+  return t(`transportationTypes.${key}`);
 };
 
 

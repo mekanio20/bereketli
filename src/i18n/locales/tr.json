@@ -35,6 +35,22 @@
     "lang": "Dil",
     "forgot_password": "Şifreyi unuttum"
   },
+  "statuses": {
+    "pending": "Bekliyor",
+    "accepted": "Onaylandı",
+    "completed": "Tamamlandı",
+    "in_transit": "Transitte",
+    "customs": "Gümrükte",
+    "delivered": "Teslim Edildi",
+    "cancelled": "İptal Edildi",
+    "rejected": "Reddedildi"
+  },
+  "transportationTypes": {
+    "air": "Hava",
+    "sea": "Deniz",
+    "land": "Kara Yolu",
+    "rail": "Demir Yolu"
+  },
   "menu": {
     "home_page": "Ana Sayfa",
     "about_us": "Hakkımızda",

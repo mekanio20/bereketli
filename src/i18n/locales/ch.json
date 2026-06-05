@@ -35,6 +35,22 @@
     "lang": "语言",
     "forgot_password": "忘记密码"
   },
+  "statuses": {
+    "pending": "待处理",
+    "accepted": "已批准",
+    "completed": "已完成",
+    "in_transit": "运输中",
+    "customs": "海关处理中",
+    "delivered": "已送达",
+    "cancelled": "已取消",
+    "rejected": "已拒绝"
+  },
+  "transportationTypes": {
+    "air": "空运",
+    "sea": "海运",
+    "land": "陆运",
+    "rail": "铁路运输"
+  },
   "menu": {
     "home_page": "首页",
     "about_us": "关于我们",

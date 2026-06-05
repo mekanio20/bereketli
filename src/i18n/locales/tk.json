@@ -35,6 +35,22 @@
     "lang": "Dil",
     "forgot_password": "Açar sözi unutdym"
   },
+  "statuses": {
+    "pending": "Garaşylýar",
+    "accepted": "Tassyklanan",
+    "completed": "Tamamlanan",
+    "in_transit": "Transitda",
+    "customs": "Gümrükde",
+    "delivered": "Eltip berildi",
+    "cancelled": "Ýatyrldy",
+    "rejected": "Ret edilen"
+  },
+  "transportationTypes": {
+    "air": "Uçar",
+    "sea": "Deňiz",
+    "land": "Ýol",
+    "rail": "Demir ýol"
+  },
   "menu": {
     "home_page": "Baş sahypa",
     "about_us": "Biz barada",

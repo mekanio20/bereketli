@@ -35,6 +35,22 @@
     "lang": "Язык",
     "forgot_password": "Забыли пароль"
   },
+  "statuses": {
+    "pending": "Ожидает",
+    "accepted": "Подтверждено",
+    "completed": "Завершено",
+    "in_transit": "В пути",
+    "customs": "На таможне",
+    "delivered": "Доставлено",
+    "cancelled": "Отменено",
+    "rejected": "Отклонено"
+  },
+  "transportationTypes": {
+    "air": "Авиа",
+    "sea": "Морской",
+    "land": "Автомобильный",
+    "rail": "Железнодорожный"
+  },
   "menu": {
     "home_page": "Главная",
     "about_us": "О нас",

@@ -71,7 +71,7 @@
                                     <div class="grid grid-cols-3 gap-3">
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393] required">{{ $t('forms.width')
-                                            }} (sm)</label>
+                                                }} (sm)</label>
                                             <form-input :readonly="isReadonly" v-model="formData.width" type="number" />
                                             <span v-if="errors.width" class="text-red-500 text-sm mt-1 block">
                                                 {{ $t('errors.required') }}
@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393] required">{{ $t('forms.length')
-                                            }} (sm)</label>
+                                                }} (sm)</label>
                                             <form-input :readonly="isReadonly" v-model="formData.length"
                                                 type="number" />
                                             <span v-if="errors.length" class="text-red-500 text-sm mt-1 block">
@@ -88,7 +88,7 @@
                                         </div>
                                         <div class="space-y-2">
                                             <label class="text-sm text-[#939393] required">{{ $t('forms.height')
-                                            }} (sm)</label>
+                                                }} (sm)</label>
                                             <form-input :readonly="isReadonly" v-model="formData.height"
                                                 type="number" />
                                             <span v-if="errors.height" class="text-red-500 text-sm mt-1 block">
@@ -100,7 +100,7 @@
                                     <!-- Description -->
                                     <div>
                                         <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description')
-                                        }}</label>
+                                            }}</label>
                                         <textarea :readonly="isReadonly" v-model="formData.description" rows="2"
                                             class="bg-[#EBF3FD] text-[#222222] font-medium outline-none w-full px-[20px] py-4 rounded-[10px] focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 resize-none"></textarea>
                                     </div>
@@ -120,24 +120,32 @@
                                         <!-- Description -->
                                         <div class="px-1 col-span-2">
                                             <label class="block text-sm text-[#939393] mb-2">{{ $t('forms.description')
-                                            }}</label>
+                                                }}</label>
                                             <form-input :readonly="isReadonly" v-model="formData.description"
                                                 type="text" />
                                         </div>
                                     </div>
-                                    <button type="button" v-for="item in approximateItems" :key="item.id"
-                                        :disabled="isReadonly" @click="selectItem(item)"
-                                        class="w-full flex items-center space-x-8 px-14 py-4 mb-2 rounded-xl bg-[#EBF3FD] cursor-pointer duration-100"
-                                        :class="[findArrayItem(approximateData, 'id', item.id) ? 'bg-[#bad7ff]' : '']">
-                                        <div class="w-[58px] h-[40px]">
-                                            <img :src="item.icon" class="w-full h-full object-cover" />
-                                        </div>
-                                        <div class="flex flex-col space-y-2 items-start">
-                                            <h4 class="text-[#222222] font-semibold">{{ `${item.name} #${item.id}` }}
-                                            </h4>
-                                            <p class="text-[#838589] text-sm">{{ formattedMeasurement(item) }}</p>
-                                        </div>
-                                    </button>
+                                    <div v-if="approximateItems.length > 0">
+                                        <button type="button"
+                                            v-for="item in approximateItems" :key="item.id" :disabled="isReadonly"
+                                            @click="selectItem(item)"
+                                            class="w-full flex items-center space-x-8 px-14 py-4 mb-2 rounded-xl bg-[#EBF3FD] cursor-pointer duration-100"
+                                            :class="[findArrayItem(approximateData, 'id', item.id) ? 'bg-[#bad7ff]' : '']">
+                                            <div class="w-[58px] h-[40px]">
+                                                <img :src="item.icon" class="w-full h-full object-cover" />
+                                            </div>
+                                            <div class="flex flex-col space-y-2 items-start">
+                                                <h4 class="text-[#222222] font-semibold">{{ `${item.name} #${item.id}` }}
+                                                </h4>
+                                                <p class="text-[#838589] text-sm">{{ formattedMeasurement(item) }}</p>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <div v-else class="flex items-center justify-center py-8 rounded-xl bg-[#EBF3FD] text-gray-500 text-sm">
+                                        {{ $t('info.no_data') }}
+                                    </div>
+
                                     <span v-if="errors.approximateData" class="text-red-500 text-sm mt-1 block">
                                         {{ $t('errors.required') }}
                                     </span>
