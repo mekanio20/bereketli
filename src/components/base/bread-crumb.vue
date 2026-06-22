@@ -6,7 +6,7 @@
                 <!-- If item has a link -->
                 <router-link v-if="item.to" :to="item.to" @click.stop class="flex items-center sm:gap-1">
                     <component v-if="item?.icon" :is="icons[item?.icon]" />
-                    <span v-if="item?.label" class="text-[13px] text-[#838589]">
+                    <span v-if="item?.label" class="text-[13px] text-[#838589] text-nowrap">
                         {{ item?.label }}
                     </span>
                 </router-link>

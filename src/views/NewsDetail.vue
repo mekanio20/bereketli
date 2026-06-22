@@ -1,6 +1,6 @@
 <template>
     <section class="overflow-x-hidden relative">
-        <MainContainer>
+        <div class="max-w-[1000px] mx-auto">
             <SectionContainer>
                 <!-- Breadcrumb -->
                 <bread-crumb class="mb-8" :items="[
@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="space-y-10">
-                    <img :src="newsStore.news_detail.image" class="w-full max-h-[500px] object-cover rounded-[14px]">
+                    <img :src="newsStore.news_detail.image" class="w-full max-h-[500px] object-contain rounded-[14px]">
                     <p class="text-lg text-[#222222]">
                         {{ newsStore.news_detail.description }}
                     </p>
@@ -32,7 +32,7 @@
                 <!-- Loading -->
                 <Loading v-if="newsStore.loading" />
             </SectionContainer>
-        </MainContainer>
+        </div>
         <Slider v-if="related_news?.length > 0" :title="$t('names.related_news')" :data="related_news" />
     </section>
 </template>

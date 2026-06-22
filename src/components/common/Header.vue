@@ -89,7 +89,7 @@
                                                     :class="notificationBadgeClass(item?.event.type)">
                                                     <notification-icon :color="'currentColor'" />
                                                 </div>
-                                                <div class="flex flex-col space-y-2 items-start text-start">
+                                                <div class="flex flex-col space-y-2 items-start text-start max-w-[70%]">
                                                     <p class="font-medium">{{ item.body || item.title }}</p>
                                                     <p class="text-[#939393] text-sm">{{ item.date_created }}</p>
                                                 </div>
@@ -163,7 +163,7 @@
                                                 :class="notificationBadgeClass(item?.event.type)">
                                                 <notification-icon :color="'currentColor'" />
                                             </div>
-                                            <div class="flex flex-col space-y-2 items-start text-start">
+                                            <div class="flex flex-col space-y-2 items-start text-start max-w-[75%]">
                                                 <p class="font-medium">{{ item.body || item.title }}</p>
                                                 <p class="text-[#939393] text-sm">{{ item.date_created }}</p>
                                             </div>

@@ -94,8 +94,7 @@ const handleSearch = async (search) => {
 const showResult = async (results) => {
     showResultModal.value = true
     resultOptions.value = normalizePrices(results.prices).map((option) => ({
-        ...option,
-        price: usdToTmt(option.price, configStore.usd_rate)
+        ...option
     }))
 }
 

@@ -75,7 +75,7 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center space-x-4 mt-14">
+                        <div class="flex items-center justify-center space-x-4 mt-14">
                             <router-link :to="{ name: 'OrderDetail', params: { id: order.id } }" class="bg-custom-gradient px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">{{ $t('buttons.detail') }}</router-link>
                             <router-link :to="{ name: 'Chat', query: { code: order.code } }" class="bg-[#002645] px-20 py-4 rounded-full text-white font-bold text-nowrap flex items-center space-x-2  hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                                 <comment-icon />

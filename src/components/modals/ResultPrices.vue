@@ -24,7 +24,7 @@
                                     <p class="text-[#868686] text-sm">{{ $t('forms.delivery_date') }}: {{ formatDate(item.delivery_days) }}</p>
                                 </div>
                             </div>
-                            <p class="font-bold text-[#222222] text-lg">{{ item.price.toFixed(2) }} TMT</p>
+                            <p class="font-bold text-[#222222] text-lg">{{ item.price.toFixed(2) }} $</p>
                         </div>
                     </div>
                     <NoData v-else :message="$t('info.no_data')" />
